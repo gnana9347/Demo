@@ -1,0 +1,354 @@
+1.Write a program to below pattern
+package com.k7it.Assignment2;
+
+import java.util.Scanner;
+
+public class patter2 {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter n value");
+		int n = sc.nextInt();
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				if (i == 1 || i == n || j == 1 || j == n || i==j || i+j==n+1 /*j==i-2 ||j==i+2*/) {
+					System.out.print("* ");
+				}
+				else {
+					System.out.print("  ");
+				}
+			}
+			System.out.println();
+		}
+	}
+}
+output:
+======
+* * * * * 
+* *   * * 
+*   *   * 
+* *   * * 
+* * * * * 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+2.Write a program to print K7ITECH using stars pattern....
+
+package com.k7it.Assignment2;
+
+import java.util.Scanner;
+
+public class pattern3 {
+	public static void main(String[] args) {
+	
+	Scanner sc = new Scanner(System.in);
+	System.out.println("enter n value");
+	int n = sc.nextInt();
+	int m=n,o=n,p=n,q=n,r=n,s=n;
+	for (int i=1;i<=n;i++) {
+		for(int j=1;j<=n;j++) {
+			if(j==1 || i+j==n || j==i-1) {
+				System.out.print("*");
+			}
+			else {
+				System.out.print("  ");
+			}
+		}
+		System.out.println("");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter m value"); int m = sc.nextInt();
+	 */
+	for(int i=1;i<=m;i++) {
+		for(int j=1;j<=m;j++) {
+			if(i==1 || /*i+j==n*/ j==n) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+			
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter o value"); int o = sc.nextInt();
+	 */
+	for(int i=1;i<=o;i++) {
+		for(int j=1;j<=o;j++) {
+			if(i==1 ||i==n || j==3) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter p value"); int p = sc.nextInt();
+	 */
+	for(int i=1;i<=p;i++) {
+		for(int j=1;j<=p;j++) {
+			if(i==1 || j==3) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter q value"); int q = sc.nextInt();
+	 */
+	for(int i=1;i<=q;i++) {
+		for(int j=1;j<=q;j++) {
+			if(i==1 || j==1 || i==n || i==3) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter r value"); int r = sc.nextInt();
+	 */
+	for(int i=1;i<=r;i++) {
+		for(int j=1;j<=r;j++) {
+			if(i==1 || j==1 ||i==n) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	/*
+	 * System.out.println("enter s value"); int s = sc.nextInt();
+	 */
+	for(int i=1;i<=s;i++) {
+		for(int j=1;j<=s;j++) {
+			if(j==1 || j==n || i==3) {
+				System.out.print("* ");
+			}
+			else{
+				System.out.print("  ");
+			}
+		}
+		System.out.println("   ");
+	}
+	System.out.println("    ");
+	}
+}
+
+Output:
+=======
+enter n value
+5
+*    *  
+*  *    
+**      
+*  *    
+*    *  
+    
+* * * * *    
+        *    
+        *    
+        *    
+        *    
+    
+* * * * *    
+    *        
+    *        
+    *        
+* * * * *    
+    
+* * * * *    
+    *        
+    *        
+    *        
+    *        
+    
+* * * * *    
+*            
+* * * * *    
+*            
+* * * * *    
+    
+* * * * *    
+*            
+*            
+*            
+* * * * *    
+    
+*       *    
+*       *    
+* * * * *    
+*       *    
+*       *    
+    
+---------------------------------------------------------------------------------------------------------------------------------------
+3.Write a program for type Conversions
+
+package com.k7it.Assignment2;
+
+public class Type_conversions {
+
+	public static void main(String[] args) {
+
+		//Implicit type conversions
+				//byte to short
+						byte d=20;
+						short d1=d;
+						System.out.println(d1);
+				//short to integer
+						int e1=d1;
+						System.out.println(e1);
+				//integer to long
+						int a=10;
+						long a1=a;
+						System.out.println(a1);
+				//long to float
+						float b=a1;
+						System.out.println(b);
+				//float to double
+						double c=b;
+						System.out.println(c);
+				
+		//Explicit type conversion
+				//Double to float
+						double f1=2.25;
+						float f2=(float)f1;
+						System.out.println(f2);
+				//float to long
+						long f3=(long)f2;
+						System.out.println(f3);
+				//long to integer
+						int f4=(int)f3;
+						System.out.println(f4);
+				//integer to short
+						short f5=(short)f4;
+						System.out.println(f5);
+				//short to byte
+						byte f6=(byte)f5;
+						System.out.println(f6);
+	}
+}
+Output:
+=======
+20
+20
+10
+10.0
+10.0
+2.25
+2
+2
+2
+2
+---------------------------------------------------------------------------------------------------------------------
+4.write a program to find largest of three numbers..
+
+package com.k7it.Assignment2;
+
+import java.util.Scanner;
+
+public class Largest_of3 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter a value");
+		int a= sc.nextInt();
+		System.out.println("enter b value");
+		int b= sc.nextInt();
+		System.out.println("enter c value");
+		int c= sc.nextInt();
+		if(a>b && a>c) {
+			System.out.println("a is largest number"+a);
+		}
+		else if(b>a && b>c) {
+			System.out.println("b is largest number"+b);
+		}
+		else if(c>a && c>b) {
+			System.out.println("c is largest number"+c);
+		}
+		else {
+			System.out.println("plz enter valid numbers");
+		}
+		
+	}
+}
+output:
+-======
+enter a value
+5
+enter b value
+10
+enter c value
+15
+c is largest number15
+----------------------------------------------------------------------------------------------------------------------------
+5.write a program to print 1st 100 prime numbers....
+
+package com.k7it.Assignment2;
+
+import java.util.Scanner;
+
+public class Primes {
+//one and itself
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter n value");
+		int n = sc.nextInt();
+		for (int i = 1; i <= n; i++) {
+			int count = 0;
+			for (int j = 1; j <= n; j++) {
+				if (i % j == 0) {
+					count++;
+				}
+			}
+			if (count == 2) {
+				System.out.println("prime no.:" + i);
+			}
+		}
+	}
+}
+output:
+======
+enter n value
+100
+prime no.:2
+prime no.:3
+prime no.:5
+prime no.:7
+prime no.:11
+prime no.:13
+prime no.:17
+prime no.:19
+prime no.:23
+prime no.:29
+prime no.:31
+prime no.:37
+prime no.:41
+prime no.:43
+prime no.:47
+prime no.:53
+prime no.:59
+prime no.:61
+prime no.:67
+prime no.:71
+prime no.:73
+prime no.:79
+prime no.:83
+prime no.:89
+prime no.:97
+------------------------------------------------------------------------------------------------------
