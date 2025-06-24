@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, ini	tial-scale=1.0">
+	<title>Library Home Page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background: url('https://uk.urbanest.com/wp-content/uploads/library-scaled.jpg') no-repeat center center fixed;
+			background-size: cover;
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+			height: 100%;
+		}
+
+		.navbar {
+			background-color: rgb(255, 255, 255);
+			padding: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			position: fixed;
+			width: 100%;
+			top: 0;
+			z-index: 1;
+		}
+
+		.navbar img {
+			height: 60px;
+			margin-right: 20px;
+		}
+
+		.navbar a,
+		.dropdown .dropbtn {
+			color: rgb(0, 128, 255);
+			padding: 14px 20px;
+			text-decoration: none;
+			text-align: center;
+			transition: background-color 0.3s;
+		}
+
+		.navbar a:hover,
+		.dropdown:hover .dropbtn {
+			background-color: #0056b3;
+			color: white;
+		}
+
+		.navbar a i,
+		.dropdown .dropbtn i {
+			margin-right: 8px;
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+			z-index: 1;
+		}
+
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+			text-align: left;
+		}
+
+		.dropdown-content a:hover {
+			background-color: rgb(0, 128, 255);
+			color: white;
+		}
+
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		.search-container {
+			display: flex;
+			align-items: center;
+			margin-left: auto;
+		}
+
+		.search-container input[type="text"] {
+			padding: 7px;
+			margin-right: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.search-container button {
+			padding: 7px 14px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.search-container button:hover {
+			background-color: #0056b3;
+		}
+
+		.container {
+			text-align: center;
+			background-color: rgba(255, 255, 255, 0.8);
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			margin-top: 80px;
+			min-height: calc(100vh - 140px);
+			/* Ensure it stretches to fill the space */
+		}
+
+		h1 {
+			color: #333;
+		}
+
+		.btn {
+			display: inline-block;
+			margin: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+			color: #fff;
+			background-color: rgb(0, 0, 0);
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.btn:hover {
+			background-color: #0056b3;
+		}
+
+		.footer {
+			background-color: rgb(255, 255, 255);
+			padding: 20px;
+			text-align: center;
+			position: fixed;
+			width: 100%;
+			bottom: 0;
+			box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.footer a {
+			color: rgb(0, 128, 255);
+			text-decoration: none;
+			margin: 0 10px;
+		}
+
+		.footer a:hover {
+			color: #0056b3;
+		}
+
+		/* Popup Search Box Style */
+		.popup-search-container {
+			display: none;
+			position: fixed;
+			bottom: 100px;
+			right: 20px;
+			background-color: rgba(255, 255, 255, 0.9);
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			z-index: 1001;
+			width: 250px;
+		}
+
+		.popup-search-container input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.popup-search-container button {
+			width: 100%;
+			padding: 10px;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+
+		.popup-search-container button:hover {
+			background-color: #0056b3;
+		}
+
+		/* AI Bot Icon */
+		.chatbot-icon {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			outline: none;
+			touch-action: none;
+		}
+
+		.chatbot-icon img {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			transition: transform 0.3s;
+		}
+
+		.chatbot-icon:hover img {
+			transform: scale(1.1);
+		}
+
+		/* Book Card Styles */
+		.book-cards-container {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			margin-top: 40px;
+		}
+
+		.book-card {
+			width: 200px;
+			margin: 15px;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			overflow: hidden;
+		}
+
+		.book-card img {
+			width: 100%;
+			height: 250px;
+			object-fit: cover;
+		}
+
+		.book-card-description {
+			padding: 10px;
+			color: #333;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="navbar">
+		<div class="dropdown">
+			<button class="dropbtn"><i class="fas fa-home"></i> Home</button>
+			<div class="dropdown-content">
+				<a href="/">Main Home</a>
+				<a href="/library-home">Library Home</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn"><i class="fas fa-user-plus"></i> Visitors</button>
+			<div class="dropdown-content">
+				<a href="/create-visitor">Create Visitor</a>
+				<a href="/list-visitors">List of Visitors</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn"><i class="fas fa-info-circle"></i> About</button>
+			<div class="dropdown-content">
+				<a href="/about-us">About Us</a>
+				<a href="/our-team">Our Team</a>
+			</div>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn"><i class="fas fa-envelope"></i> Contact</button>
+			<div class="dropdown-content">
+				<a href="tel:+9347554548">9347554548</a>
+				<a href="tel:+6309556367">6309556367</a>
+			</div>
+		</div>
+		<a href="/sign-up" class="btn"><i class="fas fa-user"></i> Sign Up</a>
+		<div class="search-container">
+			<input type="text" id="search" placeholder="Search...">
+			<button onclick="alert('You have searched: ' + document.getElementById('search').value); search()"><i
+					class="fas fa-search"></i></button>
+		</div>
+	</div>
+
+	<div class="container">
+		<h1>Books House</h1>
+		<div class="book-cards-container">
+			<!-- Book Card 1 -->
+			<div class="book-card">
+			    <img src="https://image.tmdb.org/t/p/original/fTFRY6RJTpwkrYybwj4Wdf5nfgn.jpg?text=Avengers+Book+1" alt="Avengers Book 1">
+			    <div class="book-card-description">
+			        <h3>Avengers: Endgame</h3>
+			        <!-- Open button now links to the book details page -->
+			        <a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+			        <p>Join the Avengers in their final battle to defeat Thanos and save the universe.</p>
+			    </div>
+			</div>
+
+
+
+			<!-- Book Card 9 -->
+			<div class="book-card">
+			    <img src="https://th.bing.com/th/id/OIP.R7A5RToh5o6GZiwjVHG6bAHaLT?rs=1&pid=ImgDetMain" alt="To Kill a Mockingbird">
+			    <div class="book-card-description">
+			        <h3>To Kill a Mockingbird</h3>
+			        <!-- Open button now links to the book details page -->
+			        <a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+			        <p>Scout Finch reflects on growing up in the segregated South and her father’s fight for justice in a racially charged trial.</p>
+			    </div>
+			</div>
+
+			<!-- Book Card 2 -->
+			<div class="book-card">
+				<img src="https://image.tmdb.org/t/p/original/pf8DZqVdlx69JX3803Ml0ag0sNk.jpg?text=Avengers+Book+2"
+					alt="Avengers Book 2">
+				<div class="book-card-description">
+					<h3>Avengers: Infinity War</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>The Avengers face the most powerful threat they've ever known: Thanos.</p>
+				</div>
+			</div>
+
+			<!-- Book Card 8 -->
+			<div class="book-card">
+				<img src="https://hachette.imgix.net/books/9780762498130.jpg?auto=compress,format"
+					alt="The Great Gatsby">
+				<div class="book-card-description">
+					<h3>The Great Gatsby</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>Set in the Jazz Age, Nick Carraway narrates the life and mysterious death of his neighbor, the
+						elusive Jay Gatsby.</p>
+				</div>
+			</div>
+
+
+			<!-- Book Card 4 -->
+			<div class="book-card">
+				<img src="https://www.budsartbooks.com/wp-content/uploads/2022/07/avekgh-avengers-kree-skrull-war-book.jpg?text=Avengers+Book+4"
+					alt="Avengers Book 4">
+				<div class="book-card-description">
+					<h3>Avengers: The Kree-Skrull War</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>The Avengers must defend Earth from an intergalactic war between the Kree and the Skrulls.</p>
+				</div>
+			</div>
+
+			<!-- Book Card 10 -->
+			<div class="book-card">
+				<img src="https://th.bing.com/th/id/OIP.wZLy7-jzEmvVhQXAafrPCAHaKr?rs=1&pid=ImgDetMain"
+					alt="The Catcher in the Rye">
+				<div class="book-card-description">
+					<h3>The Catcher in the Rye</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>Holden Caulfield, a disillusioned teenager, narrates his life in New York City and his struggles
+						with growing up and identity.</p>
+				</div>
+			</div>
+
+
+			<!-- Book Card 5 -->
+			<div class="book-card">
+				<img src="https://th.bing.com/th/id/R.487915c304203de4f1fe712013a3e2be?rik=rPhdpJcZ%2f8lA%2bw&riu=http%3a%2f%2f4.bp.blogspot.com%2f-E7GEt3MXeJA%2fVNjX3c5-JLI%2fAAAAAAAAC40%2fsOseJbtKCiM%2fs1600%2fAvengers_Age_Of_Ultron_Unpublished_Character_Poster_h_JPosters.jpg&ehk=8pfDjO3d7Y7cAPKr7T9WA5MjGt04DDnIxGTkAcwvw9k%3d&risl=&pid=ImgRaw&r=0"
+					alt="Avengers Book 5">
+				<div class="book-card-description">
+					<h3>Avengers: Age of Ultron</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>Ultron threatens to destroy the Earth, and only the Avengers can stop him.</p>
+				</div>
+			</div>
+
+			<!-- Book Card 6 -->
+			<div class="book-card">
+				<img src="https://covers.openlibrary.org/b/id/7984916-L.jpg" alt="Dune">
+				<div class="book-card-description">
+					<h3>Dune</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>A young nobleman embarks on a journey to a desert planet to protect the future of his family and
+						their resources.</p>
+				</div>
+			</div>
+
+			<!-- Book Card 7 -->
+			<div class="book-card">
+				<img src="https://i.thenile.io/r1000/9780452262935.jpg?r=5e7d61110b596" alt="1984">
+				<div class="book-card-description">
+					<h3>1984</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>In a totalitarian future society, Winston Smith struggles to find freedom and truth amidst
+						constant surveillance.</p>
+				</div>
+			</div>
+			<!-- Book Card 3 -->
+			<div class="book-card">
+				<img src="https://image.tmdb.org/t/p/original/9zJILsQeg49QGMO8hwV65GHfdI8.jpg?text=Avengers+Book+3"
+					alt="Avengers Book 3">
+				<div class="book-card-description">
+					<h3>Avengers: The Ultimates</h3>
+					<a href="/sign-up" class="button" style="background-color: #007bff;">Open</a>
+					<p>The Avengers form to battle enemies of earth that no other hero can defeat.</p>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="footer">
+		<p>&copy; 2024 Library. All rights reserved.</p>
+		<a href="/privacy-policy">Privacy Policy</a>
+		<a href="/terms-of-service">Terms of Service</a>
+		<a href="/contact-us">Contact Us</a>
+	</div>
+
+	<button class="chatbot-icon" id="chatbot-icon">
+		<img src="https://png.pngtree.com/png-clipart/20230907/ourlarge/pngtree-d-robot-chatbot-ai-in-science-and-business-technology-engineering-concept-png-image_10021336.png"
+			alt="Chatbot">
+	</button>
+
+	<div class="popup-search-container" id="popup-search-container">
+		<input type="text" id="popup-search-input" placeholder="Search...">
+		<button
+			onclick="alert('You searched for: ' + document.getElementById('popup-search-input').value)">Search</button>
+	</div>
+	
+
+	<script>
+		// Handle popup search container visibility
+		const chatbotIcon = document.getElementById('chatbot-icon');
+		const popupSearchContainer = document.getElementById('popup-search-container');
+		const searchInput = document.getElementById('search');
+
+		// Show the popup search when the chatbot icon is clicked
+		chatbotIcon.onclick = function () {
+		    popupSearchContainer.style.display = 'block';
+		};
+
+		// Close the popup search when clicking anywhere else
+		document.addEventListener('click', function (event) {
+		    if (!popupSearchContainer.contains(event.target) && event.target !== chatbotIcon) {
+		        popupSearchContainer.style.display = 'none';
+		    }
+		});
+
+		// Highlight the book card matching the search term and scroll to it
+		function highlightCard() {
+		    const searchTerm = searchInput.value.toLowerCase(); // get the search term in lowercase
+		    const bookCards = document.querySelectorAll('.book-card'); // get all book cards
+		    let foundMatch = false; // flag to check if a match is found
+
+		    // Loop through all the book cards and check if the search term matches the book title
+		    bookCards.forEach(function (card) {
+		        const bookTitle = card.querySelector('h3').textContent.toLowerCase(); // get the title of the book in lowercase
+		        if (bookTitle.includes(searchTerm)) {
+		            // If the title matches the search term, highlight the card
+		            card.style.border = "2px solid #007bff"; // Add a blue border for highlight
+		            card.style.boxShadow = "0 4px 10px rgba(0, 123, 255, 0.5)"; // Add a glowing effect
+
+		            // Scroll to the highlighted card if it's a match
+		            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		            foundMatch = true; // Set the flag to true as we found a match
+		        } else {
+		            // If it doesn't match, remove any previous highlight
+		            card.style.border = "none";
+		            card.style.boxShadow = "none";
+		        }
+		    });
+
+		    // If no match is found, alert the user
+		    if (!foundMatch) {
+		        alert('No books found matching your search.');
+		    }
+		}
+
+		// Attach the highlight function to the search button click event
+		document.querySelector('.search-container button').addEventListener('click', function () {
+		    highlightCard(); // Execute the function to highlight matching cards
+		});
+
+		// Optionally, you could also call highlightCard() when the user types in the search field for live search
+		searchInput.addEventListener('input', function () {
+		    highlightCard(); // Update highlighting as the user types
+		});
+
+
+	</script>
+</body>
+
+</html>

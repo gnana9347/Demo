@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #007BFF;
+      margin-right: 15px;
+    }
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    /* Center the main heading above the calculator and add color */
+    h1 {
+      text-align: center;
+      color: #e74c3c;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    .calculator-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .calculator {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #display {
+      width: 100%;
+      height: 50px;
+      text-align: right;
+      margin-bottom: 20px;
+      font-size: 24px;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      color: #333;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      padding: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #fff;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    button:hover {
+      background: #e1e1e1;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .special-button {
+      background: brown;
+      color: white;
+    }
+    .special-button:hover {
+      background: darkred;
+    }
+    .equal-button {
+      background: brown;
+      color: white;
+    }
+    .equal-button:hover {
+      background: darkred;
+    }
+    .content video {
+      width: 100%;
+      height: auto;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav-links">
+      <a href="index.html">⬅ Back</a>
+    </div>
+    <!-- Main heading moved to the top and centered -->
+    <h1>Scientific Calculator</h1>
+    <div class="calculator-section">
+      <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+          <button class="special-button" onclick="clearDisplay()">C</button>
+          <button class="special-button" onclick="deleteLast()">DEL</button>
+          <button onclick="appendToDisplay('(')">(</button>
+          <button onclick="appendToDisplay(')')">)</button>
+          <button onclick="appendToDisplay('7')">7</button>
+          <button onclick="appendToDisplay('8')">8</button>
+          <button onclick="appendToDisplay('9')">9</button>
+          <button onclick="appendToDisplay('/')">/</button>
+          <button onclick="appendToDisplay('4')">4</button>
+          <button onclick="appendToDisplay('5')">5</button>
+          <button onclick="appendToDisplay('6')">6</button>
+          <button onclick="appendToDisplay('*')">*</button>
+          <button onclick="appendToDisplay('1')">1</button>
+          <button onclick="appendToDisplay('2')">2</button>
+          <button onclick="appendToDisplay('3')">3</button>
+          <button onclick="appendToDisplay('-')">-</button>
+          <button onclick="appendToDisplay('0')">0</button>
+          <button onclick="appendToDisplay('.')">.</button>
+          <button class="equal-button" onclick="calculateResult()">=</button>
+          <button onclick="appendToDisplay('+')">+</button>
+          <button onclick="appendToDisplay('Math.sin(')">sin</button>
+          <button onclick="appendToDisplay('Math.cos(')">cos</button>
+          <button onclick="appendToDisplay('Math.tan(')">tan</button>
+          <button onclick="appendToDisplay('Math.sqrt(')">√</button>
+          <button onclick="appendToDisplay('Math.log10(')">log</button>
+          <button onclick="appendToDisplay('Math.pow(')">^</button>
+          <button onclick="appendToDisplay('Math.exp(')">exp</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>What is a Scientific Calculator?</h2>
+      <p>A scientific calculator is a type of electronic calculator designed to help you perform complex mathematical operations. Unlike basic calculators, scientific calculators support functions such as trigonometric calculations, logarithms, and exponential functions. They are widely used in fields like engineering, physics, and mathematics.</p>
+      <video controls loop>
+        <source src="https://videos.pexels.com/video-files/5466768/5466768-hd_1920_1080_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function deleteLast() {
+      const display = document.getElementById('display');
+      display.value = display.value.slice(0, -1);
+    }
+
+    function appendToDisplay(value) {
+      const display = document.getElementById('display');
+      display.value += value;
+    }
+
+    function calculateResult() {
+      const display = document.getElementById('display');
+      try {
+        let result = eval(display.value);
+        result = new Intl.NumberFormat('en-US', {
+          maximumFractionDigits: 10
+        }).format(result);
+        display.value = result;
+      } catch (error) {
+        display.value = 'Error';
+      }
+    }
+  </script>
+</body>
+</html>

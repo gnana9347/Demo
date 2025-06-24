@@ -1,0 +1,920 @@
+packages:
+=========
+it is a process of grouping of similer classes into a single folder or sub categorizing the java files 
+  into different types folders instead of keeping all together into a src folder. 
+
+package standards:
+=====================
+1st level folder will start with either com or org :
+ com -> company
+    or 
+ org  -> organization 
+ 
+ 2nd level floder will start with corresponding company name:
+ ===========
+ company name 
+ ===============
+ k7it or ibm or, o1 or eka 
+ 
+ com.k7it 
+ com.o1
+ com.ibm
+ com.eka
+ 
+ 
+ 3rd level :
+ ==========
+ project name :
+ ==============
+ sms
+ 
+ 4th level onwards   we should go with as per our business requirememt name :
+ ==============================================================================
+ com.k7it.sms.student. Student.java
+ 
+ when we are writing indivisual classes we are simply keeping class defincation inside *.java file
+ A.java
+ ===========
+ class A{
+ 
+ }
+ 
+ but if we want categorizing the classes into a packages then we should define the package info also 
+ along with class defination inside *.java file using package keyword.
+ 
+ note: if we want to use the package keyword inside *.java file , 
+   it should be a 1st statements of java file. 
+ 
+ package : folder defination will not includes src folder name,  
+          package will specifies sub folder structure  of inside src folder. 
+ 
+ src 
+    com 
+	  k7it 
+	     1stbatch
+			  Tharun.java
+			  
+	Tharun.java 
+	==============
+	package com.k7it.1stbatch;
+	
+	public class Tharun{
+	
+	
+	}
+	
+	
+	
+	Tharun.java  
+	==============
+
+	public class Tharun{
+	
+	}
+	
+   package com.k7it.1stbatch; // CTE  package key word should be 1st line of java file.
+   
+   Note:
+   
+	here Tharun is is a class name , com.k7it.1stbatch is a package name 
+	
+	className: Tharun
+	package name: com.k7it.1stbatch
+	
+	
+	fullly qualified className : package +"."+className ;
+	                           : com.k7it.1stbatch.Tharun - > fully qualified class name. 
+	
+	Note: if we want to use any of the class with in same package we dont need fullly qualified class name
+	just simple class name is enough. 
+	but if we want to use any of the class outside of our package  we need fullly qualified className.
+	
+	
+	A.java 
+	======
+	package com.k7it.pack1;
+	public class A{
+	  public int i =10;
+	}
+	
+	B.java 
+	============
+	package com.k7it.pack1;
+	public class B{
+	 public static void main(String args[]){
+	   A a1 = new A();
+	   sop(a1.i);//10
+	 }
+	}
+	
+	
+	C.java
+	=======
+	package com.k7it.pack2;
+	public class C{
+	 public static void main(String args[]){
+	   A a1 = new A();// CTE  A symbol can't resolveble type . why bzc inside packa 2 there is no class A.
+	                  // if we want to use one package class into another package class means we should provide 
+					  // full qualified class name or proper class address.
+	   sop(a1.i);
+	 }
+	}
+   
+   
+	how to provide full qualified class address inside another package class:
+	=======================================================================
+	in java if we want to specifies one class fullly qualified address we should use import key word:
+	=================================================================================================
+	import key words should be after package before class defination otherwise we will compile time error. 
+	
+	in above program if we want to make it compile sucess we should add class A 
+	 fullly qualified address inside class C of pack2.
+	
+	
+	C.java
+	=======
+	package com.k7it.pack2;
+	
+	import com.k7it.pack1.A;
+	
+	public class C{
+	 public static void main(String args[]){
+	   A a1 = new A();
+	   sop(a1.i);
+	 }
+	}
+	
+	how to use other package class without using import statements:
+	===============================================================
+	C.java
+	=======
+	package com.k7it.pack2;
+
+	public class C{
+	 public static void main(String args[]){
+	   com.k7it.pack1.A a1 = new com.k7it.pack1.A();
+	   sop(a1.i);
+	   com.k7it.pack1.A a2 = new com.k7it.pack1.A();
+	 }
+	}
+   
+	
+ 
+ D.java 
+ =============
+ 
+ package com.k7it.pack2;
+	
+	public class D{
+	 public static void main(String args[]){
+	   A a1 = new A();// CTE even though if we added import statement inside class C, 
+	                    // we will CTE inside class D. 
+	                  // every class should add import if they want to use any other package class. 
+	   sop(a1.i);
+	 
+	 }
+	}
+ 
+  E.java 
+ =============
+ 
+ package com.k7it.pack2;
+	
+	public class E{
+	 public static void main(String args[]){
+	   com.k7it.pack1.A a1 = new A();// CTE even though if we added import statement inside class C, we will CTE inside class D. 
+	                  // every class should add import if they want to use any other package class. 
+	   sop(a1.i);
+	 
+	 }
+	}
+ 
+ 
+ 
+ A.java:
+ ====
+ package com.k7it.pack3;
+
+public class A {
+ public String name = "k7it";
+}
+
+
+C.java
+==========
+ package com.k7it.pack2;
+import com.k7it.pack1.A;
+//import com.k7it.pack3.A; // we cant add import for same class name with different packages 
+// in this case how to access 2 classes then we should with fullly qualified class names for both 
+// or one inport and one is fullly qualified class name.
+
+public class C {
+	public static void main(String[] args) {
+		A a1 = new A();
+		System.out.println(a1.i);
+		com.k7it.pack3.A a2 = new com.k7it.pack3.A();
+		System.out.println(a2.name);
+	}
+}
+
+ 
+ Access Levels:
+ ===============
+  in java 4 types accesslevels:
+  ============================
+  1. private 
+  2.        (default)
+  3. protected
+  4. public
+
+  
+  private : private access level scope is with in the same class. 
+    it means if we declare any of class member as a private member we cant access those member 
+   outside of class either direct or inheritance or with in same package or different package 
+   with import statement.
+  
+    A.java 
+	======
+	package com.k7it.pack1;
+	public class A{
+	  private int i = 10;
+	  
+	  public int getI(){
+	    return i;
+	  }
+	   public void  setI(int i ){
+	     this.i  = i;
+	  }
+	}
+	
+	B.java :
+	========
+	package com.k7it.pack1;
+	public class B{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CTE here i is a private member to class A, so we cant acceess i outside class A. 
+			System.out.println(a1.getI());//10
+			a1.setI(20);
+			a1.i = 20;//CTE 
+		}
+	}
+  
+  
+  package com.k7it.pack1;
+	public class Person{
+     int age;
+	 String name;
+	 private Person(){
+	 }
+	 public static Person getPersonInstance(){
+	    Person p1 = new Person();
+	    return p1;
+	 }
+    }	
+    class C{
+	  public static void main(String args[]){
+	   
+	   // Person p1 = new Person();// CTE bzc person class constructor is private, so we can't access outside of the class
+	   
+		Person p1 = Person.getPersonInstance();
+		System.out.println(p1.age);//0
+		System.out.println(p1.name);//null
+		
+	  } 
+	}
+  
+  // for example if we want to create only one object for one class enitre life time of execution 
+  //  this kind of requirememt is called a SingleTone class  or singleTone design pattern
+
+    package com.k7it.singleTone;
+	 
+    public class SingleTone{
+	 
+	   private static  SingleTone s1;
+	   
+	   private SingleTone(){
+	   
+	   }
+	   
+	   public static  SingleTone  getInstance(){
+	   
+	      if(s1 == null ){
+		      s1 = new SingleTone();
+			  return s1;
+		  }else{
+		    return s1;
+		  }
+	   }
+	}  
+	
+	package com.k7it.singleTone;
+
+	public class SingleToneChildren  extends SingleTone {// 
+ 
+		  SingleToneChildren(){
+		    super();// if we dont use final key word,if   any  of the class is having private constructors, 
+          // then we will get issue  at sub class constructor as part of super() statement. 
+		  // here super() -> calling statement of super class constructor, but that constructor is private, so 
+		  // it wont accessable here. to avoid this kind of issue we should make super class as final.
+		  
+		  }
+
+	}
+
+package com.k7it.singleTone;
+	 
+    public final class SingleTone{
+	 
+	   private static  SingleTone s1;
+	   
+	   private SingleTone(){
+	   
+	   }
+	   
+	   public static  SingleTone  getInstance(){
+	   
+	      if(s1 == null ){
+		      s1 = new SingleTone();
+			  return s1;
+		  }else{
+		    return s1;
+		  }
+	   }
+	}  
+	
+	package com.k7it.singleTone;
+
+	public class SingleToneChildren /* extends SingleTone */{//CTE we can't make final class as super class. 
+	
+	}
+   
+    Example2:
+     
+	 public interface X{
+	  
+	  private void m1(); // CTE  -> private abstract void m1(); // CTE
+	  //1. inside interface every member should be public 
+	  // 2. the combination of private and abstract is not possible, why bzc abstract design for sub class purpose
+	     // and private is design for same class, it wont support inheritance. 
+	  
+	 }
+  
+   final abstract -< not possible
+   static abstract -< not possible
+   private abstract -< not possible
+   
+     example 4:
+	 ==========
+	 
+	  class A{
+	  
+	  int i =10;
+	  
+	  }
+	  
+	   class B extends A{
+	     int j = 30;
+	   }
+   
+   // class B javing 3 members 1. i and 2. j and 3. B()
+   
+   
+    class A{
+	  
+	 private  int i =10;
+	  
+	  }
+	  
+	   class B extends A{
+	     int j = 30;
+	   }
+     // class B javing 2 members  1. j and 2. B()
+	 
+	 //Note: private members wont support inheritance either it is method or attributes. 
+	 
+   
+   
+  
+  default : default access level scope is with in the same package,
+  //  it means we can access defualt members even other classes which are in same package, but we ca't access outside of the package or another package. 
+   
+   A.java 
+	======
+	package com.k7it.pack1;
+	public class A{
+	  int i = 10;// default access level member 
+	  public int getI(){
+	    return i;
+	  }
+	}
+	B.java :
+	========
+	package com.k7it.pack1;
+	public class B{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS 10
+			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	C.java :
+	========
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;
+	public class C{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			//System.out.println(a1.i);// CTE  here i is a default member to class A, so we cant acceess i outside pack1. 
+			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;
+	public class D extends A {
+		public static void main(String[] args) {
+		   
+			A a1 = new A();// CS
+			//System.out.println(a1.i);// CTE  here i is a default member to class A, so we cant acceess i outside pack1. 
+			 
+			System.out.println(a1.getI());//10
+			
+			 D d1 = new D();
+			//System.out.println(d1.i);// CTE  here i is a default member to class A, so we cant acceess i outside pack1. 
+			 
+			System.out.println(a1.getI());//10
+			 
+		}
+	}
+  // default members we can't access outside of the package either direct use or through inheritance also.
+  // since scope of the default members is within the same package.
+  
+  
+  protected: this we will see after public acceess level
+  
+  
+  public: public is a widder most access level in java, 
+  public scope is any where scope, 
+  it means public members we can access any where in java i.e 
+     with in same class or 
+	 with in same package or 
+	 with in different package or 
+	 different classes. 
+  
+   A.java 
+	======
+	package com.k7it.pack1;
+	public class A{
+	 public  int i = 10;// default access level member 
+	  public int getI(){
+	    return i;
+	  }
+	}
+	B.java :
+	========
+	package com.k7it.pack1;
+	
+	public class B{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS 10
+			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	C.java :
+	========
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;
+	public class C{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS // 10  			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	
+	example:
+	===========
+	
+	 A.java 
+	======
+	package com.k7it.pack1;
+	class A{
+	 public  int i = 10;// default access level member 
+	  public int getI(){
+	    return i;
+	  }
+	}
+	B.java :
+	========
+	package com.k7it.pack1;
+	
+	public class B{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS 10
+			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	C.java :
+	========
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;// cTE why bzc class A hvaing default scode we can't access out side of the pack1.
+	public class C{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS // 10  			 
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	Note: if we want access any of the class member out side of the package then class should be public and also'
+	      class member should  be public. 
+		  
+	  ex3:
+==========
+    class A{
+	
+	   priavte int i = 10;
+	   int k = 30;
+	   public int l = 40;
+	   
+	   
+	}	 
+// how many members we have inside class A
+  ans: 4 , i,k,l,A() no arg
+// what is the access level of member k? -> default  
+// what is the access level of member l? -> public   
+// what is the access level of member i? -> private 
+// what is the access level of member A()?= -> public or default or protected or priavte ? default :ans ->  default
+// what is the access level of class A?= -> public or default or protected or priavte ? default -> and default
+
+ public class B{
+	   
+	  
+	}
+   
+// what is the access level of class B?= -> ans: public 
+// how many members we have inside class B? ans:  1. B()
+// what is the access level of member B()?= -> public or default or protected or priavte ? default :ans -> public
+
+
+	public class C{
+	   
+	    private C(){
+		}
+	}
+   
+// what is the access level of class C?= -> ans: public 
+// how many members we have inside class C? ans:  1. C()
+// what is the access level of member C()?= -> private
+
+
+Note: access level for default constructor is depending on class accesslevel. 
+
+
+	protected : default + public 
+	protected acceess level will act like a default acceess for direct access using same class obj 
+	 i.e with in same package scope.
+	 but if we access any protected memmers through inheritance it will act like public access level 
+	   i.e it means we can access any where by using extends key word.
+	
+	 A.java 
+	======
+	package com.k7it.pack1;
+	public class A{
+	 protected int i = 10;
+	 private int k =20;
+	 public int getI(){
+	    return i;
+	  }
+	}
+	B.java :
+	========
+	package com.k7it.pack1;
+	public class B{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			System.out.println(a1.i);// CS 10
+			 
+			System.out.println(a1.getI());//10
+			System.out.println(a1.k);//CTE , K is a priavte member we cant acceess outside of the class.
+		}
+	}
+	
+	C.java :
+	========
+	package com.k7it.pack1;	
+	public class C extends A{ // class C will have 3 member 1. i, 2. getI() 3. C(), 4.main()
+	                
+	
+		public static void main(String[] args) {
+			A a1 = new A();// CS 
+			System.out.println(a1.i);// cs   // 10
+			System.out.println(a1.k);// CTE private scope is with in the same class
+			C c1 = new C();
+			System.out.println(c1.i);// cs  // 10
+			System.out.println(c1.k);// CTE //private scope is with in the same class
+			 
+			System.out.println(a1.getI());//10
+			System.out.println(c1.getI());//10
+		}
+	}
+	
+	D.java :
+	========
+	package com.k7it.pack2;
+	
+	import com.k7it.pack1.A;
+	
+	public class D{
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			//System.out.println(a1.i);// CTE	  protected scope is with in the same package for direct access.
+			System.out.println(a1.getI());//10
+		}
+	}
+	
+	
+	E.java 
+	=======
+	
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;
+	public class E extends A {// class E having 4 members 1. i 2. getI() 3. E() 4. main()
+	
+		public static void main(String[] args) {
+			A a1 = new A();// CS
+			//System.out.println(a1.i);// CTE  
+			System.out.println(a1.k);// CTE private scope is with in the same class
+			
+			E e1 = new E();
+			System.out.println(e1.i);// cs //10  protected inherited member act like a public member, 
+			   // so we can access out of the packge also by using sub class obj. 
+			 
+			System.out.println(a1.getI());//10
+			System.out.println(e1.getI());//10
+		}
+	}
+	
+	F.java
+	=========
+	package com.k7it.pack2;
+	import com.k7it.pack1.A;
+	public class F extends E{
+	
+	 //  private int i = 10; protected and inherited member act like a private and spricfic member  to sub class.
+	   
+		public static void main(String[] args) {
+		
+			A a1 = new A();// CS
+			//System.out.println(a1.i);// CTE protected members we cant acceess out of the package using same class obj. 
+			
+			E e1 = new E();
+			System.out.println(e1.i);// CTE protected and in member act like a private and spricfic member  to sub class.
+			
+			F f1 = new  F();
+			System.out.println(f1.i);// CS // 10
+		}
+	}
+	
+	
+	
+	
+	protected with co relationaship  through inheritance:
+	======================================================
+	the process of assinging sub class obj into sup class ref var
+	
+	
+	package com.k7it.pack1;	
+	class A {  //  5
+	  private int i = 10;
+	  int j = 20;
+	  protected int k = 30
+	  public int l = 40;
+	}
+	package com.k7it.pack1;	
+	class B extends A{ // 3 inherited members(j,k,l) +  B class having 3 specific memebrs(m,n,B())  = 6 
+	
+	  private int m=50;
+	  public int n = 60;
+	  
+	  public static void  main(String args[]){
+	     A a1 = new  A();
+		 sop(a1.i);//CTE i is a private member so we cant access outside of the class.
+		 sop(a1.j);// 20
+		 sop(a1.k);//30
+		 sop(a1.l);//40
+		 sop(a1.m);// CTE by using super class ref or sup class obj we cant access subclass specific memebrs.
+		 sop(a1.n);// CTE by using super class ref or sup class obj we cant access subclass specific memebrs.
+		 
+		  B b1 = new  B();
+		 sop(b1.i);//CTE i is a private member it wont support for inheritance
+		 sop(b1.j);//20
+		 sop(b1.k);//30
+		 sop(b1.l);//40
+		 sop(b1.m);// 50
+		 sop(b1.n);// 60
+		 // co relationaship
+		  A a2 = new  B();
+		 sop(a2.i);//CTE i is a private member so we cant access outside of the class.
+		 sop(a2.j);// 20
+		 sop(a2.k);// CTE  protected + inherited member act like a private and specific member to sub class, 
+		           //so sub class specific members we can't access by using sup ref var. 
+		 sop(a2.l);//40
+		 sop(a2.m);// CTE by using super class ref  we cant access subclass specific memebrs even though sup ref var pointing sub class obj. 
+		 sop(a1.n);// CTE by using super class ref  we cant access subclass specific memebrs even though sup ref var pointing sub class obj
+		
+		sop( ((B)a2).m  );// 50  // temporary down casting  B temp1 = (B)a2; B temp1 = new B(); sop(temp1.m); temp1 = null;
+		sop( ((B)a2).n  );// 60 //  // temporary down casting  B temp1 = (B)a2; B temp1 = new B(); sop(temp1.n);
+		
+		B b2 = (B)a2; // permanent down casting ; B b2 = (B)new B(); B b2 = new B();
+		sop(b2.m); // 50
+		sop(b2.n);//  60
+		 
+	  }
+	
+	}
+	
+	
+
+	
+	father -> singer
+	son -> singer + dance + mimicry
+	
+   function 1:
+==================	
+	contract for singer + dance + mimicry  :  300/-
+	we are sending son 
+	
+	
+	   function 2:
+==================	
+	contract for singer : paid  money 100/-
+	
+	we are sending son ->  
+	
+	father fRef  = son obj
+	
+	fRef.singing = yes 
+	
+	fRef.dance // hey boss u have contract with my father,  my father has only one quality 
+	     // that quality only u can taccess from me.
+	
+	A a2 = new B();
+	
+	by using sup class ref  inside sub class obj we can access only inherited memebrs from supr class to sub class,
+	but we cant acceess sub class spicific members even though we are assinging sub obj into  sup class ref var. 
+	
+	 a2.m; /// CTE 
+	
+	B b2 = (B)a2;  // ok boss i want ur services also so i am changing my contract from ur father type to your type
+                  //	, for that what i want to do tell me ? we have to do the explicit down casting then use sub class features. 
+	  b2.m ;// 50
+	  b2.n ;// 60
+	  
+	  
+	  
+	
+	Enum:
+	======
+	enum is a one of the key word in java like class and interface
+	
+	*.java
+	=========
+	enum EnumName{
+	}
+	
+	even for enums also we will get .class file like class and interface. 
+	X.java
+	enum X{
+	}
+	
+	X.class
+	
+	enum type key word  will use it for declaring only constants attributes like public, static, final 
+	
+	public enum WeekDays {
+
+	   SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY;
+	
+	}
+	
+	WeekDays.class
+	public enum WeekDays {
+	      SUNDAY(),MONDAY(),TUESDAY(),WEDNESDAY(),THURSDAY(),FRIDAY(),SATURDAY();
+		  WeekDays(){// default no arf constructor inside enum. like class default constr
+		  
+		  }
+	}
+	
+	Enum e1 = Enum.SUNDAY;
+	
+	here each constant variable act like a one of calling statement for enum class no constructor.
+	
+	
+	if we want to use paramter constructor type how to use it in enum ? 
+	ans: after constant attributes we should add singnature with paramter values according to constructor sinature
+	 or we should create constructor according to paramter value type.  
+	 
+	  let see example bellow :
+	  =======================
+	
+	public enum WeekDays {
+	//SUNDAY ->this is calling statement for  WeekDays no arg constructor 
+	//SUNDAY(1) -> this is calling statement for  WeekDays enum int type constructor 
+	//SUNDAY("K7iT");  - this is a calling statement for WeekDays enum String type constructor
+	
+	SUNDAY(1),MONDAY(2),TUESDAY(3),WEDNESDAY(4),THURSDAY(5),FRIDAY(6),SATURDAY(7);
+	WeekDays(int i){
+		System.out.println("Week Day:"+i);
+	}
+}
+
+note: when ever we refer our enum name first time, it will initialize all static final attributes. so it will create obj for enums using corresponding constructor.
+
+System.out.println(WeekDays.SUNDAY);//
+
+o/p:
+=====
+Week Day:1
+Week Day:2
+Week Day:3
+Week Day:4
+Week Day:5
+Week Day:6
+Week Day:7
+SUNDAY
+
+
+package com.k7it.constants;
+
+public enum MonthDays {
+ JAN(31),FEB(28),MAR(31),APR(30),MAY(31),JUN(30),JUL(31),AUG(31),
+ SEP(30),OCT(31),NOV(30),DEC(31);
+
+MonthDays(int i) {
+	
+	System.out.println("No of days in "+this+":"+i);
+}
+	
+}
+
+package com.k7it.constants;
+
+public class EnumManager {
+
+	public static void main(String[] args) {
+		
+		WeekDays e1 = WeekDays.SATURDAY;
+		System.out.println(e1);
+		
+		System.out.println("Name:"+e1.name());
+		
+		System.out.println("Ordinal:"+e1.ordinal());
+		System.out.println("Values:"+e1.values());
+		System.out.println("valueOf:"+e1.valueOf("SUNDAY"));
+		
+		MonthDays m = MonthDays.JAN;
+		
+	}
+}
+
+// output:
+
+Week Day:1
+Week Day:2
+Week Day:3
+Week Day:4
+Week Day:5
+Week Day:6
+Week Day:7
+SATURDAY
+Name:SATURDAY
+Ordinal:6
+Values:[Lcom.k7it.constants.WeekDays;@6576fe71
+valueOf:SUNDAY
+No of days in JAN:31
+No of days in FEB:28
+No of days in MAR:31
+No of days in APR:30
+No of days in MAY:31
+No of days in JUN:30
+No of days in JUL:31
+No of days in AUG:31
+No of days in SEP:30
+No of days in OCT:31
+No of days in NOV:30
+No of days in DEC:31
+
+
+

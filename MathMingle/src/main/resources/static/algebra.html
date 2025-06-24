@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Algebra Calculator with Explanation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    /* Back button positioned in the top-left corner */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      z-index: 100;
+    }
+    .back-button:hover {
+      background: #0056b3;
+    }
+    .back-button svg {
+      margin-right: 8px;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px;
+      margin-top: 60px; /* Leave space for back button */
+      margin-bottom: 20px;
+    }
+    h2 { margin-bottom: 20px; }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    button {
+      padding: 10px 20px;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover { background: #218838; }
+    .result {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: normal;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background: #e8e8e8;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    .content {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 800px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .content img {
+      max-width: 100%;
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back Button at top left -->
+  <button class="back-button" onclick="window.location.href='index.html'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+    </svg>
+    Back
+  </button>
+
+  <div class="calculator">
+    <h2>Advanced Algebra Calculator with Explanation</h2>
+    <p>Enter one equation per line. (Multiplication symbol is optional; e.g., “2x+3y-z=5”)</p>
+    <textarea id="equations" placeholder="Example:
+2x+3y-z=5"></textarea>
+    <button onclick="solveSystem()">Solve</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <!-- Extra educational content below the calculator explanation -->
+  <div class="content">
+    <h3>Understanding Linear and Complex Equations</h3>
+    <p>
+      <strong>Linear Equations:</strong> These equations are of the first degree and involve variables that are not multiplied together or raised to a power other than 1. For example, the equation <em>2x + 3y - z = 5</em> is linear. The solution to a linear system can be unique, infinite (if the system is underdetermined), or nonexistent.
+    </p>
+    <p>
+      <strong>Complex Equations:</strong> In our context, "complex" equations might refer to non-linear equations (for example, those with quadratic or higher‑order terms) or systems with multiple variables where the relationships are not simply linear. Advanced solvers or numerical methods like Newton's method are often used to tackle these equations. For example, an equation like <em>x² + 3x - 4 = 0</em> is quadratic and can be solved using factoring or the quadratic formula.
+    </p>
+    <p>
+      Below is an example image:
+    </p>
+    <img src="https://study.com/cimages/videopreview/videopreview-full/xksd0cv911.jpg" alt="Linear vs Nonlinear Equations">
+    <img src="https://th.bing.com/th/id/OIP.KufIq3iUc-700ooNLpOOmAHaEK?w=880&h=495&rs=1&pid=ImgDetMain" alt="Algebra Formulas">
+    <p>
+      In our calculator, when a unique solution is determined, the system is solved using Gaussian elimination. The explanation shows how the augmented matrix is transformed step by step until the solution vector is obtained.
+    </p>
+  </div>
+
+  <!-- Canvas for graphing (only used for two-variable systems) -->
+  <canvas id="graph" width="400" height="400" style="display:none;"></canvas>
+
+  <script>
+    // Parse a single equation into an object mapping variable to coefficient,
+    // and a 'constant' key for the constant (moved to left side).
+    function parseEquation(eqStr) {
+      eqStr = eqStr.replace(/\s+/g, '');
+      const parts = eqStr.split('=');
+      if (parts.length !== 2) throw new Error("Each equation must contain one '=' sign.");
+      let left = parts[0];
+      let right = parts[1];
+
+      function parseExpression(expr) {
+        const terms = {};
+        // Regex for variable terms (like +2x, -y, etc.)
+        const termRegex = /([+-]?)(\d*(?:\.\d+)?)([a-zA-Z]+)/g;
+        let match;
+        while ((match = termRegex.exec(expr)) !== null) {
+          if (!match[0]) continue;
+          let sign = (match[1] === '-') ? -1 : 1;
+          let coeffStr = match[2];
+          let varPart = match[3];
+          let coeff = coeffStr === "" ? 1 : parseFloat(coeffStr);
+          coeff *= sign;
+          if (varPart.length > 1) {
+            throw new Error("Non-linear term detected: " + varPart);
+          }
+          terms[varPart] = (terms[varPart] || 0) + coeff;
+        }
+        // Regex for constant terms (numbers not attached to variables)
+        const constRegex = /([+-]?)(\d+(?:\.\d+)?)(?![a-zA-Z])/g;
+        while ((match = constRegex.exec(expr)) !== null) {
+          if (!match[0]) continue;
+          let sign = (match[1] === '-') ? -1 : 1;
+          let num = parseFloat(match[2]);
+          terms.constant = (terms.constant || 0) + sign * num;
+        }
+        return terms;
+      }
+      
+      const leftTerms = parseExpression(left);
+      const rightTerms = parseExpression(right);
+      const resultTerms = {};
+      for (let key in leftTerms) {
+        resultTerms[key] = (resultTerms[key] || 0) + leftTerms[key];
+      }
+      for (let key in rightTerms) {
+        resultTerms[key] = (resultTerms[key] || 0) - rightTerms[key];
+      }
+      return resultTerms;
+    }
+
+    // Format matrix A and vector b as an augmented matrix string.
+    function formatMatrix(A, b) {
+      let lines = [];
+      for (let i = 0; i < A.length; i++) {
+        let row = A[i].map(val => val.toFixed(4)).join("\t");
+        row += "  |  " + b[i].toFixed(4);
+        lines.push(row);
+      }
+      return lines.join("\n");
+    }
+
+    // Solve a square system using Gaussian elimination while recording steps in compact matrix notation.
+    function solveUniqueSystem(variables, A, b, explanation) {
+      const n = A.length;
+      explanation.push("Augmented Matrix (Initial):\n" + formatMatrix(A, b) + "\n");
+
+      // Forward elimination
+      for (let i = 0; i < n; i++) {
+        // Pivot selection
+        let maxRow = i;
+        for (let k = i + 1; k < n; k++) {
+          if (Math.abs(A[k][i]) > Math.abs(A[maxRow][i])) {
+            maxRow = k;
+          }
+        }
+        explanation.push(`Pivot selection for column ${i + 1}: row ${maxRow + 1} selected (largest absolute value in column).`);
+        if (Math.abs(A[maxRow][i]) < 1e-10) {
+          throw new Error("No unique solution exists (pivot too small).");
+        }
+        // Swap rows if necessary
+        if (maxRow !== i) {
+          [A[i], A[maxRow]] = [A[maxRow], A[i]];
+          [b[i], b[maxRow]] = [b[maxRow], b[i]];
+          explanation.push(`Swapped row ${i + 1} with row ${maxRow + 1}:\n` + formatMatrix(A, b) + "\n");
+        }
+        explanation.push(`Eliminating entries below pivot in column ${i + 1}...`);
+        // Elimination below pivot
+        for (let k = i + 1; k < n; k++) {
+          let factor = A[k][i] / A[i][i];
+          explanation.push(`Row ${k + 1}: subtracting ${factor.toFixed(4)} * row ${i + 1}.`);
+          for (let j = i; j < n; j++) {
+            A[k][j] -= factor * A[i][j];
+          }
+          b[k] -= factor * b[i];
+          explanation.push(formatMatrix(A, b) + "\n");
+        }
+      }
+      explanation.push("After forward elimination:\n" + formatMatrix(A, b) + "\n");
+
+      // Back substitution
+      let sol = new Array(n).fill(0);
+      for (let i = n - 1; i >= 0; i--) {
+        let sum = b[i];
+        for (let j = i + 1; j < n; j++) {
+          sum -= A[i][j] * sol[j];
+        }
+        sol[i] = sum / A[i][i];
+      }
+      explanation.push("Back substitution result:\n" + sol.map(x => x.toFixed(4)).join("\t"));
+      const solution = {};
+      for (let i = 0; i < n; i++) {
+        solution[variables[i]] = sol[i];
+      }
+      return solution;
+    }
+
+    // For simplicity, parametric solution explanation is not implemented here.
+    function solveParametric(variables, A, b, explanation) {
+      throw new Error("Parametric solution not supported in this version.");
+    }
+
+    // Draw graph if exactly 2 variables are present.
+    function drawGraph(variables, eqParsed) {
+      if (variables.length !== 2) return;
+      const canvas = document.getElementById("graph");
+      canvas.style.display = "block";
+      const ctx = canvas.getContext("2d");
+      const width = canvas.width, height = canvas.height;
+      ctx.clearRect(0, 0, width, height);
+      const xMin = -10, xMax = 10, yMin = -10, yMax = 10;
+      function toCanvasX(x) {
+        return ((x - xMin) / (xMax - xMin)) * width;
+      }
+      function toCanvasY(y) {
+        return height - ((y - yMin) / (yMax - yMin)) * height;
+      }
+      ctx.strokeStyle = "#000";
+      ctx.beginPath();
+      ctx.moveTo(toCanvasX(xMin), toCanvasY(0));
+      ctx.lineTo(toCanvasX(xMax), toCanvasY(0));
+      ctx.moveTo(toCanvasX(0), toCanvasY(yMin));
+      ctx.lineTo(toCanvasX(0), toCanvasY(yMax));
+      ctx.stroke();
+      const colors = ["#ff0000", "#0000ff", "#008000", "#ff00ff", "#ffa500"];
+      eqParsed.forEach((eq, idx) => {
+        const a = eq[variables[0]] || 0;
+        const bCoeff = eq[variables[1]] || 0;
+        const c = eq.constant || 0;
+        ctx.strokeStyle = colors[idx % colors.length];
+        ctx.beginPath();
+        if (Math.abs(bCoeff) > 1e-10) {
+          let x1 = xMin;
+          let y1 = (-a * x1 - c) / bCoeff;
+          let x2 = xMax;
+          let y2 = (-a * x2 - c) / bCoeff;
+          ctx.moveTo(toCanvasX(x1), toCanvasY(y1));
+          ctx.lineTo(toCanvasX(x2), toCanvasY(y2));
+        } else {
+          let xLine = -c / a;
+          ctx.moveTo(toCanvasX(xLine), toCanvasY(yMin));
+          ctx.lineTo(toCanvasX(xLine), toCanvasY(yMax));
+        }
+        ctx.stroke();
+      });
+    }
+
+    function solveSystem() {
+      const inputText = document.getElementById("equations").value.trim();
+      const resultDiv = document.getElementById("result");
+      let explanation = [];
+      try {
+        if (!inputText) throw new Error("Please enter at least one equation.");
+        const eqLines = inputText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+        const eqParsed = [];
+        const varSet = new Set();
+        eqLines.forEach(line => {
+          const parsed = parseEquation(line);
+          eqParsed.push(parsed);
+          for (let key in parsed) {
+            if (key !== "constant") varSet.add(key);
+          }
+        });
+        const variables = Array.from(varSet).sort();
+        const m = eqParsed.length;
+        const n = variables.length;
+        const A = [];
+        const b = [];
+        for (let i = 0; i < m; i++) {
+          A[i] = [];
+          for (let j = 0; j < n; j++) {
+            A[i][j] = eqParsed[i][variables[j]] || 0;
+          }
+          b[i] = -(eqParsed[i].constant || 0);
+        }
+        let output;
+        if (m === n) {
+          let sol = solveUniqueSystem(variables, A, b, explanation);
+          let solParts = [];
+          variables.forEach(v => {
+            solParts.push(v + " = " + sol[v].toFixed(4));
+          });
+          output = "Unique solution: " + solParts.join("; ");
+        } else if (m < n) {
+          output = solveParametric(variables, A, b, explanation);
+        } else {
+          throw new Error("More equations than variables is not supported.");
+        }
+        resultDiv.innerText = output + "\n\nExplanation (Matrix Steps):\n" + explanation.join("\n");
+
+        // If two variables, draw graph.
+        if (variables.length === 2) {
+          drawGraph(variables, eqParsed);
+        } else {
+          const canvas = document.getElementById("graph");
+          canvas.style.display = "none";
+        }
+      } catch (error) {
+        resultDiv.innerText = "Error: " + error.message;
+      }
+    }
+  </script>
+
+  <!-- Canvas for graphing (only used for two-variable systems) -->
+  <canvas id="graph" width="400" height="400" style="display:none;"></canvas>
+</body>
+</html>

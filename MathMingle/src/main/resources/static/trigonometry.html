@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigonometry Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-right: 15px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .calculator {
+            margin-top: 20px;
+        }
+        .calculator input,
+        .calculator button {
+            font-size: 18px;
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .calculator button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+        .content img {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="index.html">⬅ Back</a>
+        </div>
+        <h1>Trigonometry Calculator</h1>
+        <p>Use this calculator to find the sine, cosine, tangent, cotangent, secant, and cosecant values for a given angle. Enter the angle in degrees and click "Calculate".</p>
+        
+        <div class="calculator">
+            <input type="number" id="angle" placeholder="Enter angle in degrees">
+            <button onclick="calculateTrig()">Calculate</button>
+            <div id="result"></div>
+        </div>
+        
+        <div class="content">
+            <h2>What is Trigonometry?</h2>
+            <p>Trigonometry is a branch of mathematics that studies relationships between side lengths and angles of triangles. The field emerged in the Hellenistic world during the 3rd century BC from applications of geometry to astronomical studies.</p>
+            <img src="https://www.learncbse.in/wp-content/uploads/2018/12/Trigonometry-Formulas-Values-of-Trigonometric-Ratios.jpeg" alt="Trigonometry Image">
+        </div>
+        
+        <div class="chart-container">
+            <h2>Trigonometric Functions</h2>
+            <canvas id="trigChart" width="800" height="400"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let trigChart;  // Declare the chart variable outside the function
+
+        function calculateTrig() {
+            const angle = document.getElementById("angle").value;
+            const resultDiv = document.getElementById("result");
+
+            if (angle === "") {
+                resultDiv.innerHTML = "Please enter an angle.";
+                return;
+            }
+
+            const angleRad = angle * (Math.PI / 180);
+            const sinValue = Math.sin(angleRad).toFixed(4);
+            const cosValue = Math.cos(angleRad).toFixed(4);
+            const tanValue = Math.tan(angleRad).toFixed(4);
+            const cotValue = (1 / Math.tan(angleRad)).toFixed(4);
+            const secValue = (1 / Math.cos(angleRad)).toFixed(4);
+            const cscValue = (1 / Math.sin(angleRad)).toFixed(4);
+
+            resultDiv.innerHTML = `
+                <p>sin(${angle}°) = ${sinValue}</p>
+                <p>cos(${angle}°) = ${cosValue}</p>
+                <p>tan(${angle}°) = ${tanValue}</p>
+                <p>cot(${angle}°) = ${cotValue}</p>
+                <p>sec(${angle}°) = ${secValue}</p>
+                <p>csc(${angle}°) = ${cscValue}</p>
+            `;
+
+            updateChart(angle, sinValue, cosValue, tanValue, cotValue, secValue, cscValue);
+        }
+
+        function updateChart(angle, sinValue, cosValue, tanValue, cotValue, secValue, cscValue) {
+            const ctx = document.getElementById('trigChart').getContext('2d');
+
+            if (trigChart) {
+                trigChart.destroy();  // Destroy the existing chart instance
+            }
+
+            trigChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['sin', 'cos', 'tan', 'cot', 'sec', 'csc'],
+                    datasets: [{
+                        label: `Trigonometric values for ${angle}°`,
+                        data: [sinValue, cosValue, tanValue, cotValue, secValue, cscValue],
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            suggestedMax: 10  // Adjust this value as needed
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

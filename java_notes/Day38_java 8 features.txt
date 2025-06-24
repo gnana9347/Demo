@@ -1,0 +1,409 @@
+package com.k7it;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.DoubleFunction;
+import java.util.function.Function;
+import java.util.function.IntConsumer;
+import java.util.function.IntFunction;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+/*
+    Java 1.8 imp features: 2014 some time we got java 8 but still we 
+    didn't start using java 1.8 features fully.
+      present java version is jdk 23
+    
+    Python, R, scale, cobal , rubby LISP these languages are supporting below coding styles
+    
+    1. concise coding 
+    2. Lambda expressions 
+    
+    if we want to achieve any task in java we may required 100 lines of code.
+    but same task we can complete in just 10 lines code using above programming languages.
+    
+    So those languages started getting boom in the market, then java people started rethinking 
+    about java future then they came up with java 8 features into market. 
+    
+  
+    java 8 main features :
+    
+      1. Lambda expression 
+      2. Functional interface 
+      3. default methods and static methods in interfaces 
+      4. Predefined functional interfaces 
+           - Function
+           - Predicate
+           - Supplier
+           - Consumer
+           - Callable 
+           - Runnable
+           etc.
+      5. Stream apis
+      6. Dates and Time APIS
+      7. Optional class
+      8. double colon operator (::)
+           -method reference
+           -constructor reference
+      9. Nashorn javaScript Engine
+      etc.
+      
+      
+      Lambda Expressions:
+      ===================
+         in 1930 LISP language introduced the lambda expressions 
+         
+		 these following languages already supporting the lambda expression:
+		 
+         Phython
+         c
+         c++
+         R
+         Scalar
+         etc 
+         
+         finally in 2014 java also started using lambda expressions in java as part of jdk1.8
+         
+         Mathematical lambda expression is : reverse of Y symbol i.e λ 
+         
+         how to write the lambda expression in java? 
+            in java : the combination of minus or hyphen symbol + greater than symbol: 
+                                         i.e ->(lambda symbol in java)
+                                         
+        
+        what is lambda expression :
+        ===========================
+          - lambda expression is a
+             - anonymous function 
+              -(without method name)
+              - without return type
+              - without modifiers
+			  -> signature arguments data type is optional
+			  -> only signature is enough
+			  -> Body of the method
+              
+              
+       eg1.
+       
+          public void m1(){
+            System.out.println("Hello...");  
+          }
+              
+          convert into lambda : means method should not have name, return type and access modifies or access specifier
+          =====================
+          
+            (){System.out.println("Hello...");};
+          
+          how to identify this code is a lambda expression code 
+          ======================================================
+          
+          by using lambda symbol -> between signature and definition of the function.
+          
+           ()->{System.out.println("Hello...");};
+           
+           () -> System.out.println("Hello...")// if there is only single line of code inside
+                                                // lambda function then braces are optional.
+           () -> {
+           		System.out.println("Hello...");  // if function is having more than one  line of code then braces are mandatory.
+           		System.out.println("Hello...");    
+           };                                      
+           
+           note: every line inside function should be end with semicolon. 
+           
+           eg1:
+            
+             public void m1(int i){
+               System.out.println(i);
+             }
+             
+             lambda:
+             
+               (int i)-> { System.out.println(i); };
+               (i)->{ System.out.println(i); };
+               (i)-> System.out.println(i);
+			   
+			   anonymous function 
+			   1. no method name
+			   2. no return type
+			   3. no access modifiers or specifier
+			   4. no data type for arguments or parameters
+			   5. no body incase of single line of code. 
+			   
+              
+              
+           eg3:
+           
+           public int add(int i, int j){
+           return i+j;
+           }
+                                   
+           lambda: 
+           
+           (int i, int j)->{ return i+j; };  // 100% valid        
+           (i,j)->{ return i+j; };   // 100% valid 
+           (i,j)->i+j;               // 100% valid 
+           
+         (i,j)-> return i+j; //100% not valid : using return key word but not using braces  or body    
+         (i,j)->{return i+j};//not valid using braces and return key word, but semicolon missing    
+         (i,j)->{i+j;};     //  not valid using braces but not using return key word.
+           
+          Note1: if we want to use the return key word inside the function
+           then braces are mandatory. 
+           
+             with braces if we want to return  some value then we should use 
+			 the return key word.
+          
+          
+          Note2: if we want to return value without return key word then 
+		      braces are not mandatory.
+           
+            without braces if we want to return some value, then return key is not required.
+           compiler will consider returned value automatically 
+             
+            
+           class Calculator<T extends Number,R extends Number>{
+             public  R squared(T n){
+               return n*n;
+             }            
+           }  
+		class Manager{
+			
+			 public static void main(String args[]){
+					   Calculator<Integer,Integer> c1 = new Calculator<>();
+					  system.out.println("Square of 4:"+c1.squared(4));//16
+					  
+					   Calculator<Double,Double> c2 = new Calculator<>();
+					  system.out.println("Square of 5:"+c2.squared(5.0));//25.0
+					 }
+		}
+
+
+        if we write above class logic using anonymous class way :
+		==========================================================
+		
+		interface Calculator<T,R>{
+		  public R squared(T v);
+		}
+		
+		// normal sub class 
+		
+		 class IntCalculator implements Calculator<Integer,Integer>{
+		    
+			 public Integer squared(Integer v){
+			   return v*v;
+			 }
+		 
+		 }
+		 
+		  Calculator c1 = new IntCalculator();
+		 
+  		  c1.squared(4);// 16
+		  c1.squared(5);// 16
+		 
+		  class DoubleCalculator implements Calculator<Double,Double>{
+		    
+			 public Double squared(Double v){
+			   return v*v;
+			 }
+		 
+		 }
+		 Calculator c1 = new DoubleCalculator();
+		 
+		 c1.squared(4.0);//16.0 
+		 c1.squared(5.0);//25.0 
+		  
+		
+		// anonymous sub class
+		
+		Calculator<Float,Float> c1 =  new Calculator<>(){
+		 
+		  public  Float squared(Float v){
+		      return v*v;
+		   }
+		};
+		
+		sop(c1.squared(4.0f));//16.0f
+		sop(c1.squared(5.0f));//25.0f
+		
+		// if we want achive same thing using lambda expression:
+		========================================================
+		Syntax:
+		========
+		dataType<generics> ref = lambda expression;
+		
+		example:
+		========
+		
+		Calculator<Integer,Integer> c1 = (v) -> v*v;
+		
+		
+		in above code we are crating one new sub class for Calculator interface like anonymous way 
+		and overriding abstract method inside sub class using lamda expression. 
+		and creating object for sub class and assigning to super class ref var 
+		
+		sop(c1.squared(4));// 16
+		sop(c1.squared(5));// 25
+		
+
+		
+      is it possible to convert one class into a lamda expression?
+	  =============================================================
+	  Ans: No we can't convert one class into a lamda expression format. 
+	  land expressions will support only functional interfaces 
+	  i.e single abtract method interfaces or SAM interfaces. 
+	 
+	 that interface can be a our own fucntional interface or predefined functional interfaces. 
+	  
+	  for above requirements we can use one of the existing funtional interface 
+	  i.e Function.
+	  it is having only one abstract method i.e apply(); 
+	  this method will take one input param and one return value. 
+	  
+	     public interface Function<T,R>{			 
+			 public abstract R apply(T v);
+		 }
+		 
+		 class Manager{
+			 public static void main(String args[]){
+				 // implementing interface with help of anonymous inner class way
+				 Function<Integer,Integer> f1 = new Function(){
+					 
+					  public Integer apply(Integer v){
+						  return v*v;						  
+					  }
+				 };
+				 
+				 System.out.println(f1.apply(4));//16
+				 System.out.println(f1.apply(5));//25
+				 
+				 // implementing same functional interface using lamda expression
+				 // 1. anonymous inner class defination not required like anonymous
+				 // 2. anonymous inner class object not required 
+				 // 3. for  overriding method 
+				      3.1. method name not required 
+					  3.2  return type not required
+					  3.3  access specifier and modifiers not required 
+					  3.4  parameters types not required
+					  
+				  
+				  Function<Integer,Integer> f2 =  (v)-> v*v;
+				  
+				  System.out.println(f2.apply(4));//16
+				  System.out.println(f2.apply(5));//25
+
+				  this single line of code equals of above anonymous inner class code 
+				  
+				  
+			 }
+			 
+		 }
+	
+    
+       lamda expression :
+       
+       class Calculator{
+          public static void main(String args[]){
+             
+             Function<Intger,Integer> squared =  (Integer n)->{ return n*n;};
+             Function<Intger,Integer> squared =  (n)->{ return n*n;};
+             Function<Intger,Integer> squared =  (n)-> n*n;
+             
+             System.out.println("Square of 4:"+squared.apply(4));//16
+     		 System.out.println("Square of 5:"+squared.apply(5));//25
+     		 
+			 Function<Integer,String> myfaction = (v) -> "your input value is:"+v;
+			 // publiv String apply(Integer v){}
+			 myfaction.apply(5);// your input value is:5
+			 
+     		  // is given number is a  even or not : in this case i need to give one numner 
+			  as input and out put should be  true if given  number is even else false 
+     
+	            in this case we can go with predicate interface
+				  public interface Predicate<T>{
+				     public boolean test(T v);
+				  }
+	  
+			     Predicate<Integer> predicate = (n)-> n%2==0;
+			     
+			      // java mathematical division operation 
+			      //  / will give the quotient  
+			      //  % will give the reminder 
+			       // ex:
+			       //  2/2 = 1
+			       //  2%2 = 0
+				   
+			          diviser)divident(quotient
+					  ==================
+					      reminder
+					  ==================
+			      
+			     
+			     System.out.println("4 is even number:"+predicate.test(4));//true
+			     System.out.println("5 is even number:"+predicate.test(5));// false
+             
+		          }
+		       }
+    
+	
+	Note: How many ways we can implementing the interface in java 
+	ans: 3 ways 
+	
+	1. create sub class by using implements key word and override abstract method
+	2. create sub class using anonymous inner class and override abstract
+	3. create sub class using lambda expression (it will support only if our interface having 
+	  single abstract method else its not possible)
+	  
+	  example:
+	  =======
+	  
+	   interface Vehicle<T,R>{
+	     public R printCost(T vType);
+	   }
+	   
+	 1. implements:
+	 class Car implements Vehicle<String,Integer>{
+	     
+		   public Integer printCost(String vType){
+		     return "Cost for "+ vType+" is:"+10000;  
+		   }
+	   }
+	   
+	   Vehicle v1 = new Car();
+	   sop(v1.printCost("BMW"));// Cost for BMW is:10000
+	   
+	  2. anonymous :
+	  
+	       Vehicle<String,Integer> v1 =  new Vehicle(){
+		   
+				public Integer printCost(String vType){
+				 return "Cost for "+ vType+" is:"+10000;  
+			   }
+		      
+		   };
+		   
+		   sop(v1.printCost("BMW"));// Cost for BMW is:10000
+
+   3. lambda :
+
+            Vehicle<String,Integer> v1 = (String vType) -> {
+				 return "Cost for "+ vType+" is:"+10000;  
+			   };
+			   
+			   or 
+			   
+			Vehicle<String,Integer> v1 = (vType) -> {
+				 return "Cost for "+ vType+" is:"+10000;  
+			   };
+			   
+			   or 
+			   
+			Vehicle<String,Integer> v1 = (vType) -> "Cost for "+ vType+" is:"+10000; 
+
+				
+			sop(v1.printCost("BMW"));// Cost for BMW is:10000

@@ -1,0 +1,141 @@
+ 
+			 builder(): 
+			 =========
+			 By using Builder() also we can able to create Stream class object.
+			 with the help of add() and build().
+			 
+			 When builder is used, the which type of elements  we need to add into stream should be additionally specified in the right side of  statement, otherwise the build() method will create an instance of the Stream<Object>:
+			 
+			 Stream<String> streamBuilder =
+			 Stream.<String>builder().add("a").add("b").add("c").build();
+			 
+			 Stream<Object> objSstreamBuilder = 
+			 Stream.builder().add("a").add(1).build();
+			 
+			 above code will works like below code :
+			 List<String> list =  new ArrayList<>();
+			 list.add("a");
+			 list.add("b");
+			 list.add("c");			 
+			 Stream<String> stream = list.stream();
+			 
+			 Note: instead of doing seperate seperate steps we can do it as single 
+			 step using builder() pattern.
+			 1. create list 
+			 2. add elements 
+			 3. convert that list into stream. 
+			 
+			 
+			 examples:
+			 
+			  //create instream using builder pattern 
+			 IntStream intStreamBuilder = IntStream.builder().add(10).add(20).add(30).build();
+			 intStreamBuilder.forEach(System.out::println);
+	 // same code we can do it using normal stream with integer generics also
+			 Stream<Integer> intStreamBuilder1 = Stream.<Integer>builder().add(10).add(20).add(30).build();
+			 
+			 List<Integer> list1 = new ArrayList<Integer>();
+			 list1.add(10);
+			 list1.add(20);
+			 list1.add(30);			 
+			 Stream<Integer> intSt =  list1.stream();
+			 intSt.forEach(System.out::println);
+			 
+			 List<Integer> list2 = Arrays.asList(10,20,30);
+			 list2.stream().forEach(System.out::println);
+			 
+			 
+			 
+			 
+
+			 
+			 File streaming:
+			 ===============
+			 using this file stream api we can read the files very easily. 
+			 
+			 in java there one class called  "Files", its allows us to generate a Stream<String> of a text file through the lines() method. Every line of the text becomes an element of the stream:
+			 these classes are avaiable under java.nio.file: 
+			 
+			 for examples :
+			 sameple.txt: on desktop:
+			 ========================
+				Hi everyone,
+				I am kesav 
+				i am taking java classes 
+				On stream apis 
+				for My students
+
+			 Path path = Paths.get("C:\\Users\\Dell\\Desktop\\Sample.txt");
+			 Stream<String> streamOfStrings = Files.lines(path);
+				
+		     streamOfStrings.forEach(System.out::println);
+			 
+			 Note: here the callign statement of lines() will cause one checked type Exception i.e IOException, so we should render that code into a try and catch or throws IOException in method signature.
+			 
+			  
+			Referencing a Stream objects:
+			=============================
+			
+			Accessing the stream with the help of reference variable instead of using direct stream object is called as Referencing a Stream.
+			
+			we can create object for stream in one line and we can use that refere variable in next lines but this stream object will avaiable active until if we are using intermediat operations only, once any where or any line if we use terminal operation then stream object will close automatically and it wont avaiable for next usage. 
+			
+			for example : 
+			create stream using of() with elements  "ab","bc","cd" and and filter values using filter conditions where which elements contains "b" char.
+			
+			 Stream<String> stream1 = 
+					  Stream.of("ab", "bc", "cd").filter(element -> element.contains("b"));
+					  
+					  here stream1 will contains 2 values "ab", "bc";
+			
+			2. reading value from stream using ref variable here :
+			
+			 Optional<String> anyElement = stream1.findAny();
+			 if(anyElement.isPresent())
+			 System.out.println(anyElement.get());// this will any one of element which is having b car like either ab or b element 
+            output : ab
+			
+           3.  but in next line 
+		     again if we are tring to read first element from same steam object,
+			 it wont work we will get RTE: why bzc findAny() method is a terminal operation, so after usage of findAny() method our stream1 object will close automatically. it wont avaiable for further usage.
+			 
+			 
+			 Optional<String> findFirst = stream1.findFirst();
+			 if(findFirst.isPresent())
+			 System.out.println(findFirst.get());
+		 
+		 RTE:
+		 
+Exception in thread "main" java.lang.IllegalStateException: stream has already been operated upon or closed
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:229)
+	at java.base/java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:647)
+	at Java8Features/com.k7it.StreamApiDemo.main(StreamApiDemo.java:66)
+	
+	Note: java stream apis are not resuageble for multiple terminal operations with single stream object, if we need to use multiple terminal operations we need to create  multiple stream objects. 
+	rewrite above code to work fine without any error: like bellow with multiple stream objects:
+	
+	
+			List<String> elements =
+			  Stream.of("ab", "bc", "cd").filter(element -> element.contains("b"))
+				.collect(Collectors.toList());
+				// here List will create with elements i.e "ab","bc", from 3 elements 
+			Optional<String> anyElement1 = elements.stream().findAny();// here one stream obj will create and closing here only.
+			Optional<String> firstElement = elements.stream().findFirst();// here  another new stream obj will create  and closing here only.
+			
+			 if(anyElement1.isPresent())
+				 System.out.println(anyElement1.get());
+			 if(firstElement.isPresent())
+				 System.out.println(firstElement.get());
+			 
+			 Note:
+			 collect(): this is one of the terminal operator , it will collect the output from current stream object and convert into user specified output format like toList() or toSet() or toMap()... etc.
+			 
+			Problem: convert List of string into Map<String,Integer> key as list element, value as size of list element.
+		sol:	 by usiny toMap(Function key, Function value);
+		
+			   List<String> strList = Arrays.asList("java","mongodb","oracle","ajx","kafka");
+			   Map<String,Integer> map = strList.stream()
+			                             .collect(Collectors.toMap(e -> e, e -> e.length()));
+			   
+			   map.forEach((k,v) -> System.out.println(k+":"+v));
+			 

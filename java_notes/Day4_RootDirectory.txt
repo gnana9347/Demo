@@ -1,0 +1,100 @@
+ 
+	   Note: as of  now we are keeping .java files and .class files together inside same src folder. but its not 
+	   advisible because in case instead of deleting .class file if we delete .java file we will loose our source code.
+	   if we want to develop or write the java code again it will takes more time compare to creating .class file. 
+	   
+	   even though if .class creating also times more time it is not a burden for us. it is a burden to compiler, 
+	   
+	   so its better to seperate .java files and .class files. 
+	   
+	   as per folder name we given as src it means source code so we should keep only .
+		
+	   java files inside src but for .class files we will create one more new folder wiht the name of "classes". inside classes folder we will keep .class files.
+	   
+	   but javac cmd by default it will create .class files under current location only i.e src folder where our .java files avaiable . but we dont want to create 
+		
+	   .class files under src folder, we need to create under classes folder 
+	   
+	   how to make java compiler to create .class files under user specified location ?
+	   
+	   by using -d option for javac cmd we can specifie where we need to create .class files by compiler.
+	   
+	   syntax: javac -d <.class file destination location > .java file name with extention
+	   
+	   example:  src> javac -d D:\lab\202402_JavaBatch\classes PersonAddress.java
+	   
+	   -d :   redirect , by using -d we can redirect generated .class files into user specified location.
+	   
+	   while giving location to .class files we can use the 2 ways to specifie destination location 
+	    
+		1. absolute path : it is process of specifing the address from starting to ending always with complete address.
+		 
+		 2. real path or relative path: it is process of specifing destination address from our current location instead of the starting of address. 
+			  
+			  
+			  Note: in order to reach classes folder location from src folder , just 2 steps are enough. 
+			   1. one step backward  ( normaly in system we can use back word button or upward button) but from cmd prompt how to go one step back ward? 
+				   
+				   ans: in cmd propt if we want to go one step back ward we shld use ../ (double dot/)
+				   
+			   2. one step forward in to classes folder: in normal system means we can just double click on folder name  i.e classes folder. 
+			     but from cmd prompt how to go to forward direction?
+			     ans: in cmd prompt use /folder name (/classes) we can go forward direction.
+				 
+				final realpath: ../classes 
+				 
+				 
+				 cd : change directory 
+				 ../ : one step back ward / previous location
+				 ./ : current location 
+				 cls: clear screen
+				 mkdir : create folder or directory
+				 
+				 these are windows cmds not java cmd 
+				 
+				 
+				D:\lab\202401_JavaBatch\src>cd ../
+
+				D:\lab\202401_JavaBatch>cd ../
+	
+				D:\lab>
+
+				D:\lab\202401_JavaBatch\src>cd ../classes
+
+				D:\lab\202401_JavaBatch\classes>
+
+				D:\lab\202401_JavaBatch\src>javac -d ../classes PersonAddress.java
+
+				D:\lab\202401_JavaBatch\src>javac -d D:/lab/202401_JavaBatch/classes PersonAddress.java
+
+				D:\lab\202401_JavaBatch\src>javac -d ../././classes PersonAddress.java
+
+				D:\lab\202401_JavaBatch\src>javac -d ../../classes PersonAddress.java
+				javac: directory not found: ../../classes
+				
+				Usage: javac <options> <source files>
+				use -help for a list of possible options
+				
+				here : ../../classes folder we are going 2 steps back ward  means we will reach 202401_JavaBatch folder from src then 
+				inside 202401_JavaBatch we are looking for classes folder , so its not available under 202401_JavaBatch folder so we are getting 
+				above error. 
+				
+				if we want to run the our .class files we need to change the location from src to classes :
+				
+				D:\lab\202401_JavaBatch\src> cd ../classes
+
+				D:\lab\202401_JavaBatch\dev\classes>java Address
+				I am address
+
+				D:\lab\202401_JavaBatch\dev\classes>java Person
+				I am person
+				
+				D:\lab\202401_JavaBatch\dev\classes>cd ../src
+
+				D:\lab\202401_JavaBatch\src>javac PersonAddress.java
+
+				D:\lab\202401_JavaBatch\src>
+				 
+				 Note: compilation has to done from src folder 
+				       execution has to done from classes folder
+					   

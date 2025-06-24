@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #555;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #666;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e9f5ff;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: #007bff;
+            text-align: center;
+        }
+
+        .error {
+            margin-top: 10px;
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #d32f2f;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="calculator-title">Calculator</h1>
+        <div id="calculator-content"></div>
+        <button class="back-button" onclick="window.location.href='health.html'">Back</button>
+    </div>
+
+    <script>
+        // Function to load the calculator based on the query parameter
+        function loadCalculator() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const calculatorType = urlParams.get('calculator');
+
+            const calculatorContent = document.getElementById('calculator-content');
+            const calculatorTitle = document.getElementById('calculator-title');
+
+            let calculatorHTML = '';
+            let calculatorJS = '';
+
+            switch (calculatorType) {
+                case 'macro':
+                    calculatorHTML = `
+                        <h2>Macro Calculator</h2>
+                        <label>Daily Calories:</label>
+                        <input type="number" id="macro-calories" required>
+                        <label>Goal:</label>
+                        <select id="macro-goal">
+                            <option value="maintenance">Maintenance</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain</option>
+                        </select>
+                        <button onclick="calculateMacro()">Calculate</button>
+                        <div class="result" id="macro-result"></div>
+                        <div class="error hidden" id="macro-error"></div>
+                    `;
+                    calculatorJS = calculateMacro.toString();
+                    break;
+
+                case 'carb':
+                    calculatorHTML = `
+                        <h2>Carbohydrate Calculator</h2>
+                        <label>Total Carbohydrates (g):</label>
+                        <input type="number" id="carb-total">
+                        <label>Dietary Fiber (g):</label>
+                        <input type="number" id="carb-fiber">
+                        <label>Sugar Alcohols (g):</label>
+                        <input type="number" id="carb-sugar-alcohols">
+                        <button onclick="calculateCarbohydrate()">Calculate</button>
+                        <div class="result" id="carb-result"></div>
+                        <div class="error hidden" id="carb-error"></div>
+                    `;
+                    calculatorJS = calculateCarbohydrate.toString();
+                    break;
+
+                case 'protein':
+                    calculatorHTML = `
+                        <h2>Protein Calculator</h2>
+                        <label>Weight (kg):</label>
+                        <input type="number" id="protein-weight">
+                        <label>Activity Level:</label>
+                        <select id="protein-activity">
+                            <option value="sedentary">Sedentary</option>
+                            <option value="active">Active</option>
+                            <option value="athlete">Athlete</option>
+                        </select>
+                        <button onclick="calculateProtein()">Calculate</button>
+                        <div class="result" id="protein-result"></div>
+                        <div class="error hidden" id="protein-error"></div>
+                    `;
+                    calculatorJS = calculateProtein.toString();
+                    break;
+
+                case 'fat':
+                    calculatorHTML = `
+                        <h2>Fat Intake Calculator</h2>
+                        <label>Daily Calories:</label>
+                        <input type="number" id="fat-calories">
+                        <button onclick="calculateFatIntake()">Calculate</button>
+                        <div class="result" id="fat-result"></div>
+                        <div class="error hidden" id="fat-error"></div>
+                    `;
+                    calculatorJS = calculateFatIntake.toString();
+                    break;
+
+                case 'tdee':
+                    calculatorHTML = `
+                        <h2>TDEE Calculator</h2>
+                        <label>Gender:</label>
+                        <select id="tdee-gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <label>Weight (kg):</label>
+                        <input type="number" id="tdee-weight">
+                        <label>Height (cm):</label>
+                        <input type="number" id="tdee-height">
+                        <label>Age (years):</label>
+                        <input type="number" id="tdee-age">
+                        <label>Activity Level:</label>
+                        <select id="tdee-activity">
+                            <option value="1.2">Sedentary</option>
+                            <option value="1.375">Lightly Active</option>
+                            <option value="1.55">Moderately Active</option>
+                            <option value="1.725">Very Active</option>
+                            <option value="1.9">Extremely Active</option>
+                        </select>
+                        <button onclick="calculateTDEE()">Calculate</button>
+                        <div class="result" id="tdee-result"></div>
+                        <div class="error hidden" id="tdee-error"></div>
+                    `;
+                    calculatorJS = calculateTDEE.toString();
+                    break;
+
+                default:
+                    calculatorHTML = `<p>No calculator selected.</p>`;
+            }
+
+            calculatorContent.innerHTML = calculatorHTML;
+            calculatorTitle.textContent = `${calculatorType.toUpperCase()} Calculator`;
+
+            // Load the corresponding JavaScript function
+            eval(calculatorJS);
+        }
+
+        // Load the calculator when the page loads
+        window.onload = loadCalculator;
+
+        // Include your existing JavaScript functions here
+        function calculateMacro() {
+            const calories = parseFloat(document.getElementById('macro-calories').value);
+            const goal = document.getElementById('macro-goal').value;
+            const resultDiv = document.getElementById('macro-result');
+            const errorDiv = document.getElementById('macro-error');
+
+            errorDiv.classList.add('hidden');
+            resultDiv.textContent = '';
+
+            if (!calories || calories <= 0) {
+                errorDiv.textContent = 'Please enter a valid calorie amount.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            let carbRatio, proteinRatio, fatRatio;
+            switch(goal) {
+                case 'weight-loss':
+                    carbRatio = 0.3;
+                    proteinRatio = 0.4;
+                    fatRatio = 0.3;
+                    break;
+                case 'muscle-gain':
+                    carbRatio = 0.4;
+                    proteinRatio = 0.35;
+                    fatRatio = 0.25;
+                    break;
+                default: // maintenance
+                    carbRatio = 0.4;
+                    proteinRatio = 0.3;
+                    fatRatio = 0.3;
+            }
+
+            const carbGrams = (calories * carbRatio) / 4;
+            const proteinGrams = (calories * proteinRatio) / 4;
+            const fatGrams = (calories * fatRatio) / 9;
+
+            resultDiv.innerHTML = `Recommended Daily Macros:<br>
+                Carbohydrates: ${carbGrams.toFixed(1)}g<br>
+                Protein: ${proteinGrams.toFixed(1)}g<br>
+                Fat: ${fatGrams.toFixed(1)}g`;
+        }
+
+      /*  function calculateCarbohydrate() {
+            const total = parseFloat(document.getElementById('carb-total').value);
+            const fiber = parseFloat(document.getElementById('carb-fiber').value) || 0;
+            const sugarAlcohols = parseFloat(document.getElementById('carb-sugar-alcohols').value) || 0;
+            const resultDiv = document.getElementById('carb-result');
+            const errorDiv = document.getElementById('carb-error');
+
+            errorDiv.classList.add('hidden');
+            resultDiv.textContent = '';
+
+            if (!total || total < 0) {
+                errorDiv.textContent = 'Please enter total carbohydrates.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            const netCarbs = total - fiber - sugarAlcohols;
+            resultDiv.innerHTML = `
+                Total Carbohydrates: ${total.toFixed(1)}g<br>
+                Net Carbohydrates: ${netCarbs.toFixed(1)}g
+            `;
+        }*/
+
+        function calculateProtein() {
+            const weight = parseFloat(document.getElementById('protein-weight').value);
+            const activity = document.getElementById('protein-activity').value;
+            const resultDiv = document.getElementById('protein-result');
+            const errorDiv = document.getElementById('protein-error');
+
+            errorDiv.classList.add('hidden');
+            resultDiv.textContent = '';
+
+            if (!weight || weight <= 0) {
+                errorDiv.textContent = 'Please enter a valid weight.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            let multiplier;
+            switch(activity) {
+                case 'active':
+                    multiplier = 1.2;
+                    break;
+                case 'athlete':
+                    multiplier = 1.6;
+                    break;
+                default: // sedentary
+                    multiplier = 0.8;
+            }
+
+            const protein = weight * multiplier;
+            resultDiv.textContent = `Recommended Protein Intake: ${protein.toFixed(1)}g per day`;
+        }
+
+        function calculateFatIntake() {
+            const calories = parseFloat(document.getElementById('fat-calories').value);
+            const resultDiv = document.getElementById('fat-result');
+            const errorDiv = document.getElementById('fat-error');
+
+            errorDiv.classList.add('hidden');
+            resultDiv.textContent = '';
+
+            if (!calories || calories <= 0) {
+                errorDiv.textContent = 'Please enter a valid calorie amount.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            const minFat = (calories * 0.2) / 9;
+            const maxFat = (calories * 0.35) / 9;
+
+            resultDiv.innerHTML = `Recommended Daily Fat Intake:<br>
+                Minimum: ${minFat.toFixed(1)}g<br>
+                Maximum: ${maxFat.toFixed(1)}g`;
+        }
+		
+		function calculateCarbohydrates() {
+		           const totalCalories = document.getElementById('carb-intake').value;
+		           if (totalCalories) {
+		               const carbCalories = totalCalories * 0.5; 
+		               const carbGrams = (carbCalories / 4).toFixed(2);
+		               document.getElementById('carb-result').innerText = `You should consume approximately ${carbGrams} grams of carbohydrates per day.`;
+		           } else {
+		               alert('Please enter your total daily calorie intake.');
+		           }
+		       }
+
+        function calculateTDEE() {
+            const gender = document.getElementById('tdee-gender').value;
+            const weight = parseFloat(document.getElementById('tdee-weight').value);
+            const height = parseFloat(document.getElementById('tdee-height').value);
+            const age = parseFloat(document.getElementById('tdee-age').value);
+            const activityFactor = parseFloat(document.getElementById('tdee-activity').value);
+            const resultDiv = document.getElementById('tdee-result');
+            const errorDiv = document.getElementById('tdee-error');
+
+            errorDiv.classList.add('hidden');
+            resultDiv.textContent = '';
+
+            if (!weight || !height || !age || weight <=0 || height <=0 || age <=0) {
+                errorDiv.textContent = 'Please enter valid weight, height, and age.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            let bmr;
+            if (gender === 'male') {
+                bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+
+            const tdee = bmr * activityFactor;
+            resultDiv.textContent = `Your TDEE is approximately ${tdee.toFixed(0)} calories per day.`;
+        }
+    </script>
+</body>
+</html>

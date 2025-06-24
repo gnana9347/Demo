@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        select:focus, input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+        button {
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            font-size: 18px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #219150;
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #2c3e50;
+        }
+        .back-button {
+            margin-top: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            font-size: 18px;
+            display: inline-block;
+        }
+        .back-button:hover {
+            background: #c0392b;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>💰 Currency Converter</h2>
+        <label>Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount" min="0" required>
+
+        <label>From:</label>
+        <select id="fromCurrency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+        </select>
+
+        <label>To:</label>
+        <select id="toCurrency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+        </select>
+
+        <button onclick="convertCurrency()">Convert</button>
+        <div class="result" id="result"></div>
+        <a href="index.html" class="back-button">Back</a>
+    </div>
+
+    <script>
+        async function convertCurrency() {
+            const amount = document.getElementById("amount").value;
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+
+            if (amount === "" || amount <= 0) {
+                document.getElementById("result").innerText = "⚠️ Please enter a valid amount.";
+                return;
+            }
+
+            document.getElementById("result").innerText = "⏳ Converting...";
+
+            const API_URL = "https://api.exchangerate-api.com/v4/latest";
+
+            try {
+                const response = await fetch(`${API_URL}/${fromCurrency}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const rate = data.rates[toCurrency];
+                    const convertedAmount = (amount * rate).toFixed(2);
+                    document.getElementById("result").innerText = `✅ Converted Amount: ${convertedAmount} ${toCurrency}`;
+                } else {
+                    document.getElementById("result").innerText = `❌ Error: ${data.error}`;
+                }
+            } catch (error) {
+                console.error("Error fetching conversion rate:", error);
+                document.getElementById("result").innerText = "❌ Error fetching conversion rate.";
+            }
+        }
+    </script>
+
+</body>
+</html>

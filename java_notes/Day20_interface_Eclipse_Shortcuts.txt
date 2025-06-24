@@ -1,0 +1,1183 @@
+drawbacks of class:
+=======================
+
+1. by using class key word we cant acheive 100% abstractness 
+    why bzc in side class there is default constructor concept it will have the  .
+2. by using class key word we can't acheive multiple inheritance why bzc due to constructor chaining concept
+3. by using class key word we can't acheive empty class. even though if we keep empty class it will generate default constructor internally
+
+
+
+in order to overcome these drawbacks in java , java people introduced one new key word called interface. 
+ 
+ 
+ interface: it is a one of the key word in java, it act like similar to class key word, but it will always abstract type. 
+ 
+ syntax : interface InterfaceName{
+           // interface body 
+          }
+		  
+		  here InterfaceName will follow the same rules of  ClassName. 
+		  
+		  example:
+		  
+		    X.java                            A.java
+===============================			  ===================
+		ex: interface X{                  class A{
+		    }									}
+		
+how to compile interface code: 
+==============================
+src> javac -d ../classes A.java  -> A.class
+src> javac -d ../classes X.java  -> X.interface -> wronge 
+src> javac -d ../classes X.java  -> X.class -> correct 
+
+Note: even for interface also compiler will create .class file after compilation. 
+
+		P.java
+		==========
+		interface X{
+		}
+		class B{
+		}
+		
+	src> javac -d ../classes P.java - > we will get 2 .classes as output from javac cmd 
+				1. X.class 
+				2. B.class 
+				
+
+class B{    -> javac ->  class B extends Object {
+							B(){
+							 super();
+							}
+
+}						}
+
+interface X{    -> javac ->  abstract interface X {
+							
+
+}								}
+
+
+
+Note: interface is by default abstract type either we provide or not provide abstract key word, interface will 
+      consider as abstract type only. 
+	  
+	  
+	
+abstract interface X{    -> javac ->  abstract interface X {
+							
+
+}								}
+
+
+Note: so default interface is a abstract type so we cant create objects for interface.
+
+
+interface members :  as per the java 7 interface was having only 2 members 
+						1. static constants attributes 
+						2. abstract methods
+. but after java 8 interface also suport 
+     1. static methods
+	 2. default methods.
+		
+
+1st we will see the java 7 members :
+====================================
+1. static constants attributes : in side interface every attribute is by default public, static and final,
+ so every attribute is a static constants type inside interface,
+ so we should initialize each and every attribute at the time declaration only else we will get compile time error. 
+ 
+  what is mean by constants variables : in java if want to declare any attribute or variable with fixed value, it means once 
+   value initialize we can't modify again or we can't reinitialize again. 
+    then we should use final key word for that corresponding variable or attribute. 
+	
+	 final : final is a one of key word in java , this key word we can use it for 4 members in java 
+	     1. class 
+		 2. attributes
+		 3. methods 
+		 4. local variables or parameter variable
+		 
+		 
+   
+   1 final class : if we use final key word for class, those classes wont support inheritance. 
+              it means we can't create any child class using final class as parent or super class. 
+			  
+			  ex:
+			  
+			  class A{
+			  
+			  }
+			  
+			  class  B extends A{
+			  
+			  }
+			  
+			  final class D{
+			  
+			  }
+			  
+			  class E extends D{// CTE 
+			  
+			  }
+			
+		D:\lab\202402_JavaBatch\src>javac -d ../classes D.java			
+			  A.java:7: error: cannot inherit from final D
+            class E extends D{
+                            ^
+			  
+	2. final method : if we use final key word for any method, those methods we can't override inside subclass after inheritance. 
+	   
+	   
+	    class A{
+		  final void m1(){
+		    System.out.println("A-m1");
+		  }
+		}
+	   
+	    class B extends A{
+		
+		   void m1(){ // CTE we can't override the final method in sub class. 
+		   
+		     System.out.println("B-m2"); 
+		   }
+		}
+	   
+			  
+D:\lab\202402_JavaBatch\src>javac -d ../classes A.java
+A.java:9: error: m1() in B cannot override m1() in A
+                   void m1(){ // CTE we can't override the final method in sub class.
+                        ^
+  overridden method is final
+1 error
+
+
+ 3. final  attributes: 
+           a. final instance attribute :
+		   b. final static attributes 
+		   
+		   if we declare any attribute as a final for those attributes we can't reinitialize the value and also for final attributes
+		   there is no default value concepts so we should be initialize at the place of declaration.
+		   final variables also called as a constants variables or attributes.
+		   
+		   class A{
+		   
+		     final int age =10;
+			 final static String name = "K7iT";
+			 
+			 public static void main(String args[]){
+			 
+			   A a1 = new A();
+			   a1.age = 40;// CTE  final attributes we can't reinitialize it 
+			   a1.name ="Java"; // cTE name also final attribute we cannot change the values
+			   
+			 }
+		   }
+		   
+		   ex:
+		   class A{
+		   
+		      final int i; // CTE 
+		   }
+
+D:\lab\202402_JavaBatch\src>javac -d ../classes A.java
+A.java:3: error: variable i not initialized in the default constructor
+         final int i;
+                   ^
+				   
+				 Note: in case if we dont want to initialize at the time declaration , in this case 
+				   
+				    in case of non static final attributes : we can initialize at 3 places , either of one place initialize is allowed .   
+					 non static final attributes initialize places:
+					 ==============================================
+					    1. at the time declaration palce 						
+						2. insdie IIB's 
+						3. inside constructor body 
+				either of these 3places only one is allowd , more place not allowd.
+				
+				ex1:
+				
+				   class A{
+		   
+		           final int age =10;// declaration and initialize at same place , it will allow CS
+				   }
+				   
+				   ex2:
+				
+				   class A{
+		   
+		           final int age; 
+				   {
+				    age = 10;  // CS  we didnt initialize at declaration but we initialized at IIB , so its enough for instance attribute.
+				   }
+				   }
+				   
+				     ex3:
+				
+				   class A{
+		   
+		           final int age; 
+				   {
+				       System.out.println("IIB");
+					}
+					 A(){
+					  this.age = 10; // direct value
+					 }
+					 // or 
+					 A(int age ){
+					  this.age =age;	 // dynamic value 				 
+					 }
+					 
+					 
+				   }
+				// Note: this program also will get CS, even though i am not initialize at declaration place and IIB, but 
+				// i am initializing inside constructors. in case of constructor how many constructors we have inside all constructors
+				 // we have to initialize the instance constants attributes.
+				
+				
+				
+				  in case of  static final attributes : we can initialize at 2 places , either of one place initialize is allowed .   
+					
+					static final attributes initialize places:
+					 ==============================================
+					    1. at the time declaration palce 						
+						2. insdie SIB's 
+
+				either of these 2places only one is allowd , more place not allowd.
+				
+					ex1:
+						class A{
+						final static String name = "K7iT";
+						}
+						output: CS declaration and initialize at same place
+					
+					ex2: 
+					class A{
+						final static String name;
+						static{
+						   name = "K7iT";
+						}
+						}
+						output: CS if we are not initialize at declaration palce, we can initialize SIB's , its allowed for 
+						// static final attributes.
+						
+						
+						
+					ex3:
+
+                    class A{
+					
+					   final int i; - 1
+					   
+					   {
+					     i =10;  -2
+					   }
+					   A(){
+					     i = 20; - 3
+					   }
+					}	
+                // 			CTE		at -3  we cant reinitialize final attribute.
+				
+				
+				class B{
+				
+				  final String name;
+				  
+				  static{
+				   name = "K7iT";
+				  }
+				}
+						
+			// CTE -> 	 we cant access non static members directly inside static members either block or method. 
+
+           class A{
+		   
+		      static final String name;
+			  
+              A(){
+			    this.name = "Java";
+			  }
+			  
+			  public static void main(String args[]){
+			    
+				System.out.println(A.name);
+			  }
+		   }			
+				
+			
+           //	CS  why? 	
+
+        > javac -d ../classes A.java  -> A.class 
+        
+        > java A 	
+		  -> jre will load A.class into heap memory
+		  ->  ISA -> initialize default values static attributes if present  any. no static attributes, we have only static constants 
+		  -> call SIBS no SIBs so nothig will happen 
+		  -> create thread to main method
+		  -> execute main() and print output in console
+			   then it will execute 
+			   
+	    System.out.println(A.name);// by this time our constructor not executed , so  o value seted into name attribute. 
+		                            // wihtout value we cannot use any variable.
+									
+		
+       4. final local variables:	for local variables only ony key word is allowed 
+	                           from access specifiers (private, (default), protected, public )or acceess modifiers(static, final)
+							   apart from data type i.e final 	
+							   
+							   -> in case of final variable there is no default value concepts so we should initialize before use it
+							   
+							  -> any final variable we can't reinitialize it .
+							  
+							  ex
+							   class A{
+							   
+							     public static void main(String args[]){
+								   
+								   final int i =10;
+								   
+								   System.out.println(i);// cs &  RS output : 10
+								   
+								   final String s;
+								   s = "K7iT";
+								    
+								   System.out.println(s);// cs &  RS output : K7iT
+									  
+								   final int age;
+								   System.out.println(age);// CTE we didnt initialized age variable before use it
+									  
+								  final double ht= 5.5;
+								  System.out.println(ht);// cs &  RS output : 5.5
+									
+								   ht = 6.2;// CTE we cant reinitialize final variables;
+									
+								   System.out.println(ht);// cs &  RS output : 10
+								   
+								   
+								 }
+								 
+								
+							   }
+				
+				
+				ex2:
+				
+				 class A{
+				 
+				 
+				    static void printValues(final String name){
+					
+					   System.out.println(name);// K7iT, Java
+					}
+					
+					public static void main(String args[]){
+					  
+					   printValues("K7iT");
+					  
+					   printValues("Java");
+					   
+					}
+				 }
+				
+				output: CS & RS out :
+				  K7iT
+				  Java
+				  
+				ex3:
+				
+				 class A{
+				 
+				 
+				    static void printValues(final String name){
+					   name = "MongoDB";// cTE this is called reinitialize of final parameters variable
+					   System.out.println(name);// K7iT, Java
+					}
+					
+					public static void main(String args[]){
+					  
+					   printValues("K7iT");
+					   
+					}
+				 }
+				   
+				     result: CTE 
+					 
+					 
+					 
+					 
+					 
+					 
+			class A{
+			   final int i =10;
+			
+			}
+			
+			A a1 = new A();
+			sop(a1.i) // 10
+			
+			A a2 = new A();
+			sop(a1.i) // 10
+			
+			class  A{
+			  final int i;
+			  
+			  A(final int i){
+			   this.i =i;
+			  }
+			}
+			
+			A a1 = new A(10);
+			sop(a1.i) // 10
+			
+			A a2 = new A(20);
+			sop(a1.i) // 20
+			
+			A a2 = new A(10);
+			sop(a1.i) // 10
+			
+			
+			
+1st member of the interface : 		i.e 	static constant attributes.
+===================================	=====================================		
+
+		in side interface every attribute by default public static and final .	
+		
+		for example:
+			  
+   X. java 
+   ===========
+  interface X{
+     int i=10;
+	 static int j = 20;
+	 final int k = 30;
+	 static final int l = 40;
+	 public static final int m = 50;
+	 public int n = 60;
+  }
+  javac X.java --> it will give output like below
+  
+  X.class
+  =============
+  abstract interface X{
+    public static final int i=10;
+	public static final int j = 20;
+	public static final int k = 30;
+	public static final int l = 40;
+	public static final int m = 50;
+	public static final int n = 60;
+  }
+  
+  ex2:
+  
+  
+     interface Y{
+	   private int k = 40;// CTE
+	   protected int l = 60;// CTE
+	    
+	 }
+	 // interface will support only one access level for interface members i.e public,
+ //	 even though if u dosent provide any access level it wont consider as default access level like class, 
+ // it will consider as a public  only 
+	 access level. 
+	 
+	 class access levels:
+	    1. default
+		2. public
+		
+     class members access level:
+	   1. private
+	   2.   	(default)
+	   3. protected
+	   4. public
+	   
+	   
+	 interface access levels:
+	    1. default
+		2. public
+		
+     interface members access level:
+	   1. public
+	   
+	   
+	   ex3:
+	   
+	   interface X{
+	      int i; // cTE  in side interface constants attributes should be initialize at the time declaration only.
+		  public static final int k; //CTE even though if we provide public static final also we are gettug cte due to we 
+		                             // we are not providing initial value for constants. 
+	   }
+	   
+	   ex4:
+	   
+	   interface X{
+	      int i =40;// CS -> public static final int i = 40;
+	   }
+	   
+	  
+2nd member of interface : abstract methods: 
+==================================
+in side interface every method is by default public and abstract type. either we provide abstract key word or not.
+so inside interface any method dosent have definations , every method should end with semicollon only.
+
+X.java
+=======
+interface X{
+
+   void m1();
+   public void m2();
+   public abstract void m3();
+}
+
+javac X.java -> output like below
+
+X.class
+=========
+abstract interface X{
+
+   public abstract void m1();
+   public abstract void m2();
+   public abstract void m3();
+}
+	   
+	   ex2:
+	   ======
+	   
+	    interface Y{
+		  void m1(){ //CTE
+		    sop("m1");			
+		  }
+		}
+	   
+	    Note: inside interface every method is by default abstract type so we can't provide definations.
+ 		if we provide we will get the compile time error. why bzc u can see bellow code incase if we allow compile success 
+		how our code will looks like 
+	   
+	   
+	   Y.class
+	   ======
+	   abstract interface Y{
+	   public abstract void m1()
+	      { //CTE
+		    sop("m1");			
+		  }
+	   }
+	   
+	   example:
+	   
+	   
+	   abstract class A {
+	    public abstract void m1();		
+		  { 
+		    sop("m1");			
+		  }	   
+	   }
+	   
+	   // 1. CS 2. CTE 3. Both 4.None 
+	   ans: CS , why bzc here class A is having 2 members 1. abstract m1 and 2. IIBM 
+	   
+	      public abstract void m1();		 -> m1 abstract 
+		  
+		   {  // IIB
+		    sop("m1");			
+		  }	  
+		  
+		  
+		  ex4:
+		  
+		  abstract interface X{
+		  
+			  public abstract void m1();
+			  
+			  {
+				Sop("m1");
+			  }
+		  
+		  }
+		  
+		   // 1. CS 2. CTE 3. Both 4.None 
+		   
+		   ans: CTE, why bac , interface will not support IIB's , 
+		   
+		   
+		   
+		   
+	   
+	   ex3: 
+	   interface X{
+	   }
+	   
+	   X x1 = new X();// CTE, inside interface there is no constructor concept and also by default interface is a abstract type, so we cant create object for interfaces.
+	   
+	   
+	   ex4:
+	   
+	   interface Vehicle{
+	     void fixEngine(); -> public abstract void fixEngine();
+		 void fixBreaks();
+		 void fixWheels();
+		 void fixBody();
+	   }
+	   
+	   class Lorry implements Vehicle{
+	     // now implements all abstract methods which are inherited from Vehicle interface. 
+		 
+		  public void  fixEngine(){
+		    sop("fixing engine for Lorry");
+		  }
+		   public void  fixBreaks(){
+		    sop("fixing Breaks for Lorry");
+		  }
+		   public void  fixWheels(){
+		    sop("fixing Wheels for Lorry");
+		  }
+		   public void  fixBody(){
+		    sop("fixing Body for Lorry");
+		  }	    
+	   }
+	    javac Lorry.java  -> 
+		
+	   Lorry tata = new Lorry();
+	   Lorry ashok = new Lorry();
+	   Lorry benz = new Lorry();
+	   
+	  abstract  class FourWheeler implements Vehicle{
+	   
+	       public void  fixEngine(){
+		    sop("fixing engine for Lorry");
+		  }
+		   public void  fixBreaks(){
+		    sop("fixing Breaks for Lorry");
+		  }
+		   public void  fixWheels(){
+		    sop("fixing Wheels for Lorry");
+		  }
+	   
+	   }
+	   
+	   
+	   // FourWheeler f1 = new FourWheeler();// CTE
+		//f1.fixBody();// here fixBody() feature is not implemented yet. to use this feature. 
+	   
+	   
+	   class Bus extends FourWheeler{
+	   // 3 concremente methodss and 1 abstract will inherited from FourWheeler class. 
+		public void fixBody(){// implementation
+	     sop("fixing Bus Body");
+		}
+	   }
+	   
+	   Bus nonAc = new Bus();
+	   Bus volvo = new Bus();
+	   
+	   class SleeperBus extends Bus{
+	   public void fixBody(){ // override
+	     sop("overring  Bus Body as a sleeper");
+		}
+	   }
+	   SleeperBus sleeper = new SleeperBus();
+	   
+	   
+	   
+	   
+	   inheritance in interface :
+	   ===========================
+	   in case of interfaces: inheritance will acheive using 2 keywords 1. extends 2. implements 
+	   
+	  1. interface to interface  -> extends  -> one interface can extends more than one interfaces.
+	   
+	   interface X{
+	   }
+	   interface Y{
+	   }
+	   
+	   interface Z extends X,Y{// this is called as multiple inheritance, 
+	                            // in case of interface there is no constructor chaining concept so multiple inheritance possible in interface. 
+	   
+	   }
+	   
+	  2.  class to interface -> implements -> one class can implements more one than one or multiple  interfaces
+	  
+	  A.java
+	   =======
+	   class A implements X,Y,Z
+	   {
+	   }
+	   javac A.java -> will give below output 
+	   A.class
+	   =======
+	   class  A extends Object implements X,Y,Z{
+	     A(){
+		   super();// if we dont use extends key word inc ase oif implements using for class , 
+         		   //  then it will break the constructor chaining bzc these is  no constructors inside interface.
+				   // so in side classs even though if we are making our class is sub class of interfaces, java compiler 
+				   // will make Object class a parent class for our class using extends key word
+				   // it means class should extends another class always, if not java compiler extends Object class. 
+				   // extends key word mandatory key word for classes, but implements key is not mandatory. 
+		        
+		 }
+	   }
+	     
+		 B.java
+		 class B extends A implements X{
+		 
+		 }
+		  javac B.java 
+		  
+		 B.class
+		 class B extends A implements X{
+		 
+		 }
+
+		class C implements X extends A{ // CTE extends should be before implements key word, 
+		          // extends key should be avaiable after class name. else we will get compilation error.
+		
+		}
+	   
+	  1.  class to class -> extends -> one class can extends only one another class
+	 
+	 clas A{
+	   }
+	   class B extends A{
+	   }
+	   
+	 2.  interface to class -> no key word : interface can't implements or extends class type.
+	   
+	   class A{
+	   }
+	   interface X implements A{ //CTE  interface can't implements or extends class type.
+	   }
+
+		interface X extends A{//CTE  interface can't implements or extends class type.
+		}	   
+	  
+	  
+	   example:
+	   
+	   interface Vehicle{
+	        void fixEngine(); -> public abstract void fixEngine();
+			void fixBreaks();
+	   }
+	   
+	   interface fourWheeler extends Vehicle{
+	      void fixFourWheels();
+	   }
+	   
+	   interface TwoWheeler extends Vehicle{
+	      void fixTwoWheels();
+	   }
+	   
+	   interface ThreeWheeler extends Vehicle{
+	     void fixThreeWheels();
+	   }
+	   
+	   
+	   interface Car extends FourWheeler{
+	     void fixCarBody();
+	   }
+	   
+	   class AudiCar implements Car{
+	        public void  fixEngine(){
+		    sop("fixing engine for car"	)	  }
+		   public void  fixBreaks(){
+		    sop("fixing Breaks for Car");
+		  }
+		   public void  fixFourWheels(){
+		    sop("fixing Wheels for Car");
+		  }
+		   public void  fixCarBody(){
+		    sop("fixing Body for Audi Car");
+		  }	    
+	   }
+	   
+	    class RangeRoverCar implements Car{
+	      public void  fixEngine(){
+		    sop("fixing engine for Car");
+		  }
+		   public void  fixBreaks(){
+		    sop("fixing Breaks for Car");
+		  }
+		   public void  fixFourWheels(){
+		    sop("fixing Wheels for Car");
+		  }
+		   public void  fixCarBody(){
+		    sop("fixing Body for RangeRover Car");
+		  }	    
+	   }
+	   
+	   RangeRoverCar car1 = new RangeRoverCar();
+	   
+	   class FakeCars extends RangeRoverCar implements Car{
+	   
+			public void  fixCarBody(){
+				sop("fixing Body for new model Car");
+			}	
+	   } 
+	   
+		FakeCars	rangeRollerCar = new FakeCars();
+		
+		Note:
+		  1. interface can extends multiple another interfaces
+		  2. interface can't extends or implements another class type 
+		  3. class can extends class 
+		  4. class can implements multiple interfaces. 
+		  5. class can do extends and implements also together . 
+		  
+		  interface is mainly used for declarating manadatory features for subclass purpose not for self purpose. 
+		  in sub class they should implements all inherited abstract methods. 
+		
+ 
+		 interface X{
+			 public static final int k = 10;
+			 public abstract void m1();
+		 }
+          Sop(X.k);// 10 // here k is s static member so we can access by using interface name without object creation
+  
+  
+    java 8 featires in interface : 
+	
+	1. static methods inside interface: 
+	====================================
+	
+	
+	 interface X{
+		 public static final int k = 10;
+		 public abstract void m1();
+		 
+		 public static void m2(){
+		   Sop("This is interface static method");
+		 }
+	 }
+	 
+     X.k // 10 // static attribute
+	 X.m2();//This is interface static method
+	 
+	x.m1();// CTE // but m1() we cant access by using interface name , its should access using sub class objects after implementation
+	 
+	 class A implements X{
+	    public void m1(){
+			Sop("m1 method implementation in class A");
+		}
+	 }
+	 
+	 A a1 = new A();
+	 a1.k = 10;// A.k 
+	 a1.m1();// m1 method implementation in class A
+	 a1.m2();// A.m2();//This is interface static method
+	 
+	 X x1 = new A();
+	 x1.k = 10 ;// X.k
+	 x1.m1();// m1 method implementation in class A
+	 x1.m2();//X.m2(); This is interface static method
+	 
+	 2. default methods in interface :
+	 ===================================
+	 in jdk 1.8  java people introduced one new key word only  for  interface  i.e "default" key word.
+	 exmple:
+	 =========
+	 interface X{
+		 void m1(); -> public abstract void m1();
+		 
+		 void print(Strng name){ // public abstract void print(String name); // cTE
+		  sop("name:"+name);
+		  }
+	  
+	  default void print(Strng name){ // public default void print(String name)
+		sop("name:"+name);
+	  }
+	  
+	  
+	 }
+	 
+	 class A implements X{
+	 }
+	 
+	 class B implements X{
+	 }
+	 class C implements X{
+	 }
+	 class D implements X{
+	 
+	  // this class dont want to use default defination of print method from interface, then he should override method defination. while override we should not use default key word.
+	  
+	  public void print(String name){
+	    sop("CompanyName:"+name);
+	  }
+	 }
+	 
+	 interface X{
+	  public static abstract void m1();// CTE abstract and static combination not possible
+	 }
+	 
+	 abstract class A{
+	  public static abstract void m1();// CTE abstract and static combination not possible
+	   // in case static members we can access by usign class name or interface name, if we access using class for '
+	   // static abstract methods, there is no guarente we will get defination for abstract methods inside our class. 
+	 }
+	 A.m1();//
+	 abstract class B{
+	  private abstract void m1();// CTE private and abstract combination also not possible. why bzc private wont support inheritance, but abstract required inheritance.
+	 }
+	 
+	 interface X{
+	   final void m1();// -> public abstract final void m1();// CTE combination of final and abstract also not possible
+	   // final will say we cant override, but abstract will say we should override. 
+	 }
+	 
+	 example :
+	 ==========  
+	  wriet shape interface with 2 abstract methdos and 4 sub classes  for shape type. inside all 4 sub classes 
+	  we have impplemented all abstract methods so we will get CS and RS . after few days if we wan ttoa dd any 
+	  new feature which required for only few classes but not required for other sub classes. 
+	   in this case if we add new feature as a abstract methdo then all sub class will get CTE since they want to implements
+	    this new absstract method. to avoid this depedency we jave new key word called "default" to create new method
+        default defination inside interface, so that all subclasses no need to implements this new method. 
+       who ever wants sub class specific output they only need to override this default methods in side sub class. as same as 
+      implementation of absstract methods,while overridden default methods we should remove default key word inside sub class. 		
+	 
+	 interface Shape{
+ 
+		void draw();
+		public void calculateArea();
+		
+	 }
+	 
+ class Circle implements Shape{
+    public void  draw(){
+	  System.out.println("Drawing circle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of circle");
+	}
+	
+  }
+  
+  class Triangle implements Shape{
+   public void  draw(){
+	  System.out.println("Drawing Triangle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of Triangle");
+	}
+  }
+  
+  class Square implements Shape{
+	  @Override
+  public void  draw(){
+	  System.out.println("Drawing Square");
+	}
+	@Override
+	public void calculateArea() {
+	  System.out.println("area of Square");
+	}
+	
+  }
+  class Rectangle implements Shape{
+    public void draw(){
+	  System.out.println("Drawing Rectangle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of Rectangle ");
+	}
+	
+	
+  }
+  
+  
+   now we are adding feature as default method :
+   
+    interface Shape{
+ 
+    void draw();
+	public void calculateArea();
+	public default void calculateCircumference(){
+		System.out.println("default of Circumference of shape");
+	}
+ }
+ 
+ class Circle implements Shape{
+    public void  draw(){
+	  System.out.println("Drawing circle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of circle");
+	}
+	@Override
+	public void calculateCircumference() {
+	  System.out.println("Circumference of circle");
+	}
+  }
+  
+  class Triangle implements Shape{
+   public void  draw(){
+	  System.out.println("Drawing Triangle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of Triangle");
+	}
+	
+  }
+  
+  class Square implements Shape{
+	  @Override
+  public void  draw(){
+	  System.out.println("Drawing Square");
+	}
+	@Override
+	public void calculateArea() {
+	  System.out.println("area of Square");
+	}
+	@Override
+	public void calculateCircumference() {
+	  System.out.println("Circumference of Square");
+	}
+  }
+  class Rectangle implements Shape{
+    public void draw(){
+	  System.out.println("Drawing Rectangle");
+	}
+	public void calculateArea() {
+	  System.out.println("area of Rectangle ");
+	}
+	
+	
+  }
+  class ShapeManager{
+	  
+	  public static void main(String args[]){
+		  
+		  Circle c= new Circle();
+		  c.draw();
+		  Triangle t = new Triangle();
+		  t.draw();
+	  }
+  }
+  
+  
+  
+    in above program we are adding 
+	 
+	   shapes and formulas :
+	   =========================
+	   area of the circle  :  A = πr 2
+	   circumference of circle formula : 2πR
+		  
+	   area of square formula: A = a2; or side * side 
+	   circumference of square formula: P = 4 × side
+	   
+	   area of triangle formula: A = 1/2 × b × h 
+	   perimeterof triangle formula  : P = a + b +c
+	   
+	   area of rectangle formula: A= width * hight 
+	   Perimeter of a rectangle = 2 × (base + height)
+	
+	   
+	 
+	 
+	 
+	 
+	 
+	 instalation of eclipse:
+	 =========================
+	  eclipse is also one of edittor for java program developments, it will provide more features compare to notepad++ edittor, eclipse is not a simple editor , it is IDE(integrated development environment). it will give better suggestions for the developers while writing the java code. 
+	  
+	 -> it is open source software we can use free of cost. 
+	 
+	 
+	 
+	 
+	 
+	 download the eclipse : 
+	 ======================
+	 if you want to work with eclipse we cant create independent java classes or files like notepad or notepad++.
+	 in eclipse we need create the workspace : this work space act like common place for all our java projects 
+	 next inside workspace we need to create project like java project or maven project, gradle project or spingboot project etc ... then inside project we will create java files under src folder. 
+	 
+	 -> eclipse will support auto compilation : we no need to compile java files in eclipse, once you wirte java program then save the java program then eclipse compile automatically and it will create .class files. for every save operation it will compile java files automatically.
+	 
+	 1. create workspace
+	 2. create project : file -> new -> others -> java project -> give the project name : JaveDemo -> finish -> open prospective -> ok 
+	 3. create package -> src -> rt click -> new -> package -> com.k7it
+	 4. create class under src : rt click -> new -> class -> Helloworld
+	 5. add main method : just type main -> press ctrl+space -> it will add the main()
+	 6. add sop stmts: just type syso ->  press ctrl+space ->
+	 7.  save java : ctrl+s 
+	 8. run the java program : rt click - run as-> java application  short cut : alt+shift+x, j 
+	 
+	 class A{
+	    
+	  void m1(){
+	  
+	 }
+	 }
+	 
+	 in eclipse if we get any errors in our programs it will highlights in red color 
+	 if there is any warrnings it will hightlight in yellow color, 
+	 
+	 eclipse :
+	 how to change the java font : windows-> preparence-> general-> java-> java editor font-> edit -> font size
+	 how to change the console font : windows-> preparence-> general-> debug-> console editor font-> edit -> font size
+	 how to change the java version : windows-> preparence-> java compiler-> select version under compiler level dropdown 1.3 , 1.4..... 21. 
+	 how to change the java version for project level : project -> rt click-> properties-> java compiler-> select compiler version from dropdown 
+	 
+	 how to add thirdparty libs: project -> properties- build path-> add jars or add external jars etcc....
+	 
+	 eclipse short cuts:
+	 ==================
+	  ctrl+s -> save
+	  ctrl +shift +s -> save all 
+	  ctrl +space -> to get the suggestions with typed chars 
+	  
+	  alt + left arrow -> go to previous location or file 
+	  alt+ right arrow -> got to next location 
+	  alt+shift+x, j -> run the java application
+	  
+	  ctrl +Q ->  go to last modified place 
+	  
+	  ctrl +alt + up or down arrows -> create duplicate lines
+	  
+	  ctrl + ? -> sinngle line comment  or single line uncomment //
+	  
+	  ctrl + shift +? -> multi line comments 
+	  
+	  ctrl +shift + forword slah(\) -> multi line uncomment
+	  
+	  alt +up arrow or down arrow  -> moving code into a up or donw 
+	  ctrl+shift+f -> formate code into proper order.
+	  ctrl+shift+l -  eclipse shortcuts
+	  ctrl + l -> go to line
+	  ctrl+shift+R - > open resource
+	  ctrl+d - delete entire line
+	  ctrl+h -> file search 
+	  ctrl+shift+G - > find usage of resource.
+	  
+	  
+	  how to open the views -> windows-show views -> select required view like console or project explorer or problems etc ...
+	  
+	   
+	  @deprecated -> it is a old feature, we are not provide any support for this feature either working or not working, or might be in feature we can remove this feature. 
+	  
+	  
+	  how to debug the java code in eclipse:
+	  ======================================
+	  debug nothing run the java file line by line and see the values of each attribute and variables how its changing in heap memory or stack memory.
+	  
+	  to run any of the java file in debug mode, we should select debug as java application option instead of run as java application. 
+	  next we need to keep the break points in our code where we need stop our execution to monitor our program values. 
+	  
+	  afer stopped the execution at any of the break point , if we want to continue execution for further code 
+	  we can use these keys 
+	
+      f6 -> finish current line execution go to next line 
+	  f8  -> finish current line execution and go to next break poit or if there is not next breaks points then it will continue the remaining execution without stop.
+	  
+	  f5 -> if we want to go inner lines  or inner methods or inner blockes of code  from current line 
+	  
+	  f7 -> to come back to previous debug line from inner code. 
+	  
+	  ctrl +shit+i => investigate the value in the varibale or expression or statement 
+	  
+	  
+	  
+	 
+	 
+	 

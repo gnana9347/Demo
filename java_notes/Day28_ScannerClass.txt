@@ -1,0 +1,499 @@
+java runtime arguments: or cmd line argument or dynamic arguments
+================================================================
+
+the process of passing  dynamic inputs to main() is called as java runtime arguments.
+
+how to pass the dynamic inputs to main from cmd prompt:
+=======================================================
+A.java
+==========
+class A{
+ public static void main(String args[]){
+ 
+    System.out.println(args);
+ }
+}
+
+src> javac -d ../classes A.java 
+A.class will create under classes folder 
+
+src> cd ../classes 
+classes> java A
+Empty Array object tostring() output as classname@hexadecimalNumver of memory location
+
+[Ljava.lang.String;@372f7a8d
+here first char [ is indicates this obj is array class object.
+
+what is array: array is colelction of multiple data with similar data type. 
+
+usually  one variable can store only one value , but by using arrays we can store multiple values 
+ varaible will reserve only single memory space for  storing value of that corresponding variable.
+ but arrays will reserve multiple sequence of memory locations to store multiple values using same reference variable 
+ 
+ Syntax:
+ ======
+ dataType refVar[] = new DataType[initial capacity/size/length];
+ example:
+ =========
+ String str[] =  new String[3];  0 to 2 = 3 
+ here 3 indicates no of memory space we need to reserve for us to store values.
+ or it indicates how many values we can store inside that array. 
+ 
+ str[0] = "tharun";
+ str[1] =  "babu";
+ str[2] =  "sai";
+ 
+ str[3] = "kumar";// ArrayIndexOutOfBoundException
+ str[-10] =  ".net";//ArrayIndexOutOfBoundException
+ 
+ at 3 and -10 index we dont have any values inside str array , so we will get ArrayIndexOutOfBoundException.
+ 
+ sop(str[0]);// tharun
+ sop(str[1]); // babu
+ sop(str[2]); // sai
+ sop(str[3]); // AIOOBE
+ sop(str[-5]);// AIOOBE
+ 
+ same like this our main method also we will take one string array as input param. 
+ if we want to read the values for that array we should use index.
+ 
+ A.java
+==========
+class A{
+ public static void main(String args[]){
+	System.out.println(args);
+    System.out.println(args[0]);
+    System.out.println(args[1]);
+ }
+}
+
+E:\lab\classes>java A
+[Ljava.lang.String;@372f7a8d
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+        at A.main(A.java:5)
+		
+		by default args[] array will be empty so we cant read the values without passign values to main().
+		
+
+how to pass the values to main ():
+==================================
+in java we can pass dynamic input params to main() by using cmd prompt while running .class file using java cmd.
+
+   syntax:   java .classFileName_without_extention arg1 arg2 arg3...... argN
+
+here args1 arg2 arg3 .... there values will go as input params to main() for String ars[].
+
+Note: space is a delimiter between one argument to another arguments. 
+
+here how many values we are passing we can read those many values from main() usning index as 0 to n-1. 
+
+it means suppose if u r passing  3 values means then index will come 0,1,2.(o to 2)
+
+class A{
+ public static void main(String args[]){
+ 
+    System.out.println(args);
+	System.out.println(args[0]);
+    System.out.println(args[1]);
+    System.out.println(args[2]);
+ }
+}
+
+E:\lab\classes>java A Tharun Sai babu
+[Ljava.lang.String;@372f7a8d
+Tharun
+Sai
+babu
+
+note: here our program expecting 3 values we are passing 3 values so all 3 values are printing without any issue.
+
+E:\lab\classes>java A Tharun Sai babu kumar
+[Ljava.lang.String;@372f7a8d
+Tharun
+Sai
+babu
+
+note: here our program expecting 3 values we are passing 4 values so here also all 3 values are printing without any issue. 
+but 4th value we are ignoring without using 
+
+
+E:\lab\classes>java A Tharun Sai
+[Ljava.lang.String;@372f7a8d
+Tharun
+Sai
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 2
+        at A.main(A.java:7)
+		
+		
+note: here our program expecting 3 values we are passing 2 values so here 1st  2 index values i .e [0],[1] values are printing without any issue. but while reading index [2] value we are geeting AIOOBE. beacuse there is no 3rd value. 
+
+E:\lab\classes>java A TharunSaikumar
+[Ljava.lang.String;@372f7a8d
+TharunSaikumar
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+        at A.main(A.java:6)
+		
+Note: if we dont use space between args then whole value will consider as single value. 
+
+quesion : then how to pass space is a input param to argments:
+
+E:\lab\classes>java A Tharun kumar kesavulu arthala babu kumar
+[Ljava.lang.String;@372f7a8d
+Tharun
+kumar
+kesavulu
+
+
+E:\lab\classes>java A "Tharun kumar" "kesavulu arthala" "babu kumar"
+[Ljava.lang.String;@372f7a8d
+Tharun kumar
+kesavulu arthala
+babu kumar
+
+Solution : if we want to pass the space as input param then we should keep our input value inside double quotes.
+
+
+
+how to pass the cmd line arguments in eclipse for main ():
+===========================================================
+
+select java class -> rt click -> run-> run configurations-> then we will get one pop up window.
+ there click on arguments tab -> here we will get 2 sections one VM arguments  and program arguments
+ -> now we need to pass the our main method input params under program arguments section. 
+ 
+ vm argument : this for Virtual machine arguments, means jre input params
+
+ program argument: this for  main method arguments.
+ 
+ in eclipse once we set the values it will be there always, from second time onwards we can run the program directly as run->run as java application  option . 
+ in future if we want to modify the values then again we should go for run configurations option.
+ 
+ 
+ 2nd way of reading dynamic values from java program is using :
+ 
+ Scanner clas : scanner class is available in java.util package, so we need to add the import statement 
+ 
+ import java.util.Scanner;
+ 
+ it will work like a scanning machine from console and 
+ it will read the data from console with the help of System.in InputStream class type. 
+ 
+ 1. create obj for scanner class by passign System.in as argument. 
+ 2. keep sop stmt for user guidence to which inputs he need to provide.
+ like sop("please enter your name:")
+ 3. read the values from sc obj based on input values types there are multiple next() methods 
+ inside scanner class for each data types values like, 
+ 
+	 nextInt() -> int , 
+	 nextDouble() - double, 
+	 nextBoolean() - boolean , 
+	 next()-> string type
+ 
+ if we want to repeat the program agaian and again then used one boolean flag and do while loop for repeat the code execution agaian and agaian. 
+ 
+ package com.k7it;
+
+import java.util.Scanner;
+
+public class CmdLineArgmentsDemo {
+
+	public static void main(String args[]){
+		 
+//	    System.out.println(args);
+//		System.out.println(args[0]);
+//	    System.out.println(args[1]);
+//	    System.out.println(args[2]);
+		boolean flag = false;
+		do {
+		Scanner sc =  new Scanner(System.in);
+		System.out.println("Please enter you name:");
+		String name  =  sc.next();
+		System.out.println("Please enter your age:");		
+		int age  =  sc.nextInt();		
+		System.out.println("please enter your Height:");		
+		double ht  = sc.nextDouble();
+		
+		System.out.println("your pernoal detils are:");
+		System.out.println("name:"+name+",age:"+age+",Ht:"+ht);
+		System.out.println();
+		System.out.println("do you want to add another person details:true or false");
+		flag = sc.nextBoolean();
+		
+		}while(flag);
+		 System.out.println("program stoped");
+				
+	 }
+}
+
+
+Please enter you name:
+kumar
+Please enter your age:
+25
+please enter your Height:
+5.2
+your pernoal detils are:
+name:kumar,age:25,Ht:5.2
+
+do you want to add another person details:true or false
+false
+program stoped
+
+
+Note: 
+System.out : this is attribute of printstream class type it will print our input the values into console.
+System.in : this is attribte of InputStream class type, it will read the value from console what ever user entred.
+
+out: writing 
+in : reading  
+ 
+ 
+ 3rd way of giving dynamic inputs to programs:
+ =============================================
+ 
+    cmd line args drawbacks : no of arguments should be match, 
+	                          type of the args should be match'
+                              order argument also should be match. 
+   
+    in order to fix this limitations in cmd line args java people
+        	introduced System properties.
+     
+     how to pass system properties to program:
+	 =========================================
+      by using -D option for java cmd we can pass the system properties as input params
+	  to our java program.  
+	  system properties will works like same as hashmap or JSON i,e key and value pair 
+      concept. 
+      
+      syntax: java -Dkey1=value1 -Dkey2= value2  .class FileName
+      
+      How to read the system properties :
+      =================================== 
+              datatype value = System.getProperty("key");
+      
+      note: we should not use the space between -D and key. and 
+	   one priperty to another property space is delimer and
+	   for every system property we should use -D.
+      
+      exmample:  -Dwt="5.7"  -Dname="k7it" -Dht="37"  -Dage="27" as virtual arguments in the 
+      eclipse .
+      
+      How to read the system properties :
+      
+      we can read in 2 ways
+      1. System.getProperty("key");
+      2. Properties p = System.getProperties();
+         p.getProperty("key");
+     
+         int age = Integer.parseInt(System.getProperty("age"));
+	     String name = System.getProperty("name");
+	     double ht = Double.parseDouble(System.getProperty("ht"));
+	     double wt = Double.parseDouble(System.getProperty("wt"));
+	     
+	     System.out.println("Name:"+name+",age:"+age+",ht:"+ht+",wt:"+wt);
+	 /// Name:k7it,age:27,ht:37.0,wt:5.7
+	 
+	     Properties p  = System.getProperties();
+	     
+	     System.out.println(p);
+	     
+		 output: 
+			{java.specification.version=17, sun.cpu.isalist=amd64, sun.jnu.encoding=Cp1252, java.class.path=D:\lab\3rd-batch\ScanerDemo\bin, java.vm.vendor=Eclipse Adoptium, ht=37, sun.arch.data.model=64, user.variant=, java.vendor.url=https://adoptium.net/, java.vm.specification.version=17, os.name=Windows 11, sun.java.launcher=SUN_STANDARD, user.country=IN, sun.boot.library.path=C:\Users\Dell\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20221004-1257\jre\bin, sun.java.command=com.k7it.ScannerDemo, jdk.debug=release, sun.cpu.endian=little, user.home=C:\Users\Dell, user.language=en, java.specification.vendor=Oracle Corporation, java.version.date=2022-08-12, java.home=C:\Users\Dell\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20221004-1257\jre, file.separator=\, java.vm.compressedOopsMode=Zero based, line.separator=
+			, java.vm.specification.vendor=Oracle Corporation, java.specification.name=Java Platform API Specification, name=k7it, user.script=, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, java.runtime.version=17.0.4.1+1, user.name=Dell, path.separator=;, os.version=10.0, java.runtime.name=OpenJDK Runtime Environment, file.encoding=UTF-8, java.vm.name=OpenJDK 64-Bit Server VM, java.vendor.version=Temurin-17.0.4.1+1, wt=5.7, java.vendor.url.bug=https://github.com/adoptium/adoptium-support/issues, java.io.tmpdir=C:\Users\Dell\AppData\Local\Temp\, java.version=17.0.4.1, user.dir=D:\lab\3rd-batch\ScanerDemo, os.arch=amd64, java.vm.specification.name=Java Virtual Machine Specification, sun.os.patch.level=, native.encoding=Cp1252, java.library.path=C:\Users\Dell\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20221004-1257\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Users/Dell/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20221004-1257/jre/bin/server;C:/Users/Dell/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20221004-1257/jre/bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\apache-maven-3.8.6\bin;D:\Java\jdk1.8.0_202\bin;;C:\Users\Dell\Desktop;;., java.vm.info=mixed mode, java.vendor=Eclipse Adoptium, java.vm.version=17.0.4.1+1, sun.io.unicode.encoding=UnicodeLittle, java.class.version=61.0, age=27}
+			
+			
+	     System.out.println("Name:"+p.getProperty("name")+
+	    		 ",age:"+p.getProperty("age")+
+	    		 ",ht:"+p.getProperty("ht")+
+	    		 ",wt:"+p.getProperty("wt"));
+	    		 
+	    	output: 
+			Name:k7it,age:27,ht:37,wt:5.7
+			
+			
+		 how to read the system properties from our own properties file :
+			
+			MyApplication.properties
+			
+			name=K7iT
+			age=37
+			ht=5.5
+			wt=56.5
+			com.k7it.database.name=k7itdb
+			com.k7it.database.username=k7it
+			com.k7it.databse.password=123456
+			
+			
+			
+			FileReader file = new FileReader
+				(new File("D:\\lab\\3rd-batch\\ScanerDemo\\src\\resource\\MyApplication.properties"));
+	     
+		     Properties p1 =System.getProperties();
+		     p1.load(file);
+		     System.out.println("Name:"+p1.getProperty("name")+
+		    		 ",age:"+p1.getProperty("age")+
+		    		 ",ht:"+p1.getProperty("ht")+
+		    		 ",wt:"+p1.getProperty("wt"));
+		     
+		     System.out.println("K7it databse:"+p1.getProperty("com.k7it.database.name"));
+		     System.out.println("K7it databse username:"+p1.getProperty("com.k7it.database.username"));
+		     System.out.println("K7it databse password:"+p1.getProperty("com.k7it.databse.password"));
+	     
+		 Note: Properties class available under java.util package so we should use import statement.
+		 
+		 how to pass properties in eclipse using -D:
+		 ==============================================
+		 here using -D option we can pass input param to JRE not for main(), 
+		 so -Dkey=value system properties  values 
+		 we should pass under VM Arguments but not under program arguments.
+		 
+		 javafile -> rt click -> run as -> run configurations -> argument tab -> VM arguments
+		 
+		 -Dname=kesav -Dage=25 -Dht=5.5  -Dwt=60.25
+		 
+			
+			
+			example1:
+			=========
+			
+			package com.k7it;
+
+import java.util.Properties;
+
+public class SystemPropertiesDemo {
+	public static  void main(String args[]){
+	    
+		double ht =  Double.parseDouble(System.getProperty("ht"));
+		String name = System.getProperty("name");
+		double wt =  Double.parseDouble(System.getProperty("wt"));
+		int age =  Integer.parseInt(System.getProperty("age"));
+		
+		System.out.println("Name:"+name+",age:"+age+",Ht:"+ht+",wt:"+wt);
+		
+		// 2nd way of reading system properties 
+		Properties p = System.getProperties();
+		
+		System.out.println(p);
+		
+		double ht1 =  Double.parseDouble(p.getProperty("ht"));
+		String name1 = p.getProperty("name");
+		double wt1 =  Double.parseDouble(p.getProperty("wt"));
+		int age1 =  Integer.parseInt(p.getProperty("age"));
+		
+		System.out.println("Name:"+name1+",age:"+age1+",Ht:"+ht1+",wt:"+wt1);
+		
+		
+	  }
+}
+
+
+    output:
+	 =======
+	   Name:kesav,age:25,Ht:5.5,wt:60.25
+	   
+		{java.specification.version=22, sun.cpu.isalist=amd64, sun.jnu.encoding=Cp1252, java.class.path=, java.vm.vendor=Oracle Corporation, ht=5.5, sun.arch.data.model=64, user.variant=, java.vendor.url=https://java.oracle.com/, java.vm.specification.version=22, os.name=Windows 10, sun.java.launcher=SUN_STANDARD, user.country=US, sun.boot.library.path=D:\Java\jdk-22\bin, sun.java.command=DynamicInputs/com.k7it.SystemPropertiesDemo, jdk.debug=release, sun.cpu.endian=little, user.home=C:\Users\K7IT, user.language=en, java.specification.vendor=Oracle Corporation, jdk.module.path=D:\lab\202402_JavaBatch\eclipse_workspace\DynamicInputs\bin, java.version.date=2024-07-16, java.home=D:\Java\jdk-22, file.separator=\, java.vm.compressedOopsMode=Zero based, line.separator=
+		, java.vm.specification.vendor=Oracle Corporation, java.specification.name=Java Platform API Specification, name=kesav, jdk.module.main.class=com.k7it.SystemPropertiesDemo, jdk.module.main=DynamicInputs, user.script=, sun.management.compiler=HotSpot 64-Bit Tiered Compilers, java.runtime.version=22.0.2+9-70, user.name=K7IT, stdout.encoding=UTF-8, path.separator=;, os.version=10.0, java.runtime.name=Java(TM) SE Runtime Environment, file.encoding=UTF-8, java.vm.name=Java HotSpot(TM) 64-Bit Server VM, wt=60.25, java.vendor.url.bug=https://bugreport.java.com/bugreport/, java.io.tmpdir=C:\Users\K7IT\AppData\Local\Temp\, java.version=22.0.2, user.dir=D:\lab\202402_JavaBatch\eclipse_workspace\DynamicInputs, os.arch=amd64, java.vm.specification.name=Java Virtual Machine Specification, sun.os.patch.level=, native.encoding=Cp1252, java.library.path=D:\Java\jdk-22\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;C:\Program Files\MongoDB\Server\8.0\bin\;C:\Program Files\nodejs\;C:\Users\K7IT\AppData\Local\Microsoft\WindowsApps;C:\Users\K7IT\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\MongoDB\Server\8.0\bin;C:\Users\K7IT\AppData\Roaming\npm;., java.vm.info=mixed mode, sharing, stderr.encoding=UTF-8, java.vendor=Oracle Corporation, java.vm.version=22.0.2+9-70, sun.io.unicode.encoding=UnicodeLittle, java.class.version=66.0, age=25}
+
+		Name:kesav,age:25,Ht:5.5,wt:60.25
+
+
+
+			Examples2:
+			===========
+			
+			package com.k7it;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+public class ReadCustomPropertyFile {
+
+	public static void main(String[] args) throws IOException, FileNotFoundException {
+
+		Properties p = System.getProperties();
+		FileInputStream in  = new FileInputStream(
+				"D:\\lab\\202402_JavaBatch\\eclipse_workspace\\DynamicInputs\\resource\\application.properties");
+		p.load(in);
+		
+		System.out.println(p.getProperty("name"));
+		System.out.println(p.getProperty("age"));
+		System.out.println(p.getProperty("ht"));
+		System.out.println(p.getProperty("wt"));
+		System.out.println(p.getProperty("com.k7it.database.name"));
+		System.out.println(p.getProperty("com.k7it.databse.usernmae"));
+		System.out.println(p.getProperty("com.k7it.databse.password"));
+		System.out.println(p.getProperty("com.k7it.salary"));
+	}
+}
+
+
+				output:
+
+				kesavulu arthala
+				39
+				5.5
+				60.25
+				k7itDB
+				lucky
+				vinnu@143
+				null
+
+Note1: in case given key is not present in properties file then system.getProperty("key")
+ will return null value as a output. 
+
+Note2: p.load(reader or inputStream) will raise on checked exception i.e IOException
+
+FileReader or FileInputStream will raise one checked exception called FileNotFoundException.
+ so we should take these two exceptions  using  either try and catch or throws.  
+
+ Note3: Properties class available under java.util package, so we should use import statement.
+ 
+ Note: by using -Dkey=value we can push our properties into a System.properties files. 
+ 
+ if we dont want to push our keys into system properties then we can create our own 
+    properties file like application.properties file or myApplication.properties
+	
+	
+	in core java we are doing this much excercise , but in springboot we can 
+	acheive this with simple annotation i.e @Value("key")
+	 example:
+	 ========
+	  @Value("name");
+	  String name;
+	  
+	  @Value("com.k7it.database.name");
+	  String dbName;
+	  
+	  @Value("com.k7it.database.password");
+	  String password;
+	  
+	  @Value("com.k7it.database.username");
+	  String userName;
+	  
+	 
+	
+
+
+		How to read dynamic inputs from user using scanner class:
+		===========================================================
+		
+			Scanner class is available under java.util packe, by using scanner class we can
+			read the dynamic input values from console with the help inputStream object
+			(i.e System.in).
+			Syste.out : it will write the data into console
+			System.in : it will read the data from console
+			
+			
+			
+  
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+

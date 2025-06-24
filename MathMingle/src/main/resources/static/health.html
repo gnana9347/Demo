@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness & Health Calculators</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4ede1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            color: white;
+            background: rgb(128, 128, 128);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background: #a0522d;
+        }
+
+        h1 {
+            margin: 0;
+            background: #8B4513;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 22px;
+            flex-grow: 1;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #5a3825;
+            border-bottom: 3px solid #8B4513;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .list {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .calculator-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, background-color 0.3s;
+        }
+
+        .calculator-item:hover {
+            transform: translateY(-4px);
+            background: #f0e6d2;
+        }
+
+        .calculator-item a {
+            color: #8B4513;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .calculator-item a:hover {
+            color: #a0522d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-button">⬅ Back</a>
+            <h1>Fitness & Health Calculators</h1>
+        </div>
+        <p>Explore our complete list of fitness and health calculators below.</p>
+
+        <div class="list">
+            <h2>🏋️‍♂️Fitness</h2>
+            <ul class="calculator-grid">
+                <li class="calculator-item"><a href="fitness.html?calculator=bmi">BMI Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=calories">Calorie Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=body-fat">Body Fat Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=bmr">BMR Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=ideal-weight">Ideal Weight Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=pace">Pace Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=army-body-fat">Army Body Fat Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=lean-body-mass">Lean Body Mass Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=healthy-weight">Healthy Weight Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=calories-burned">Calories Burned Calculator</a></li>
+                <li class="calculator-item"><a href="fitness.html?calculator=one-rep-max">One Rep Max Calculator</a></li>
+            </ul>
+
+            <h2>🤰Pregnancy</h2>
+            <ul class="calculator-grid">
+                <li class="calculator-item"><a href="pregnancy.html?calculator=pregnancy">Pregnancy Calculator</a></li>
+                <li class="calculator-item"><a href="pregnancy.html?calculator=conception">Pregnancy Conception Calculator</a></li>
+                <li class="calculator-item"><a href="pregnancy.html?calculator=ovulation">Ovulation Calculator</a></li>
+                <li class="calculator-item"><a href="pregnancy.html?calculator=period">Period Calculator</a></li>
+            </ul>
+
+            <h2>📊Other</h2>
+            <ul class="calculator-grid">
+                <li class="calculator-item"><a href="other.html?calculator=macro">Macro Calculator</a></li>
+               <!-- <li class="calculator-item"><a href="other.html?calculator=carbohydrate">Carbohydrate Calculator</a></li>-->
+                <li class="calculator-item"><a href="other.html?calculator=protein">Protein Calculator</a></li>
+                <li class="calculator-item"><a href="other.html?calculator=fat">Fat Intake Calculator</a></li>
+                <li class="calculator-item"><a href="other.html?calculator=tdee">TDEE Calculator</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Visitors</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+            color: #333; /* Default font color */
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .navigation {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .navigation a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+        }
+        h1 {
+            text-align: center;
+            color: #4b0082; /* Indigo */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4caf50;
+            color: white;
+            font-weight: bold;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            color: #00008b; /* Dark Blue */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .action-icons {
+            cursor: pointer;
+            margin-right: 8px;
+            color: #555; /* Default color for action icons */
+        }
+        .action-icons:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="/">Home</a>
+            <a href="/create-visitor">Create Visitor</a>
+        </div>
+        <h1>List of Visitors</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="visitorTableBody">
+                <!-- Visitor rows will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchVisitorData();
+        });
+
+        async function fetchVisitorData() {
+            try {
+                const response = await fetch('/api/v1/visitor/all');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                renderVisitorRows(data);
+            } catch (error) {
+                console.error('Error fetching visitor data:', error);
+            }
+        }
+
+        function renderVisitorRows(visitors) {
+            const tableBody = document.getElementById('visitorTableBody');
+            tableBody.innerHTML = ''; // Clear existing rows
+            visitors.forEach(visitor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${visitor.id}</td>
+                    <td>${visitor.name}</td>
+                    <td>${visitor.age}</td>
+                    <td>${visitor.email}</td>
+                    <td>${visitor.phone}</td>
+                    <td>
+                        <span class="action-icons" onclick="viewVisitor('${visitor.id}')">👁️</span>
+                        <span class="action-icons" onclick="editVisitor('${visitor.id}')">✏️</span>
+                        <span class="action-icons" onclick="deleteVisitor('${visitor.id}')">🗑️</span>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function viewVisitor(id) {
+            location.href = '/view-visitor?id=' + id;
+        }
+
+        function editVisitor(id) {
+            location.href = '/edit-visitor?id=' + id;
+        }
+
+        async function deleteVisitor(id) {
+            if (confirm("Are you sure you want to delete this visitor?")) {
+                try {
+                    const response = await fetch(`/api/v1/visitor/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (response.ok) {
+                        alert(`Visitor with ID ${id} deleted successfully.`);
+                        fetchVisitorData(); // Refresh the visitor list
+                    } else {
+                        alert(`Failed to delete visitor with ID ${id}.`);
+                    }
+                } catch (error) {
+                    console.error('Error deleting visitor:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

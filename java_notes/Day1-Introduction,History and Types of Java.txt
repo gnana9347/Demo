@@ -1,0 +1,126 @@
+Software: the process of converting our imaginaries into a reality by using set programs is called as software.
+
+software can divided into 3 types mainly 
+
+1. system software : it is software which is used to control the functionality of hardwards like washing machine  softwares, JCB softwares , oven, cars engine , robos , dvd players, flopy disk softwares etc. 
+
+These softwares are called as Stand alone softwares.
+
+scope: sysstem softwares scope is with in the device
+   
+2. application/Intranet softwareres :  it is also a sofgtwares, which is used to control the functionality of organizational oriented  process those softwares are called application softwares example: hospital management softwares, college management softwares, Bank procees softwares, telephone service with in the building  etc .
+
+these applications also called as intranet application;
+
+scope: intranet softwares scope  is with in the building or organization.
+
+
+3. internet softwares : the sofwares which are used  thorugh internate from any where in the wold (WWW)  those softwares called as internate applications.  www applications are called as internet applications, these applications also called as wold wise web applications.
+	
+	 here in this 
+	 system softwares :  this softwares are stand alone softwares/ applications
+	 application softwares : is called as intranet softwares	 
+	 internet softwares : this distributed softwares / applications 
+	 
+	 scope: internet softwares scope  is entire world.
+
+
+	 types of applications: 
+	     1. stand alone applications:
+
+		    the softwares where we have  installed in that system only we can able to use that softwares,  those  softwares are called as standalone applications.
+		   like VLC players, MS Office , antivirus software, OS, 
+			
+		   this type of softwares we can't share with others i.e these are not sharable applications
+						 			   
+			all system softwares and application softwares will comes under standalone applications. 
+  			
+		 2. distributed applications: all internate applications are called as a distributed applications .
+		   these softwares we can access from any where thorugh internate(www). like gmail, yahoo, facebook,  youtube, twitter etc applications are called internate applications. 
+		   these applications are sharable applications. 
+		   
+		  
+		  if we want to develop any of these applications we need the progrmaing languages like C, C++, java, .net, python , angular. 
+		  
+		  in these programing languages java has the huge demand in the market: so we are going to learn java programming language . 
+		  
+		  
+		  Lets start Java: 
+		  
+		  introduction about java:
+		  =========================
+		  
+		  -> java is a object oriented programing language(oops), it means in java everything we can achive in the form of classes and Objects formates only.
+		  
+		  -> java is open source software : open source means its a free of cost. we no need to pay even single ruppe for using java software for developing our projects. because of this java getting  huge market in the software world. 
+		  
+		  -> java is platform independent software :  write once run anywhere is called platform independent language. 
+		  write the program in one operationg system same program we can execute or run in any  
+			  other operating is called platform independent programs. 
+			  
+		  -> java is highly secure language.
+		  
+		  
+		   history about java :
+		   ====================
+              who  is father of java:?
+				
+					->james gosling is the father of java 
+			
+			  what is the first name of java?
+					-> OAK is the first name of java , it is one of tree name where they were taking rest when they are feeling tired.
+					
+			 what is the symbol of java?
+				   -> hot coffee cup is first symbol of java 
+		     when java is introduced in the market ?
+				  January 1991
+		     which company published java first time?
+					sun micro systems is published java first time in market 1995
+				 
+			 what is the cartoon symbol of java ?
+			     duke is the cartoon symbol of java, it looks like pengvin 
+				 
+			 when jdk 1.0 is released into market ?
+               JDK 1.0 released in (January 23, 1996) release by Sun micro system
+			   
+            what is the current company of java?
+                	Oracle company publishing java present. from 2009 oracle company occuired Sun micro system 
+					
+
+            what are the certificates in java   
+			  old:
+              SCJP :  Sun certificated java programmer
+              SCWCD:  sun certificated web component developer
+              SCECD 	
+              now: 			  
+              OCJP :  Oracle certificated java programmer
+			  OCWCD : oracle certificated web component developer
+			  
+			  
+				
+					Types of java:
+					=============
+					
+					1.J2SE : Java 2 standard edition : by using J2SE we can develop stand alone applications 
+						   like mobile games, video games , anti virus, vlc players.
+						   (.jar)  java Archive files
+						   the budle of set of java programs are called jar file
+						   or (.exe)  -> executable files
+													   
+					2.J2ME : Java 2 Micro edition / Mobile Edition : by using J2ME we can develop mobile applications
+					                                       even android applications are developed by Java only.
+															.apk
+					3.J2EE : Java 2 EnterPrize Edition: by using J2EE we can develop EJB applications like large scale applications i.e warehouse managemnts or bank applications etc where we need highly secure and very big appications we can go for J2EE. 
+					 like Web appplication (.war) or EnterPrize applications(.ear) (.war)
+					
+ 					 jar -> java archive   -> .java files  -> to run we need  cmd prompt
+					 
+					 war -> web archive  -> .java files + web.xml (Web container) ->  to run we need  web server(Tomcat) + browser
+					 
+					 ear -> enterprize archive -> .java files +  web.xml (web container)+ applicalication container -> to run we need application server(Web logic, webshpere,jboss) + browser
+					 
+					 apk -> android package								 
+														 
+					  we want to become web application developer so we can learn only J2SE and J2EE.
+					  
+					  if we want to become mobile developer then we need to learn j2se and j2me.

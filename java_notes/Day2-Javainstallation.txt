@@ -1,0 +1,260 @@
+	  
+					  J2SE: core java
+					  
+					   Versions of java : 
+					   
+				 java is having 23 version as of now : 
+				  
+					JDK Alpha and Beta (1995)
+					JDK 1.0 (23rd Jan 1996)
+					JDK 1.1 (19th Feb 1997)
+					J2SE 1.2 (8th Dec 1998)
+					J2SE 1.3 (8th May 2000)
+					J2SE 1.4 (6th Feb 2002)
+					J2SE 5.0 (30th Sep 2004) -> this version makes java very huge impact in market
+					Java SE 6 (11th Dec 2006) --- sun  micro system published still this version 
+					Java SE 7 (28th July 2011) -- Oracle company pushing java from here  (2009 - 2011)
+					Java SE 8 (18th Mar 2014)
+					Java SE 9 (21st Sep 2017)
+					Java SE 10 (20th Mar 2018)
+					Java SE 11 (September 2018)
+					Java SE 12 (March 2019)
+					Java SE 13 (September 2019)
+					Java SE 14 (Mar 2020)
+					Java SE 15 (September 2020)
+					Java SE 16 (Mar 2021)
+					Java SE 17 (September 2021)
+					Java SE 18 ( March 2022)
+					Java SE 19 (Sep 2022)
+					java SE 20 ( Mar 2023)
+					java SE 21 ( Sep 2023)
+					java se 22 ( Mar 2024)
+					java se 23 (it will come on Sep 2024)
+					
+					  How to install java software or JDK :
+					  
+					  1. download jdk 22 software from oracle web site: 
+					     https://www.oracle.com/in/java/technologies/downloads/#jdk22-windows
+						 
+						  down load jdk 22  with 64 bit operating compatability for windows.
+						  
+						  create oracle account if we dont already. if you have account just login it will 
+						  download jdk automaticaly.
+				      2.  doble click on downlaod software -> 
+					        then we will one pop with 3 options 
+							    1. development tools  : mandatory options we cant install java without this feature
+								2. source code: optional if we want we can install this feature else we can ignore
+								3. public JRE: its not mandatory option, we can ignore this feature, this freature is 
+								               not required for the developer.  it is required for only production purpose
+											   or end user user purpose we need public jre.  for developers private JRE 
+											   enough.
+							  
+							    by default our java software will try to install under C:\ program files folder like bellow
+								
+								C:\Program Files\Java\jdk-22\;
+								
+								C:\Java\jdk-22\;
+								D:\Java\jdk-22\;
+								
+								But its not advisible to install java software under program files folder. 
+								1.why beacuse as per the java standards we should not maintain space between any 2 words 
+								for folder names or file name. but here program and files words have one single space between
+                                those 2 words. 		
+                                2. in case if we unstall OS then our java software also will loose from computer.
+
+                                 so dont install our java software under C:\ program files folder 
+                                 C: used it for only OS softwares 
+                                 D: drive for our development softwares like java , oracle, mysql, notepad++ 
+                                 E:  used it for developening applications / programs
+								 
+							  So i am installing our java software under this location:
+							  D:\Java\jdk-22
+							 then click -> next -> close.
+							 
+						3. verify our software installed properlly or not 
+							  go to our installation location  i.e D:\Java\jdk-22
+							  
+							  inside this folder :
+							  we will have following folder 
+							  
+							  D:\Java\jdk-22\
+							                      -> bin
+													    *.cmd files which are related to JVM and JRE
+													    javac
+													    java
+													    javah      
+													    javaw
+													    javap
+													    javadoc
+													  
+												   -> lib 
+												        *.jar        dependency jarfiles which are related to JVM and JRE
+														 tools.jar   (this is one of imp jar file)
+											            -> src.zip       it will contains all java source code which is already
+													                 developed by java peoples so far. 
+																	 
+					if we want to open zip fiels we need unzip softwares like winrar or 7 zip etc . better to use the 7zip
+					software to open src.zip files.
+					
+					4. set the PATH and JAVA_HOME environment variables :
+					
+					   PATH: path is a one of system environment variable by using  this variable we can register our
+					   third party software locations with Operating system(OS).
+					    press  window key word -> type or search for Environment variables -> Environment variables for your user
+						-> under User Variable for K7iT 
+						    path -> click edit -> click new -> copy and past our java software installed 
+															   location still	bin folder  i.e
+															   D:\Java\jdk-22\bin; -> click ok.
+				      JAVE_HOME: this vraible will describes where is our java installed with root folder directly
+					             JAVA_Home variable should be set with java ROOT directory location;
+								   i.e D:\Java\jdk-22
+								   
+				
+				
+				
+				 JVM : Java virtual machine
+				 JRE : Java Runtime Environment
+				 LIB : Library 
+				 BIN : Birany
+				 SRC : Source code
+				 rt  : Run Time 
+				 JDK : Java development tool kit	
+                 jar : java archive (stand alone application) (bunble of .class files)
+                 war : web archive (web applications)(its a bundle of .class files and web_inf, web.xml)
+                 ear : enterprize archive(enterprize applications) (its bundle of .classes , web.xml, weblogic server info)
+
+                 javac : java compiler
+                 cd : change directory 
+ 				 
+						  
+					  
+	Write a HelloWrold program by using Java: 
+	=========================================
+	
+	1. compose and saving a java program with .java ext
+	2. compilating .java file
+	3. running .class file
+	
+	1. Compose and saving :  if we want to compose any java program we need one editor like : 
+	     notepad, notepad++, eclipes, STS, RSA, RAD, IntelliJ, visual studio etc . like this there lot of edittors in the market  to support java program developments.
+     
+	     here : notepad : is default editor which will come as part of OS instalation , so we dont need  any adiitonal software instalation. 
+		 
+		 but remaining editors like : notepad++, eclipsem, STS, RSA, RAD, IntelliJ etc  these are third party editors , if we want to use these edittors we need to install these editors seperatly. 
+			 
+	first we will start with notepad: 
+	-> lets open  the notepad:
+	    win + R -> type notepad -> press enter key.
+		it will open the editor with white background :
+		 then start composing our java HelloWrold program using class key word. 
+		 
+		  class HelloWorld{
+ 
+			 public static void main(String args[]){
+
+			  System.out.println("Hello world this is my first java program at K7iT");
+			 }
+
+		  }
+		  
+		  save the program with HelloWorld.java ; here .java is extendion type for java programs. 
+		   save under: D:\lab\202401_JavaBatch\src
+		                                    ----
+		                                      -> HelloWorld.java
+											  
+			{ - brase
+			( - parentheses 
+			[ - bracket 
+			
+   2. compilation : if we want compile java program we need 2 things
+                    a. command prompt
+                    b. javac cmd 
+
+   by usning javac cmd we can compile our java programs. this javac cmd will verify all rules and standards of 
+   our program either we are following as same as java required standards. if we are not following proper rules 
+   then we will get the errors. 
+   
+				syntax: javac  .java file name with extendion
+	 
+	 exmaple: javac HelloWorld.java
+	 
+	 if we want to compile our program we should compile from where our .java files are saved.
+	     i.e D:\lab\202402_JavaBatch\src> 
+											  
+		 let open command prompt from our system 
+		 
+		    press win + R -> type cmd -> press enter key  - then it will open the command prompt with black color 
+			background. by default it will loads current user location but we need to compile from our java file 
+			locations 
+			
+			C:\Users\Dell>cd D:\lab\202401_JavaBatch\src
+
+			C:\Users\Dell>D:
+
+			D:\lab\202401_JavaBatch\src>javac HelloWorld.java
+
+			D:\lab\202401_JavaBatch\src>
+			
+			here we get the next line without any error message means our program is compiled successfull . 
+			
+			how to confirm our program is compiled successfull or  not?
+			
+			go to our .java file location i. D:\lab\202401_JavaBatch\src and see there will be one more file got 
+			created with the same of our class name  with .class extention. 
+			
+			input (*.java)  -> javac -> *.class (output)
+			
+			javac cmd will convert our .java file into a .class file.
+			here .java file is also called  source code or high level code or user understand code. 
+			     .class file is called as   byete code or intermediate code 
+				 
+	   3. running program: if we want to run the java program we need 2 things  
+	               1.  cmd prompt  
+				   2.  java cmd 
+		   
+		     let open the cmd prompt 
+			  press win + R -> type cmd -> press enter key  - then it will open the command prompt with black color 
+			background. by default it will loads current user location but we need to run from our .class file 
+			locations 
+			
+			  syntax: java .class file name without extention
+			   exm:   java HelloWorld
+			   
+			    C:\Users\Dell>d:
+
+				D:\>cd lab\202401_JavaBatch\dev\src
+
+				D:\lab\202401_JavaBatch\src>java HelloWorld
+				Hello world this is my first java program at K7iT
+
+				D:\lab\202401_JavaBatch\src>
+				
+				
+				in case our program having some syntax errors compiler will identifies at compilation time only
+				like below
+				
+				D:\lab\202401_JavaBatch\src>javac HelloWorld.java
+				HelloWorld.java:3: error: ')' expected
+				 public static void main(String args[]{
+													  ^
+				HelloWorld.java:5: error: ';' expected
+				  System.out.println("Hello every one good morning to all")
+																		   ^
+				2 errors
+				
+				
+				
+		source code (.java): its user understandable code, or high level code or java
+		      its writing in english
+        byte code (.class): byte code or intermediate code
+             it will be in alphanumeric and some special chars		
+		binary code: its is low level code or system understandable code.		
+				
+				
+			Note: once compilation done and .class file created from .java file, then our java file is not required for execution of program. we can delete .java file no problem. 
+		
+		de compiler : by uding de compiler we can convert .class file back to .java file 
+
+        https://github.com/java-decompiler/jd-gui/releases/download/v1.6.6/jd-gui-windows-1.6.6.zip	
+		
+		to open our .class files with DeCompiler, first we need to make our .class fils as Zip file or .jar 

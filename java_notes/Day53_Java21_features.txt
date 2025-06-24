@@ -1,0 +1,240 @@
+Java 21 new Features:
+=====================
+
+1. single source file direct execution :
+=========================================
+  by using this feature we need to use javac cmd to compile .java files, we can run direct .java file using java cmd. 
+  
+  class HelloWorld{
+    public static void main(String args[]){
+	   Systeme.out.println("Good morning to all");
+	 }
+  }
+  
+  older days :
+  ============= 
+  src> javac -d ../classes HelloWorld.java 
+  classes> java HelloWorld
+      Good morning to all
+  
+  now a days :
+  ============
+  seperate compilation not required we can run direct java file 
+  
+  src> java HelloWorld.java 
+    output: Good morning to all
+	
+	
+limitation : we can't run multiple java files at a time , but we can run multiple class in side single java file. 
+  class Person{
+	  int age;
+	  String name;
+	  double height;
+	  double weight;
+	  String color;
+	  
+    Person(){    
+       System.out.println("I am inside person class constructor");
+    }
+	
+	
+  }
+
+public class PersonManager{
+		   public static void main(String args[]){
+		      /// create object for person class 
+			  
+			  Person p1 = new Person();  			  
+			  
+			  p1.age = 24;
+			  //p1.age ="abc";//CTE
+			  p1.name = "Tharun";
+			  p1.height = 5.6;
+			 
+			  
+			  System.out.println("Tharun details");
+			  System.out.println("Name:"+p1.name);
+			  System.out.println("age:"+p1.age);
+			 
+			 
+		   }
+		}
+		
+		D:\lab\202402_JavaBatch\src>java PersonManager.java
+			I am inside person class constructor
+			Tharun details
+			Name:Tharun
+			age:24
+			
+    String Templates: 
+	================
+	     String name = "K7iT";
+		 
+		Sop("My name is:"+name);///My name is: K7iT.
+		
+		Sop("My name is:{name}");
+		
+		int age = 20;
+		
+			Sop("My name is:{name}, my age is:{age}");
+		
+java 21 features:
+=================
+
+1. instanceof with record  : 
+============================
+instanceof key from java 21 onwards its supporting for record type also.
+    example :
+
+   package com.k7it; 
+
+record Account(int i,int j) {} 
+
+public class InstanceOfDemo21 {
+	public static void main(String[] args) {
+		 Object obj  = new Account(10, 20);
+		System.out.println( add(obj));
+		
+		
+	}
+	 
+	
+static int add(Object obj) {
+	
+	if(obj instanceof Account a) {
+		return a.i() + a.j();
+	}
+	return 0;
+} 
+
+} 
+
+2. switch with null : 
+========================
+   example :
+   package com.k7it; 
+
+class Accounts{
+	int getBalance() {
+		return 10;
+	}
+}
+class SavingAccount extends Accounts{
+	int getBalance() {
+		return 20;
+	}
+}
+class CurrentAccount extends Accounts{
+	int getBalance() {
+		return 30;
+	}
+}
+class DematAccount extends Accounts{
+	int getBalance() {
+		return 40;
+	}
+}
+public class SwitchCaseDemo {
+	
+	public static void main(String[] args) {
+		
+		Accounts a = new SavingAccount();
+		printBalance(a);
+	}
+	
+	static void printBalance(Accounts a) {
+		
+		int balance = switch(a) {
+		case null -> throw new IllegalArgumentException("Null value not allowed");
+		case SavingAccount sa ->  sa.getBalance();
+		case CurrentAccount ca ->  ca.getBalance();
+		case DematAccount da ->  da.getBalance();
+		default -> 0;
+		};
+		
+		System.out.println(balance);
+		
+	} 
+
+}
+  in above code  we are passing SavingAccount obj as input param to printBalance(), so we are getting output as : 20
+  
+
+3. switch with case with additional filters with "when" key word :
+=================================================================
+here inside switch case alogn with patters they came up with when key for 
+    adding additional filters when wich case matched on the matched object like bellow 
+	
+	package com.k7it; 
+
+class Accounts{
+	int getBalance() {
+		return 10;
+	}
+}
+class SavingAccount extends Accounts{
+	int getBalance() {
+		return 5;
+	}
+}
+class CurrentAccount extends Accounts{
+	int getBalance() {
+		return 30;
+	}
+}
+class DematAccount extends Accounts{
+	int getBalance() {
+		return 40;
+	}
+}
+public class SwitchCaseDemo {
+	
+	public static void main(String[] args) {
+		
+		Accounts a = new SavingAccount();
+		
+		printBalance(a);
+		
+	}
+	
+	static void printBalance(Accounts a) {
+		
+		int balance = switch(a) {
+		case null -> throw new IllegalArgumentException("Null value not allowed");
+		case SavingAccount sa when  sa.getBalance() > 10 -> sa.getBalance();
+		case CurrentAccount ca ->  ca.getBalance();
+		case DematAccount da ->  da.getBalance();
+		default -> 0;
+		};
+		
+		System.out.println(balance);
+		
+	} 
+
+}
+
+
+here we will get the output as : 0 even though we are passing SavingAccount object. why bacause in case of SavingAccount optin 
+we have added additional conditions like accoutbalance > 10 means we are reading the balance amt else we are ignoring so we are getting
+default case output is : 0. 
+
+case SavingAccount sa when  sa.getBalance() > 10 -> sa.getBalance();
+
+4. source file execution introduction 
+     by using this option we can run the .java file directly without compilation using javac cmd. 
+	 
+5. String templates usign STR template name with type script patter of using attribute names : by using String tamplates we can 
+     use the attributes and variables directly inside string value as type script variables using \{variable name}.
+	 
+	 example:
+	  String name = "k7iT";
+	  int age = 10;
+	  
+	  old ways:
+	  ========
+	  sop("My name is :"+name+", my age is :"+age);
+	  
+	  new template:
+	  ================
+	  sop(STR."My name is :\{name}, my age is :\{age}");
+	 

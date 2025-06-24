@@ -1,0 +1,226 @@
+package com.k7it;
+
+public class ReverseNumber {
+	public static void main(String[] args) {
+		int n = 1352;
+		int reverseN = reverseNumber1(n);
+		// complete reverseNumber(); to get the required output
+		System.out.println("original number:" + n);
+		System.out.println("reverse  number:" + reverseN);
+	}
+
+	private static int reverseNumber(int n) {
+		int rev = 0;
+		while (n > 0) {
+			int reminder = n % 10;// 5, 2, 1
+			rev = (rev * 10) + reminder;// 5, 5*10+2= 52, 52*10+1= 521
+			n = n / 10; // 1 , 0
+		}
+		return rev;
+	}
+	
+	private static int reverseNumber1(int n) {
+		int rev = 0;
+		for (;n > 0; ) {
+			int reminder = n % 10;// 5, 2, 1
+			rev = (rev * 10) + reminder;// 5, 5*10+2= 52, 52*10+1= 521
+			n = n / 10; // 1 , 0
+		}
+		return rev;
+	}
+
+}
+// r=0
+//125% 10 -> 10*12 ->120, -> 5
+//r  = 0*10+5 = 5
+// n =  n/10 -> 125/10 = 12
+ //12>0 -> true 
+
+//12% 10 -> 10*1 ->10, -> 2
+//r  = 5*10+2  = 52
+//n =  n/10 -> 12/10 = 1
+
+//1>0 -> true 
+
+//1% 10 -> 10*0 ->0, -> 1
+//r  = 52*10+1  = 521
+//n =  1/10 -> 1/10 = 0
+//0>0 
+// return r;
+
+
+problem: swap the two numbers without using third variable;
+
+   int i = 10;
+   int j = 20;
+   
+  // int temp = i;
+//i = j;
+  // j=temp;
+   
+   sop(i);//20
+   sop(j);//10
+   
+
+problem: perform multification operation wihtout using * operator 
+problem: perform division operation wihtout using / operator 
+
+
+
+
+
+ ---->StringBuilder: StringBuilder is a one of the class which is also using for
+     		 manipulating alphanumeric values in java like same as String class .  
+			 it is also present in java.lang package 
+  
+  	---->StringBuilder class will produce mutable objects.
+  
+  ---->but only difference between String and String builder:
+       =======================================================
+  	-> String class is immutable class but StringBuilder is mutable class. 
+  	-> String class objects we can create 2 ways 1. using literal 2.using  new operator 
+  		but for StrinbBuilder we can create objects only one way using new operator.
+  	-> in String class if we try to modify the state of the object it will create new objects
+  		with modified data it wont change in existing object location,
+                   but in StringBuilder it will change the data in existing object location it self.
+  	-> in string we have conact() but in StrinbBuilder we have append() 
+                 
+---->how to create objects for StringBuilder :
+     ==========================================
+  
+  	StringBuilder sb =  new StringBuilder("abc");
+  
+  	StringBuilder sb = "abc";// CTE literal ways SB wont support.
+  
+  	SB objects will always creates under non constant pool. 
+  	for example while executing this line of code :
+  	
+  	StringBuilder sb =  new StringBuilder("abc"); 
+  
+  	in side heap memory it will create 2 objects 
+  	1."abc" -> this will create under cosntant pool memory
+  	2. new StringBuilder("abc") - > this will create one object in non constant pool.
+  	
+  	
+  	
+---->important methods in StringBuilder :
+    ====================================
+  
+  	->length(): this will return no of characters in StringBuilder object. 
+  	
+  	->append(String str): this method will append the new string value into existing string inside
+  		StringBuilder object , but it wont create another object for modified value like String class.
+  	
+  		StringBuilder sb = new StringBuilder("K7iT");
+  		sb.append("java");                 
+  		sop(sb);// K7iTjava
+  
+  
+  
+  		String s =  "K7iT";
+  		s.concat("java");
+  		sop(s);// K7iT
+  	
+  		s =  s.concat("java");
+  		sop(s);// K7iTjava
+  		
+  	->Note: if we have requirements in our project to do perform more append or concat operations 
+  		better to go with StringBuilder class instead of String concat operation.
+  	
+  
+  	->reverse();this method will reverse the given string value. 
+  	
+  		StringBuilder sb  = new StringBuilder("welcome To every one from K7iT");
+				System.out.println(sb.reverse());//Ti7K morf eno yreve oT emoclew
+				
+	-->delete(int startIndex, int endIndex):this method will delete the specified index range sub string 
+				                          from original string.
+				          Note: startindex is a include operation 
+				                endIndex is a exclude operation.
+				               endIndex > length  - SIOOBE 
+				               startIndex < 0  - SIOOBE 
+				               
+				               StringBuilder sb  = new StringBuilder("welcome To every one from K7iT");
+								sb.delete(11, 16);
+								System.out.println(sb);//welcome To  one from K7iT
+
+				
+	-->insert(int index, String insetStr) : this method will insert the given string at specified index
+				in  the original string. or if we want to add some text inside middle of the original string , usually append 				method will always append the new string at end of the original string.
+				
+                   StringBuilder sb  = new StringBuilder("welcome To every one from K7iT");
+					sb.delete(11, 16);
+					System.out.println(sb);////welcome To  one from K7iT
+					sb.insert(11, "every");
+					System.out.println(sb);// "welcome To every one from K7iT"
+					
+----->  StringBuffer :  StringBuffer class is one of the important class in String framework, it will works same 
+		   as StringBuilder 
+		   but only difference is StringBuilder is a non synchronized class or non thread safe class.
+		   
+		   but StringBuffer is 100% Thread safe class why because inside StringBuffer every method is
+ 		   a synchronized methods like vector and HashTable class in collection framework.
+		   
+		   -> it is also mutable class : it means we can modify the state of object in same memory location. 
+		   -> but it will allows only one thread at a time for execution, so compare to StringBuilder StringBuffer
+		   will give the less performance but high accuracy. 
+		   
+		   	StringBuffer sb  = new StringBuffer("welcome To every one from K7iT");
+		sb.delete(11, 16);
+		System.out.println(sb);// welcome To one from K7iT
+		sb.insert(11, "every");
+		System.out.println(sb);// welcome To every one from K7iT
+	
+		Note: inside StringBuffer each and every methods are synchronized methods.
+   		StringBuilder is non synchronized methods .
+		
+		   
+		   
+  */
+	static void m1(String name) {
+		System.out.println(name);//k7it, dhanya
+		
+	}
+	public static void main(String[] args) {
+		m1("K7it");
+		m1("Dhanya");
+		String timeStamp = "10-12-2023 10:30:20";
+		//                  012345678910
+		// get the year value from given string 
+		String year  = timeStamp.substring(6,9);// 202
+		System.out.println(year);
+		StringBuilder sb = new StringBuilder("Good morning");
+		System.out.println(sb);
+		System.out.println(sb.reverse());
+		sb.append(" Babu");
+		System.out.println(sb);
+		
+		String s1 = new String("Good morning");
+		s1.concat(" Babu");
+		System.out.println(s1);
+		s1 = s1.concat(" Babu");
+		System.out.println(s1);
+		
+		
+		  StringBuilder sb1 = new StringBuilder("welcome To every one from K7iT");
+			sb1.delete(11, 16);
+			System.out.println(sb1);
+			sb1.insert(11, "every");
+			System.out.println(sb1);// "welcome To every one from K7iT"
+			
+			StringBuffer sb2  = new StringBuffer("welcome To every one from K7iT");
+			sb2.delete(11, 16);
+			System.out.println(sb2);
+			sb2.insert(11, "every");
+			System.out.println(sb2);
+		
+	/*	StringBuffer sb  = new StringBuffer("welcome To every one from K7iT");
+		sb.delete(11, 16);
+		System.out.println(sb);
+		sb.insert(11, "every");
+		System.out.println(sb);
+		*/
+		
+		
+	}
+}

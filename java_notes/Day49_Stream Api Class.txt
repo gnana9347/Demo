@@ -1,0 +1,271 @@
+  
+  Stream api: 
+  ===========
+  
+  Stream api is one the imprtant feature in java 1.8. 
+  -> it is used to process the data in side collections.
+  
+  in order to store multile objects into a single variable we can use Collections or Arrays.
+ -but if we want to process data from collections or Arrays we can go with Stream api. 
+
+   Stream api ia avaiable under java.util.stream 
+   
+   by using stream api we can get effective and we can improve our code quality or performace 
+   by avoiding unnecessary looping  and iterations.  
+   
+   before Stream api if we want to read the data from any of the collections 
+   we need to use for loop or while loop or iterator or ListIterator
+    example :
+	
+	  ArrayList<String> list = new ArrayList<>();
+	  list.add("Vinnu");
+	  list.add("Lucky");
+	  list.add("Dhanya");
+	  
+	  for(String v: list){
+		  System.out.println(v);
+	  }
+	  
+	  Iterator it = list.iterator();
+	  while(it.hasNext()){
+		  System.out.println(it.next());
+	  }
+	  
+	  same list of we want to print values using stream api
+	  
+	  list.stream().forEach( v -> System.out::println);
+	  
+	  By using stream api we can filter the data ,process the data, we can convert one data structure to another data structure  and also we can perform aggregation operations on collection data. 
+	  
+	   -> filtering 
+	   -> collecting output
+	   -> printing output 
+	   -> convert one DS to another DS using pipiline methods. 
+	   
+	   in java where ever we want to use the stream apis we should use stream() method 
+	   
+	   example :
+	   
+	    Stream stream  = c.stream();
+		
+		here 
+		
+		c  -> nothing but any of collection object ref variable. 
+		
+		Stream -> is one the predefined interface inside java.util.stream package.
+
+if we want to use stream api we should know basic knowledge on functional interface, lamda expressions, double colon operator. 
+
+  in generally inside stream apis there some imprtant componets 
+
+   1. sequence of items 
+   2. source 
+   3. filter
+   4. pipelines
+   5. aggregation operations
+   6. internal iteration 
+
+features of Stream apis:
+========================
+  1. A stream is not a data structure instead it takes input from the Collections, Arrays, or I/O channels.
+   note: Data structure nothing but the process of storing the data in a perticular order by using entity  those are called as  DS.like ArrayList, LinkedList , Vector, HashTable
+   HashMap, Array etc..
+    by using stream api we cant store the data, just we can process the data which is getting  from source of Data structures.
+	
+ 2. Streams don’t change the original data structure, they only provide the result as per the pipelined methods. 
+ 
+ 3. Each intermediate operation is lazily executed and returns a stream as a result, hence various intermediate operations can be pipelined. Terminal operations mark the end of the stream and return the result. 
+ 
+ 
+ Intermediate Operations:
+ ==============================
+These operations return another stream and are lazy, meaning they don't get executed until a terminal operation is invoked.
+
+		filter(Predicate): Filters elements based on a predicate.
+
+		map(Function): Transforms elements into another form.
+
+		flatMap(Function): Flattens nested structures into a single stream.
+
+		distinct(): Removes duplicates from the stream.
+
+		sorted(): Sorts elements in natural order or by a comparator.
+
+		peek(Consumer): Performs an action for each element in the stream.
+
+		limit(long): Truncates the stream to a given length.
+
+		skip(long): Skips the first n elements.
+
+Terminal Operations:
+===========================
+These operations trigger the processing of the stream and produce a result or a side effect.
+
+		forEach(Consumer): Applies an action to each element.
+
+		forEachOrdered(Consumer): Applies an action to each element in encounter order.
+
+		toArray(): Collects the elements into an array.
+
+		reduce(BinaryOperator): Reduces the elements to a single value using an associative accumulation function.
+
+		collect(Collector): Collects elements into a collection.
+
+		min(Comparator): Finds the minimum element based on a comparator.
+
+		max(Comparator): Finds the maximum element based on a comparator.
+
+		count(): Returns the count of elements.
+
+		anyMatch(Predicate): Checks if any elements match the predicate.
+
+		allMatch(Predicate): Checks if all elements match the predicate.
+
+		noneMatch(Predicate): Checks if no elements match the predicate.
+
+		findFirst(): Returns the first element.
+
+		findAny(): Returns any element, useful in parallel streams.
+ 
+ Stream operations:
+ ====================
+  intermediate operations -> each intermediat operation method will return again stream class object as output , this output we can use for another pipeline method as input.
+  
+  Terminal operations: once you use the terminal operation it will close the stream api and 
+  it will return the result as output. 
+  after using terminal operation method we cant use another pipeline methods without reopen the stream object again. 
+  
+    scope of stream object:
+	 it will open with stream() and it will close with terminal operations method.
+	 
+  
+ 
+   Stream api flow:
+   ============
+   
+   stream source(arrays,collections,i/o chanels) -> create stream instace -> intermediat operations(filtering,sorting,type convertion,mapping etc method chaining or pipeline) -> terminal operations(forEach,collect,reduce etc)-> operation result (aggregation results eg: count,sum or Collecting a colection etc.)
+   
+   
+   
+   
+   
+   how to create basic stream object in diffrent ways :
+   ====================================================
+   
+   in side Stream interface there are multiple methods to create instance to Stream type object. 
+   
+   1. empty(): by using empty() we can create empty stream object instead of using null object. 
+   
+     Stream<String> stream = Stream.empty(); // here Stream is avaiable under java.util.stream pckg.
+	 
+   2. creating Stream from collection :
+     =================================== 
+	   
+	        List<String> list = new ArrayList();
+			 list.add("vinnu");
+			 list.add("lucky");
+			 list.add("dhanya");
+	 
+	      Stream<String> s1 = list.stream();
+		  
+	3. creating stream object from array of values using of():
+	================================================
+	
+	Stream<String> s2 = Stream.of("vinnu","lucky","dhanya");
+	
+	 if we want create Stream with integer numbers from 1 to 10:
+	 =============================================================
+	 
+	 Stream<Integer> s4 = Stream.of(1,2,3,4,5,6,7,8,9,10);
+	
+	
+	4. if we want to create Stream from direct Array objects:
+	=========================================================
+	
+	    String array[] =  new String[] {"vinnu","lucky","dhanya"};
+		
+		Stream<String> s3 =  Arrays.stream(array);
+		
+	primitive Streams :
+	=====================
+	 in java we have 3 primitive streams 
+	 ====================================
+	 1. IntStream
+	 2. LongStream
+	 3. DoubleStream
+ 
+ 
+     above all primitive Stream classes having some common methods to create stream object or instance.
+	 
+	 range(int startInclude, int endExclude):  this method will generate sequence of integers from start value to end value-1; 
+	    exmple:
+		
+	 	IntStream s4  =  IntStream.range(1, 100);
+		s4.forEach(System.out::println);
+		
+		 this code will generate int numbers from 1 to 99,because 100 is exclude value. 
+		 
+		 we can achive this code using single line also 
+		 
+		  IntStream.range(1, 100).forEach(System.out::println);
+		  
+		  but older days how we are generating the 100 number 
+		  
+		   for(int i=1;i<100;i++){
+			   System.out.println(i);
+			}
+ 
+	   rangeClosed(int startInclude, int endInclude): 
+	   
+	  IntStream s4  =  IntStream.rangeClosed(1, 100);
+		s4.forEach(System.out::println);
+  
+   this code will generate int numbers from 1 to 100,why because here end value  is included value.
+   
+     generate(): Returns an infinite sequential unordered stream where each element is generated by the provided IntSupplier. This is suitable for generating constant streams, streams of random elements, etc.
+	 
+	 	 System.out.println("generate");
+		 IntStream random =  IntStream.generate(() -> {return (int) (Math.random() * 999);}).limit(10);
+		 random.forEach(System.out::println);
+		 
+		 above code will generate 10 random numbers. because we have used limit(10).
+		 if we dont use limit() then it will go infinite loop it will never end. 
+		 
+		iterate(int seed, IntUnaryOperator f):
+		
+		 System.out.println("iterate");
+			 IntStream iterate = IntStream.iterate(1, i -> i + 1).limit(10);
+			 iterate.forEach(System.out::println);
+			 
+			 here the input number 1 will feed into i variable , that i variable will 
+			 increase by 1 , this will repeate 10 times. 
+			 
+			 of(int i): this of() will works same as Stream.of(), but this of() will take only int values or long values or double values based coresponding primitive stream class. 
+			 
+			  IntStream is = IntStream.of(1,2,3,4,5,6,7,8,9);
+			  
+			 IntStream is1 = IntStream.of(1,2.0,3,4,5,6,7,8,9);// CTE, instream can't allow double values. 
+			 
+			 
+			 write a java program to take list of 100 sequence numbers and print only even numbers from that 100 numner.
+			 
+			 IntStream evenNumbers =  IntStream.range(1,101).filter(n -> n%2==0);
+			 evenNumbers.forEach(System.out::println);
+            
+ write a program for print only odd number between 1 to 100;
+================================================================ 
+
+			 IntStream intNumbers = IntStream.range(1,101);
+			 IntStream oddNumbers  =  intNumbers.filter(n -> n%2 !=0 );
+			 oddNumbers.forEach(System.out::println);
+			 
+			 same program we can do it in single line :
+			 ===========================================
+			 IntStream.range(1,101).filter(n -> n%2!=0).forEach(System.out::println);
+			 
+			 
+			 
+			 
+			 
+			 
+   

@@ -1,0 +1,106 @@
+Recursive and cyclic : 
+======================
+
+method Recursive: the process of calling self invocation or self calling from same method.
+
+ Example is :
+
+ class A{
+ 
+    void m1(){
+	   m1(); 
+	}
+	p.s.v.m(){
+	  A a1 = new  A();
+	  a1.m1();
+	}
+ } 
+ 
+ note: method recursive cause the Exception in thread "main" java.lang.StackOverflowError
+        at A.m1(A.java:4)
+        at A.m1(A.java:4)
+        at A.m1(A.java:4)
+        at A.m1(A.java:4)
+		
+ 
+ example: adding n number of values by using method recursive: 
+ 
+ class SumOfN{
+ 
+    int sum =0;
+	
+    int add(int n){
+      sum = sum+n;
+      n= n-1;	
+     if( n > 0 ){// if means its conditional stamt , it will execute the inside code if and only if 
+	          // n > 0 else it will not execute 
+	   add(n);
+	 }
+     return sum; 
+	  
+	}
+	public static void main(String giri[]){
+	 SumOfN a1 = new  SumOfN();
+	 int sumof10 = a1.add(10);
+	  System.out.println(sumof10);
+	  
+	   int sumof100 = a1.add(100);
+	  System.out.println(sumof100);
+	}
+ } 
+ 
+ Note: sum of n number formula : n(n+1)/2 i.e 10(10+1)2 = 10(11)/2 = 110/2 = 55
+ 
+ 
+ Method Cyclic : method cyclic means it is proces of calling method 1 to method 2 and method 2 to method 1;
+  is called as method cyclic, in case method cyclic min 2 methods required but max we can involve n methods.
+  
+  Example : 
+  
+     class A{
+	 
+	    void m1(){
+		
+		   m2();
+		}
+		
+		void  m2(){
+		  m1();
+		}
+	 }
+	 
+	 in case of methid cyclic also we will get compilation sucess but at run time we will
+	 the Exception in thread "main" java.lang.StackOverflowError.
+	  
+	  
+	  Constructor Recursive:  the process of self invocation from same constructor is called as 
+	  constructor recursive. 
+	  
+	   example : class A{
+	          A(){
+			    this();// CTE
+			  }	       
+	     }
+		 
+	Note: java will not support constructor recursive, why bzc due to construction chaining , we are stoping execution 
+	  without reaching Object class no arg constructor. So we will get compilation time error 
+	  
+	  constructor cyclic: it is a process of calling construction 1 to constructor2 and
+	  constructor2 to constructorl is called constructor cyclic. 
+	  
+	   example : class A{
+	          A(){
+			    this(10);
+			  }	 
+
+			A(int i){
+			 this()
+			}
+	     }
+		 
+		 Note: java will not support constructor cyclic, why bzc due to construction chaining, 
+		 we are stoping execution without reaching Object class no arg constructor. So we will get compilation time error 
+	  
+	  so final conclusion is java is not supporting for constructor cyclic or recursive. it will support
+	   only for method cyclic or recursive. here we will get compilation sucess but runtime we will get 
+	    stack over flow error.

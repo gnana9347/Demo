@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pentagon Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: calc(100% - 24px);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #FF5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #C70039;
+            transform: scale(1.05);
+        }
+        .back-button::before {
+            content: "← ";
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+        .content {
+            margin-top: 40px;
+            text-align: left;
+        }
+        .content img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">Back</a>
+        <h1>Pentagon Calculator</h1>
+        <label for="side">Side:</label>
+        <input type="number" id="side" required>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+        <canvas id="pentagonCanvas"></canvas>
+        <div class="content">
+            <h2>About Pentagons</h2>
+            <p>A pentagon is a five-sided polygon. It has five sides and five angles. In a regular pentagon, all sides and angles are equal.</p>
+            <h2>Pentagon Formulas</h2>
+            <ul>
+                <li><b>Area:</b> \( \text{Area} = \frac{1}{4} \sqrt{5 (5 + 2 \sqrt{5})} s^2 \), where \( s \) is the side length.</li>
+                <li><b>Perimeter:</b> \( \text{Perimeter} = 5s \), where \( s \) is the side length.</li>
+                <li><b>Diagonal:</b> \( \text{Diagonal} = s \sqrt{5 + 2 \sqrt{5}} \), where \( s \) is the side length.</li>
+            </ul>
+            <h2>Pentagon Image</h2>
+            <img src="https://en.neurochispas.com/wp-content/uploads/2022/07/Formulas-for-the-perimeter-and-area-of-a-pentagon-768x826.png" alt="Pentagon Image">
+        </div>
+    </div>
+    <footer>
+        &copy; 2025 Shape Calculator. All rights reserved.
+    </footer>
+    <script>
+        async function calculate() {
+            const side = parseFloat(document.getElementById("side").value);
+            const response = await fetch("http://localhost:8080/api/pentagon/calculate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ side }),
+            });
+
+            const result = await response.json();
+
+            const resultDiv = document.getElementById("result");
+            if (result.error) {
+                resultDiv.innerText = `Error: ${result.error}`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p>Area: ${result.area}</p>
+                    <p>Perimeter: ${result.perimeter}</p>
+                    <p>Diagonal: ${result.diagonal}</p>
+                `;
+                drawPentagon(side);
+            }
+        }
+
+        function drawPentagon(side) {
+            const canvas = document.getElementById("pentagonCanvas");
+            const context = canvas.getContext("2d");
+
+            // Adjust canvas size
+            const scale = 20; // Adjust the scale as needed
+            canvas.width = side * scale + 100;
+            canvas.height = side * scale + 100;
+
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Calculate the coordinates of the pentagon's vertices
+            const angle = (2 * Math.PI) / 5;
+            const radius = (side * scale) / (2 * Math.sin(Math.PI / 5));
+
+            context.beginPath();
+            for (let i = 0; i <= 5; i++) {
+                const x = centerX + radius * Math.cos(angle * i - Math.PI / 2);
+                const y = centerY + radius * Math.sin(angle * i - Math.PI / 2);
+                if (i === 0) {
+                    context.moveTo(x, y);
+                } else {
+                    context.lineTo(x, y);
+                }
+            }
+            context.closePath();
+            context.fillStyle = "#007BFF"; // Change color as needed
+            context.fill();
+            context.strokeStyle = "#0056b3"; // Pentagon border color
+            context.stroke();
+
+            // Draw the side lengths
+            context.fillStyle = "#000";
+            context.font = "16px Arial";
+            const vertices = [];
+            for (let i = 0; i < 5; i++) {
+                const x = centerX + radius * Math.cos(angle * i - Math.PI / 2);
+                const y = centerY + radius * Math.sin(angle * i - Math.PI / 2);
+                vertices.push({ x, y });
+            }
+            for (let i = 0; i < 5; i++) {
+                const midX = (vertices[i].x + vertices[(i + 1) % 5].x) / 2;
+                const midY = (vertices[i].y + vertices[(i + 1) % 5].y) / 2;
+                context.fillText(`${side}`, midX, midY);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+  @Component or @Service
+  class A{
+  }
+  
+  class B{
+   
+    @Autowired
+	A a1;
+	
+	A a1 = new A();
+	
+	@Bean
+	B(A a1){
+	  this.a1 = a1;
+	}
+	
+	
+  }
+  
+  for class A -> 
+  
+  
+  sort list of int using stream api 
+  
+  List<Integer> list = Arrays.aslist(10,20,50,5,6,25);
+  
+  list.stream().sorted(e -> ).collect(Collectors.tolist());
+  
+  how to get the name of the employee who is having the highest salary 
+  
+  select name from employee order by salary desc limit 1 offset 2;
+  select name from emplopyee where salary = (select max(salary) from emplopyee);
+  
+  select name from emplopyee where salary = (select max(salary) from emplopyee where salary < select max(salary) from emplopyee );
+  
+  
+  
+  
+  
+  
+  

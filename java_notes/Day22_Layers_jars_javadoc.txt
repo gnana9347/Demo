@@ -1,0 +1,219 @@
+
+We have three layers to write a javacode in real time projects.
+1.Controller Layer
+2.Service Layer
+3.DAO Layer or Repository Layer
+
+1.Controller Layer/controller classes:
+======================================
+	Controller Layer is used to interact between Front_end to java.If front_end sends a request
+means then the Controller class handles that request ,It calls the Service classes..
+Syntax:
+=======		public class CalciController{
+			Calci_Service service= new calci_service_impl();
+			}
+Example:
+========
+					package com.k7it.calci_controller;
+					import com.k7it.calci_service.Calci_service;
+					import com.k7it.calci_service_impl.Calci_service_impl;
+
+					public class Calci_controller {
+
+						public Calci_controller() {
+							// TODO Auto-generated constructor stub
+						}
+						Calci_service service=new Calci_service_impl();
+						
+						public long add(int num1,int num2) {
+							return service.add(num1,num2);
+						}
+						public long sub(int num1,int num2) {
+							return service.sub(num1,num2);
+						}
+						public long mul(int num1,int num2) {
+							return service.mul(num1,num2);
+						}
+						public long div(int num1,int num2) {
+							return service.div(num1,num2);
+						}
+					}
+
+2.Service Layer/service classes:
+===============================
+	Service Layer is used to interact with the actual Business Logic ,We should take the Service 
+class support for achieving all the required service logics.Here,we are going to use 2 classes
+i)Service interface
+ii)service implementation class
+
+i)Service interface:
+================
+	In real time we are not supposed to write all the required code in a single class .so, in service interface 
+we will palce the all the methods inside the service interface without defintion,why because inside
+interface every method is by default abstract methods so we are not allowed to provide the definition 
+for those methods..
+Syntax:
+=======		interface Calci_Service {}
+
+Example:
+=======
+					package com.k7it.calci_service;
+
+					public interface Calci_service {
+					
+					public long add(int num1, int num2);
+					public long sub(int num1, int num2);
+					public long mul(int num1, int num2);
+					public long div(int num1, int num2);
+					
+					}
+
+
+ii)Service Implementation Class:
+================================
+	Service Implementation class is to used to implement all the abstract methods inside the interface,
+Service Implementation Class will act like a sub class for the Service interface..
+Syntax:
+=======		Calci_Service_impl implements Calci_Service {}
+
+Example:
+========
+					package com.k7it.calci_service_impl;
+					import com.k7it.calci_service.Calci_service;
+
+					public class Calci_service_impl implements Calci_service{
+
+						public Calci_service_impl() {
+						}
+
+						@Override
+						public long add(int num1, int num2) {
+							return num1+num2;
+						}
+
+						@Override
+						public long sub(int num1, int num2) {
+							return num1-num2;
+						}
+
+						@Override
+						public long mul(int num1, int num2) {
+							return num1*num2;
+						}
+
+						@Override
+						public long div(int num1, int num2) {
+							return num1%num2;
+						}
+					}
+
+
+Utility class:
+================
+		Utility is used for util methods or supporting methods logic,inside util class create the controller class object.
+		
+Example:
+========
+						package com.k7it.calci_utility;
+
+						import com.k7it.calci_controller.Calci_controller;
+
+						public class Calci_utility {
+
+						public Calci_utility() {
+						}
+						public static void main(String []args) {
+							Calci_controller c1=new Calci_controller();
+							System.out.println(c1.add(20, 30));
+							System.out.println(c1.sub(20, 30));
+							System.out.println(c1.mul(20, 30));
+							System.out.println(c1.div(20, 30));
+							
+						}
+					}
+
+
+-->constant class is used to make all the constant memebers into one place /one class...
+
+-->Constant Attributes /variables should be used in UPPERCASE only by using underscore( _ ) as de-limiter..
+
+3.DAO Layer or Repository Layer:
+================================
+	DAO Layer or Repository Layer is used to interact between java to database ,it will fetch the data and it will give the data 
+to controller class,The controller then sends the user details back to the frontend.
+-->In Core java we will call it as DAO Layer .DAO(DATA ACCESS OBJECT)
+-->In Spring Boot we will call it as Repository Layer.
+
+//we can also write the code in one class also,but can also use the above three layers to write the code instead 
+//of writing in one class......
+
+@Autowired in Springboot
+========================
+	The @Autowired annotation in Spring Boot is a powerful feature for automatic dependencies without explicitly 
+creating objects using the new operator,In java we will use new operator to create an object.  
+This is part of the Inversion of Control (IoC) principle,where the control of object creation and management is 
+transferred from the application code to the Spring framework.
+
+-->Using new operator,@Autowired,Serialization,Deserialization,ForName,clone(). we can create an object in these many ways..
+
+TODO:TODO means indication of work is pending,i.e. developer's work is not complete.
+====
+
+How to use one project class inside another project?
+Ans:
+Creating a JAR file or Exporting a file:
+========================================
+-->Select a file from a package in one project-->Right click-->Click on Export-->Select java JAR file and Click on NEXT-->
+Specify the JAR file name and export location-->Click on Finish-->The JAR file will be created at the specified 
+location ,if are not providing the export location means the JAR file will be created in the Eclipse workspace location.
+
+Importing the JAR file into another project:
+============================================
+-->Select a package in a project -->Right click-->Go to properties-->Select build path-->Inside build path select 
+libraries-->Select ClassPath-->Click on Add External JARs-->Select the JAR file which will be located in the specified 
+location otherwise it will be in the Eclipse workspace location-->Click on Apply-->Click on Apply And Close-->then JAR file 
+will be imported into the another project and there we can create object for the imported class..
+
+
+
+
+//Copyright (c) 2024, 2023, K7InfoTech and/or its affiliates. All rights reserved.
+//K7InfoTech PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+
+--> This is not java documentation,
+-->This is a copyright notice and confidentiality statement. This is typically used to protect
+ proprietary information and ensure that the use of the content is subject to specific license terms.
+
+
+Java Documentation ->javadoc:-
+=============================          
+		It will provide detailed documentation about our java code it will include about class and 
+about copy right belongs to which company and so on...
+
+--> javadoc will be used in class level and Method level.
+
+ Class Level Annotations:
+ ========================
+	Direct string about the class,@author,@since,@version,@see,@deprecated etc...
+ 
+ Method Level Annotations:
+ ========================
+	Direct string about the method ,@author,@param ,@return etc...
+
+-->The /** ... */ syntax in Java is used to create a JavaDoc comment.
+	JavaDoc comments are special comments that are used to generate documentation for our code.
+	Example for Classlevel:
+	======================
+                        /**  this class will provide service for all arithmetic operations.
+                         * @author K7it
+                         * @since 2024
+                         * @version 1.0
+                         */
+	Example for Methodlevel:
+	========================
+						/**this method will provide all the outputs for the operation.
+						 *@author k7it
+						 *@param num1
+						 *@param num2
+						 *@return num+num2
+						 */

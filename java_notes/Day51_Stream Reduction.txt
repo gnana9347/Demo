@@ -1,0 +1,114 @@
+Stream Reduction
+=================
+The stream API has many terminal operations which aggregate a stream to a type or to a primitive: count(), max(), min(), and sum(). However, these operations work according to the predefined implementation. 
+ if we want reduction mechanism  There are two methods 
+ 1.  reduce() 
+ 2.  collect() methods.
+
+ The reduce() Method
+ ===================
+There are three variations of reduce() methods with different signatures and returning types. They can have the following parameters:
+  
+   1. reduce(accumulator)
+   2. reduce(identity,accumulator)
+   3. reduce(identity,accumulator,combiner)
+
+identity – the initial value for an accumulator, or a default value if a stream is empty and there is nothing to accumulate
+
+accumulator – a function which specifies the logic of the aggregation of elements. As the accumulator creates a new value for every step of reducing, the quantity of new values equals the stream’s size and only the last value is useful. This is not very good for the performance.
+
+combiner – a function which aggregates the results of the accumulator. We only call combiner in a parallel mode to reduce the results of accumulators from different threads.
+
+Now let’s look at these three methods in action:
+
+OptionalInt reduced =
+  IntStream.range(1, 4).reduce((a, b) -> a + b);
+  System.out.println(reduced);
+ output: reduced = 6 (1 + 2 + 3)
+ 
+ here 
+ IntStream.range(1, 4) : list 3 integers [1,2,3]
+ 
+ and 
+ 
+ reduce((a, b) -> a + b) : here 
+ 1st time this (a,b) will take 2 values from list i.e (1,2) then it will perform 
+ (a+b) = 1+2 = 3,
+ 2nd time onwards (a,b) will a value as previous accumulate result i.e 3 (1+2)and second parameter is next value from the list i.e also 3 i,e (3,3) then it will perfom the accumulate action a+b = 3+3 =6;
+ 
+ then it will check is there any values in stream if no values it will stop the execution and it will return the output. 
+
+so if we want to confirm how many times this accumulator function is executing just rewrite above code like below :
+
+	OptionalInt reduced =
+				  IntStream.range(1, 4).reduce((a, b) -> {
+					  System.out.println("accumulator invoked");
+					  return a + b;
+					  });
+				  System.out.println("reduced:"+reduced.getAsInt());
+	}
+		output :
+		accumulator invoked
+		accumulator invoked
+		 reduced:6
+		 
+		 it means for 3 elements accumulator executed 2 times. 
+		 
+next example for 2 parameter reduce(identity, accumulator) method:
+==================================================================
+
+int reducedTwoParams =
+  IntStream.range(1, 4).reduce(10, (a, b) -> a + b);
+	output :
+	reducedTwoParams: 16 (10 + 1 + 2 + 3)
+	
+	here 10 value act like a initial value or default value inside stream it means stream values will consider as [10,1,2,3], actual stream values are [1,2,3], due to this identity value stream is getting one extra value as 10. so out combiner will be executed 3 times 
+	to confirm that we can rewrite  above code like below using lamda fucntion body
+	
+	  int reducedTwoParams =
+						  IntStream.range(1, 4).reduce(10, (a, b) -> {
+							  System.out.println(" reducedTwoParams accumulator invoked");
+							  return a + b;
+							  });
+				  
+				  System.out.println("reducedTwoParams:"+reducedTwoParams);
+				  
+				  output:				  
+				    reducedTwoParams accumulator invoked
+					reducedTwoParams accumulator invoked
+					reducedTwoParams accumulator invoked
+					reducedTwoParams:16
+	
+
+next example for 3 parameter reduce(identity, accumulator, combiner) method:
+===================================================================
+
+int reducedParams = Stream.of(1, 2, 3)
+  .reduce(10, (a, b) -> a + b, (a, b) -> {
+     log.info("accumulator was called");
+     return a + b;
+  });
+
+The result will be the same as in the previous example (16), and there will be no login, which means that combiner wasn’t called. To make a combiner work, a stream should be parallel:
+
+  int reducedParallel = Arrays.asList(1, 2, 3).parallelStream()
+						    .reduce(10, (a, b) -> a + b, (a, b) -> {
+						    	 System.out.println("combiner was called");
+						       return a + b;
+						    });
+ System.out.println("reducedParallel:"+reducedParallel);
+ 
+ output: 
+combiner was called ->  11+12
+combiner was called ->  23+13
+reducedParallel:36
+
+The result here is different (36), and the combiner was called twice. Here the reduction works by the following algorithm: 
+
+ the accumulator ran three times by adding every element of the stream to identity. These actions are being done in parallel. 
+ 
+ it means multiple threads will execute parallelly for each value from stream. then result will be like this  (
+  thread1 10 + 1 = 11;
+  thread2 10 + 2 = 12; 
+  thread3 10 + 3 = 13;).
+  Now combiner can merge these three results. It needs two iterations for that (12 + 13 = 25; 25 + 11 = 36).

@@ -1,0 +1,117 @@
+			classes and Objects:
+=================================
+
+class: it is a real time entity,  it is act like catagory.  we can't touch or we cant see the catogies.
+real time entity: the thing which is having properties and behaviours is called as real time entity.
+class is a blue print of an object..
+this real time entity is represent as a class in java .
+
+properties : preoperties are represents as a attributes in java , 
+by using properties we can represents state of the object or entity.
+
+behaviours: behaviours of the entity is represents as methods in java.
+  by using methods we can achive the activies or functions of entity .
+
+Object : instance of Entity is called as object. object is a real thing for that catagory, 
+these objects we can see and we can touch it. but catogies we cant see or we cant touch.
+    
+
+in java we can create object by using "new" operator. 
+
+   Syntax : 
+         ClassName refVar = new ClassName();
+		 
+		  Person p1  = new Person(); -> person class object.
+		  
+		  
+		  for example if we take Person is a entity 
+		  Entity - Person   -- class 
+		  propertis : age, name, hright, weight etc  -- attributes
+		  behaviours: getRunRate()  -- methods
+		  
+		  class Person{
+		     int age;  // datatype  attributeName;
+			 String name;
+			 double height;
+			 double weight;
+			 
+			double getRunRate(){
+			    return (height*weight)/age; 
+			 }
+			 
+		  }
+		  
+		  
+		  class PersonManager{
+		    public static void main(String args[]){
+			Person p1 = new Person();
+			  p1.name = "Gnana";
+			  p1.age= 23;
+			  p1.height = 6.0;
+			  p1.weight = 60.0;
+			  
+			  double gnanaRunRate = p1.getRunRate();
+			  
+			  System.out.println("Name:"+p1.name); // Name:Gnana  10+20 = 30, "abc"+20 = abc20 "abc"+"xyz" = abcxyz
+			  System.out.println("age:"+p1.age);
+			  System.out.println("height:"+p1.height);
+			  System.out.println("weight:"+p1.weight);
+			  System.out.println("RunRate:"+gnanaRunRate);
+			  
+			   Person p2 = new Person();
+			  
+			  p2.name = "Mouni";
+			  p2.age= 30;
+			  p2.height = 5.4;
+			  p2.weight = 68.0;
+			  
+			  double mouniRunRate = p2.getRunRate();
+			  
+			  System.out.println("Name:"+p2.name); // Name:Gnana  10+20 = 30, "abc"+20 = abc20 "abc"+"xyz" = abcxyz
+			  System.out.println("age:"+p2.age);
+			  System.out.println("height:"+p2.height);
+			  System.out.println("weight:"+p2.weight);
+			  System.out.println("RunRate:"+mouniRunRate );
+			  
+			  
+			}
+		  }
+		  
+		  output : 
+		  D:\lab\202402_JavaBatch\src>javac -d ../classes PersonManager.java
+
+			D:\lab\202402_JavaBatch\src> cd ../classes
+
+			D:\lab\202402_JavaBatch\classes>java PersonManager
+			Name:Gnana
+			age:23
+			height:6.0
+			weight:60.0
+			RunRate:15.652173913043478
+			Name:Mouni
+			age:30
+			height:5.4
+			weight:68.0
+			RunRate:12.240000000000002
+
+			D:\lab\202402_JavaBatch\classes>
+
+
+  
+		  
+		     Person p1 = new Person(); 
+			 Person p1 -> ref variable 
+			
+			 
+			  new -> operator
+			  Person() : contructor 
+			  new Person() : object 
+			  p1 = ref variable
+			  Person -> this object belongs which catagory or what type of object 
+			  
+			   p2.name = "Mouni";
+			     this single .(dot) : access operator : this guy will get the access permission to get class members or object members
+				 = (equals operator) this is called assignment operator : this guy will assign rightside value into left side variable
+			  
+			 
+		  

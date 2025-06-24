@@ -1,0 +1,170 @@
+Stream pipe lines:
+		 ====================
+		 
+		 To perform a sequence of operations over the elements of the data source and aggregate their results we will go with pipe line methdos.
+		 to perform this pipe line operations we need 3 parts 
+
+		 we need three parts: the source, intermediate operation(s) and a terminal operation.
+
+		Intermediate operations return a new modified stream. For example, to create a new stream from the existing stream by skipping few of the elements, for this we can use  the skip() method: 
+		
+		Stream<String> onceModifiedStream =
+  Stream.of("abcd", "bbcd", "cbcd").skip(1);
+  
+  onceModifiedStream.forEach(System.out::println);// we will get out put of only bbcd, cbcd
+  
+  skip(int count): this skip method will skip the specified number of elements from modified stream. this skipping elements will do from start of the stream.
+
+  
+  
+  If we need more than one modification on stream values, we can chain or piple line intermediate operations. 
+  
+  Let’s assume that we need to skip 1st element of stream and also need to substitute every element of the current Stream<String> with a upper case of present value. We can do this by chaining the skip() and map() methods:
+  
+  
+   Stream<String> twiceModifiedStream =
+   Stream.of("abcd", "bbcd", "cbcd").skip(1).map(element -> element.toUpperCase());
+   
+   twiceModifiedStream.forEach(System.out::println);// we will get out put of only BBCD, CBCD in uppercase.
+   
+   suppose if we need to replace string values with number of chars in that string:
+	
+	 Stream<String> twiceModifiedStream =
+   Stream.of("abcd", "bbcd", "cbcd").skip(1).map(element -> element.length());
+   
+   twiceModifiedStream.forEach(System.out::println);
+   
+   
+   map(Function function):-
+=========================
+    map() method will map the old values with new values with the help of apply(T t) from fucntion interface and it will return new Stream object as output.
+	
+	Note: 
+	     most of the cases user is interested in the result of the terminal   operation, which will return output of the final stream modified values. 
+	
+	Note1:
+	      We can use only one terminal operation per stream
+  
+  some more examples:
+  ===================
+  prob: create a list of String values and skip the first element and repalce remaining all elements  with  the sub substring(0,3), then sort those elements and find count of final elements. 
+  
+  
+  List<String> list = Arrays.asList("babu", "saideepak", "tharun","kumar","prasad");
+  
+  long size = list.stream().skip(1)
+  .map(element -> element.substring(0, 4)).sorted().count();
+  
+  System.out.println(size);// 4
+  
+  sorted(): here sort method will sort the elements in ascending order by deafult. 
+            in case of string and primitive values case. we no need write any sorting logic by using comparator or comparable interfaces. 
+			
+	count(): this count() will give out put as number of elements in the stream        as a long value. 
+	       count() is a terminal operator so it will give the output and it will close the stream object.
+		   
+		   
+
+	
+  
+  Lazy Invocation:
+  ================
+  
+  Intermediate operations are lazy execution methods. This means that, they will be invoked only if it is necessary for the terminal operation execution.
+  
+  in case we didnt use the terminal operations intermediate operations will never execute. 
+  
+   for example: in the below code we are trying to filter the string values who's contains "2" char from the 3 string elements of arrayList.
+   
+   List<String> list = Arrays.asList(“abc1”, “abc2”, “abc3”);
+ 
+   Stream<String> stream = list.stream().filter(element -> {
+    System.out.println("filter is called");
+    return element.contains("2");
+    });
+  
+  As we have a source of 3 elements, we can assume that the filter() method will be called three times. However, running this code filer method will never execute and also we wont get any sop statement output from filter(),
+
+ it mean filter() not executed even one time, why bazc terminal operation not used in that stream. 
+ 
+ same code if we rewrite with terminal operations :
+ ==================================================
+ we can use any of the terminal operators like count(), findAny() or findFirst() or forEach(). then our filter() method will execute for all the elements of stream object i.e 3 times it will execute since we have 3 elements in list or stream.
+ 
+ 			
+   List<String> list = Arrays.asList(“abc1”, “abc2”, “abc3”);
+ 
+   Stream<String> stream = list.stream().filter(element -> {
+    System.out.println("filter is called");
+    return element.contains("2");
+    });
+	
+	stream.forEach(System.out::println);
+	
+	 output:  it will filter the elements which are contians 2 char in side string value.
+	 ========
+		filter is called
+		filter is called
+		abc2
+		filter is called
+
+Note: inside intermediate operations we will defind the definition for functional 
+interface methods, and those methods we will call from terminal operations time internally. 
+
+
+ 
+ 
+
+Let’s rewrite this code a little bit by adding a map() operation and a terminal operation, findFirst(). We will also add the ability to track the order of method calls with the help of logging:
+
+List<String> list6 = Arrays.asList("abc1", "abc3", "abc2");
+	 
+Optional<String> stream = list.stream().filter(element -> {
+    System.out.println("filter() was called");
+    return element.contains("2");
+}).map(element -> {
+    system.out.println("map() was called");
+    return element.toUpperCase();
+}).findFirst();
+
+output:
+=========
+filter() was called
+filter() was called
+map() was called
+optionValue:ABC2
+
+here filter() will execute only two times for which elements we need to filter ie which are not contains 2 char it will avaiable at 2nd position in the list. 
+
+incase this element present in 3rd position then filter will execute 3 times and map will execute 1time. 
+
+incase this element present in 1st position then filter will execute 1 time and map will execute 1time. 
+
+
+next map() will execute on output of filter(), so here only one element avaiable 
+it will execute only time and it will convert that value into upper case.
+
+
+
+Order of Execution
+==================
+From the performance point of view, the right order is one of the most important aspects of chaining operations in the stream pipeline:
+
+   List<String> list6 = Arrays.asList("abc2", "abc3", "abc1");
+						
+	long size = list6.stream().map(element -> {
+		 System.out.println("map() was called");
+		return element.substring(0, 3);
+	}).skip(2).count();
+
+Execution of this code will called the map() method of the stream three times, but the value of the size is one. So the resulting stream has just one element, and we executed the expensive map() operations for no reason two out of the three times.
+
+If we change the order of the skip() and the map() methods, So we will call the map() method only once:
+
+long size = list.stream().skip(2).map(element -> {
+    System.out.println("map() was called");
+    return element.substring(0, 3);
+}).count();
+
+
+This brings us to the following rule: intermediate operations which reduce the size of the stream should be placed before operations which are applying to each element. So we need to keep methods such as skip(), filter(), and distinct() at the top of our stream pipeline.

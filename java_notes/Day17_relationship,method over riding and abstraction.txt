@@ -1,0 +1,515 @@
+relationships:
+  ===============
+  in java we have 2 types of relationship 1. IS-A 2. Has-A 
+  
+  IS-A : relationship: the relationship between sub class to super class is called as IS-A relationship.
+  
+   syntax:
+    Sub class(Which value we are providing) IS-A Super Class (what we are expecting)
+	
+	     EX:   ObjectValue is-a Ref Var 
+	
+	class A{
+	}
+	class B extends A{
+	}
+	class C extends B{
+	}
+    class D extends A{
+	}
+	class E extends D{
+
+	}
+	
+	class P{
+	}
+	class R extends P{
+	}
+	
+				  Obj   Var
+				  B is-a A      ->  A a1 = new B();
+				  C is-a B  	->  B b1 = new C();
+				  C is-a A 		->  A a2 = new C();
+				  D is-a A 		->  A a3 = new D();
+				  D is-a D 		->  D d1 = new D();
+				  A is-a A  	->  A a4 = new A();
+				  B is-a B      ->  B b2 = new B();
+				  C is-a C      ->  C c1 = new C()
+  
+				  P is-a R -> no   -> R r1 = new P();//CTE
+				  R is-a P ->yes  ->  P p1 = new R();
+				  P is-a P - yes ->   P p2 = new P();
+				  R is-a D ->   No 
+					
+				 E is-A B  -> no ->  B b4 = new E();//CTE
+				 E is-A A -> yes     A a5 =  new E();
+				 E is-A C  -> no    C c2 = new E();// CTE
+				  
+    Note: is-A relationship we can represent using up arrow  -> symbol. 
+	
+  
+ 2.  Has-A : relationship:
+  
+  the relationship between Entity to Properties or (classes and attributes)  are called as Has-A relationship. 
+  
+  class Person{
+    Dog bestFriend;
+	int age;
+	String name;
+	Person lover;
+  }
+  
+  Person has-a age with int type
+  Person as-a name with String type 
+  Person has-a  bestFriend with Dog type 
+  Person has-a lover with Person type
+
+ Syntax : 
+ 
+       Entity has-a property with corresponding dataType;
+	   
+	   we have 2 Types of Has-A relationship:i
+	   
+	   1. aggregation -> loosely coupling or week relationship:  when ever part is disappear whole should not disappear immedaitaly. 
+	     that kind of relationship is called as aggregation.
+	   
+	    relationship between hand(part) and body(whole) is aggregation
+	   
+	    symbol of aggregation : diamond arrow without filling. it will have very less de pendency 
+	   
+	   2. composition -> tightly coupling or strong relationship : when ever part will disappear whole also will be disappear 
+	    immedaitalyis  that kind of relationship is called as composition.
+	    
+	   
+	       relationship between heart(part) and body(whole) is composition
+		 
+		   symbol of composition : diamond arrow with filling.  it will have high dependency
+		   
+		   
+		   
+	 method recursive: one method is calling same method him self is called as method recursive. 
+     jave compiler will allow the method recursive but at runtime we will get the StackOverFlow error. if we dosent stop it properly. 
+
+     class A{
+	 
+	    void m1(){
+		System.out.println("m1 started");
+		  m1();
+		}
+		public static  void main(String args[]){
+		  A a1 = new  A();
+		  a1.m1();
+		}
+	 }	 
+	 
+m1 started
+m1 started
+m1 started
+m1 started
+m1 started
+m1 started
+Exception in thread "main" java.lang.StackOverflowError
+        at java.base/java.io.BufferedWriter.flushBuffer(BufferedWriter.java:165)
+        at java.base/java.io.PrintStream.implWriteln(PrintStream.java:848)
+        at java.base/java.io.PrintStream.writeln(PrintStream.java:826)
+        at java.base/java.io.PrintStream.println(PrintStream.java:1168)
+        a
+	 
+	 
+Method Cyclic: its a process of calling m2 method from m1 and m1 method from m2 is called as method cyclic. 
+	in case of methos cyclic also java will suport, we wont get any compilation errors, but at runtime we will get the RunTimeError i.e StackOverflowError.
+	
+	 class A{
+	 
+	    void m1(){
+		System.out.println("m1 started");
+		  m2();
+		  System.out.println("m1 end");
+		}
+		void m2(){
+		System.out.println("m2 started");
+		  m1();
+		  System.out.println("m2 end");
+		}
+		public static  void main(String args[]){
+		  A a1 = new  A();
+		  a1.m1();
+		}
+	 }	 
+	 m1 started
+m2 started
+m1 started
+m2 started
+m1 started
+m2 started
+Exception in thread "main" java.lang.StackOverflowError
+        at java.base/java.io.BufferedWriter.flushBuffer(BufferedWriter.java:165)
+        at java.base/java.io.PrintStream.implWriteln(PrintStream.java:848)
+        at java.base/java.io.PrintStream.writeln(PrintStream.java:826)
+        at java.base/java.io.PrintStream.println(PrintStream.java:1168)
+        a
+		
+Note: Java will support method recursive and cyclic but it wont support construvtor recursive and cyclic.
+in case constructor we will get the CTE. 
+
+
+
+example for polymorphisum:
+===========================
+in java we can get 100% meaning for polymorphisum statement with the help of method overriding and co relationship.  if we wont use 
+co relationship polymorphisum will not make sence
+
+
+example:
+   
+   class A{
+   
+     void m1(){
+	    System.out.println("A-m1");
+	 }
+   }
+   
+   class B {
+   
+     void m1(){
+	    System.out.println("B-m1");
+	 }
+   }
+
+  class C extends A{
+    
+     
+  }
+
+  class D extends A{
+  
+     void m1(){
+	    System.out.println("D-m1");
+	 }
+  }
+  
+  class E extends A{
+   void m1(){
+	    System.out.println("E-m1");
+	 }
+  }
+   
+   
+   class Manager{
+   
+     public static void main(Strign args[]){
+	   A a1 = new A();
+	   a1.m1();// A-m1
+	   B b1 =new B();
+	   b1.m1();// B-m1
+	   
+	   C c1 = new C();
+	   c1.m1();// A-m1
+	   
+	   D d1 = new D();
+	   d1.m1(); // D-m1
+	   
+	   
+	   A a2 = new C();
+	   a2.m1();// A-m1	   
+	   A a3 new D();	   
+	   a3.1();// D-m1	   
+	   A a4 = new E();
+	   a4.m1();// E-m1
+	   
+	   
+	   A a2 = new C();
+	   a2.m1();// A-m1	   
+	   
+	   a2=new D();	   
+	   a2.m1();// D-m1	   
+	   
+	   a2 = new E();
+	   a2.m1();// E-m1
+	   
+	   
+	 }
+   }
+
+here a2.m1() is giving different different outputs at different different line of execution. is called as polymorphisum. 
+
+
+ Method Overring rules :
+  =================================
+
+  1. method should be same 
+      ex: class A{
+	     void m1(){// m1 method access level is default access
+		   System.out.println("A-m1");
+		 }
+	   }
+	   
+	   class B extends A{
+	      // here we should define same method name i.e m1 
+	   }
+  2. method signature should be same 
+      class B extends A{
+	      // here we should define same method name i.e m1  and same signature i.e no arg
+		  m1()
+	   }
+  
+  3. method return type : 
+     primitive or void : should be same 
+	 derived : same or sub class of return type 
+	 
+	 
+	     class B extends A{
+	      // here we should define same method name i.e m1  and same signature i.e no arg and same return type since its  void 
+		   void   m1()
+	   }
+  4. access level should be same or widder 
+       in java we have 4 types accesslevels 
+	     1.priate
+		 2.      (default)
+		 3.protected
+		 4.public 
+		 
+		  
+	     class B extends A{
+	      // here we should define same method name i.e m1  and same signature i.e no arg and same return type since its  void 
+		  // and access level,should be same or widder i.e in class A m1() havign default accesslevel so while overriding
+		  // we should use same default access level or widder than default access level i.e either protected or public but not privte
+		  
+				1.    void   m1()
+				2. protected void m1()
+				3. public void m1()
+				
+	   }
+		 
+		 
+  5. we should provide different method defination
+   
+      //  1.  void m1(){
+	            System.out.println("B-m1");
+	         }
+
+	   //  2. protected void m1(){
+				System.out.println("B-m1");
+			 }
+	  //  3.  public void m1(){
+	            System.out.println("B-m1");
+	         }
+			 
+			 
+			 EX4:
+			 ==========
+			 class God{
+			 
+			 }
+			 class Person extends God{
+			 }
+			 
+			 class Employee extends Person{
+			 }
+			 
+			 class A{
+			   
+			   public Person getPerson{
+			      Person p1 = new Person();
+			     return p1;
+			   }
+			 }
+			 
+			  class B extends A{
+			   // overriding getPerson() here 
+			   //1.
+			   public   Person  getPerson(){
+			   
+			     return null;
+			   }
+			   
+			   //2.
+			   
+			     public  Employee  getPerson(){
+			   
+			     return new Employee();
+			   }
+			   
+			   // 3.
+			   
+			     public  God  getPerson(){// CTE while overriding we should not use super class type for return type. 
+			   
+			     return new Employee();
+			   }
+			   
+			  }
+			  
+			  
+			  Ex5:
+			  
+			  class A{
+			     private int test(){
+				   return 10;
+				 }
+			  }
+			  
+			  class B extends A{
+			     
+				  public  int test(){// cTE why bzc private memberswe cant override in sub class. 
+				                    //and also private memebrs wont support inherritance. 
+				   return 20;
+				 }
+				
+			  }
+			  
+			 
+			 
+			 
+Abstraction:
+============
+the process of showing nessesary details and hiding unnessary details is called as abstraction.
+telling what to do and hiding how to do is called as abstraction. 
+
+-> the process of data hiding is called as abstraction. 
+
+-> in java we can achive abstraction using abstact key word. 
+-> abstact can applicable for 2 members one class and second is method. 
+
+-> if we use abstract key word for class for that class we can't create objects. 
+
+     abstract class Person{
+	   
+	 }
+	 
+	// Person p1 = new Person(); CTE 
+
+	abstract class Person{
+	   Person(){
+	   }
+	 }
+	 
+	// Person p1 = new Person(); CTE 
+	
+-> if we use abstract key word for methods , then those methods should not contains the method defination or body. 
+   abstract methods will have only method declaration and ending with semicolon. 
+   
+     class Calculator{
+	   abstract int  add();
+	   abstract int  sub();
+	   abstract int  mul();
+	 }
+
+-> if any of the class having abstract method then that class should be declared as abstract else we will get comiplation error. 
+
+   abtract  class A{  // this works fine
+	  abstract void m1();
+	}
+	
+	class B{  // CTE
+	  abstract void m1();
+	}
+	
+	B.java:1: error: B is not abstract and does not override abstract method m1() in B
+	 class B{
+	 ^
+	1 error
+
+	note: if any of the class having at least one abstract method then for that class we should not create the objects.
+	if not allow to create objets for any class then what we should do ? 
+	   we should declare that class a abstract class then no one can able to create objects for our class.
+	   
+	
+-> but Abstract class may or may not contians the abtract methods. 
+
+    abstract class A{
+	   // this abstact class doent have any abstact methods , it will comiplation success.
+	}
+	
+	 abstract class B{
+	   // this abstact class having two abstact methods , it will comiplation success.
+	   abstract void m1(); // the method which have only declaration but no defination is called as abstract method.
+	   abstract void m2();
+	}
+	
+	 abstract class C{
+	   // this abstact class doent have any abstact methods , it will comiplation success.
+	   void m1(){ // the method which is having declaration and defination is called as a concrete method.
+	     sop("m1");
+	   }
+	}
+
+    class A{// CTE  if any class conatins any abstract method then that class should be declaration as abstact class .
+	  abstract void m1();
+	}
+	
+    
+-> if we declaration any of method as abstract then that method should not contains defination else we will get the CTE.
+
+  abstact class A{
+    
+	abstract void m1(){ // CTE for abstract methods we should not keep the defination. 
+	  sop("m1");
+	}
+  }
+  // if we want to make comiplation success either we need to remove abtract key word or defination of method.
+  
+  
+  abstact class A{
+    
+	 void m1();// CTE for if you want to end with semicolon for any method declaration then we should declaration that method as abstact. else we should provide defination. 
+	 
+  }
+  
+  
+  Abstract with inherritance:
+  ============================
+   in case of inherritance if  any of the sub class receives any abstract methods from super class , sub class should implement 
+   defination for inherited abstact methods else atleast he should declare sub class also a abtract class. else we will get 
+   CTE. 
+   
+  
+  note: abstact methods are definning for sub class purpose not for same class purpose. 
+  its means who ever wants to become member of under my catogory those people or class should implement
+   all the mandatory features which are declared as  abstract methods in my class. 
+   
+  -> it mean sub class should implement all super class abstacts with proper defination else we should declare sub class also a abstract class. otherwise will comiplation error. 
+  
+  abstract class A {
+    abstract void m1();
+  } 
+  
+  class B extends A{ 
+  // CTE  why bzc from A class B is getting one abstract method, but class B dosent implemented that abstract method or
+       //   it not declared class B as abstract  class. 
+  }
+  
+  abstract class C extends A{ 
+  
+  // CS , here class C also not implementing abstact method, but here him self declared as a abstract class. 
+  
+  }
+   class D extends A{ // CS class D  not declared as abstract but still it will CS, why bzc he implemented abtract method which is inherited from super class. 
+      void m1(){
+	    sop("implementing m1 activity");
+	  }
+   }
+   
+  abstract  class E extends A{ // CS class E is immedaitalyis abstract method and also he declared class as abstract so it will compile success.
+    void m1(){
+	 sop("implementing m1 activity");
+	}
+   }
+   
+   
+  
+  abstract method implemation rules:
+  =================================
+  these rules are same as method overriding rules. 
+  1. method should be same 
+  2. method signature should be same 
+  3. method return type : 
+     primitive or void : should be same 
+	 derived : same or sub class of return type 
+  4. access level should be same or widder 
+  5. we should provide proper method defination
+  6. we should remove abstract key word for that method. 
+  
+     abstract  class F extends A{
+   abstract  void m1(){ // CTE  while implementing the abstract method in sub class we should not keep the abstract key word.
+	 sop("implementing m1 activity");
+	}s

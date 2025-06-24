@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhombus Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: calc(100% - 24px);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #FF5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #C70039;
+            transform: scale(1.05);
+        }
+        .back-button::before {
+            content: "← ";
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+        .content {
+            margin-top: 40px;
+            text-align: left;
+        }
+        .content img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">Back</a>
+        <h1>Rhombus Calculator</h1>
+        <label for="side">Side:</label>
+        <input type="number" id="side" required>
+        <label for="angle">Angle (in degrees):</label>
+        <input type="number" id="angle" required>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+        <canvas id="rhombusCanvas"></canvas>
+        <div class="content">
+            <h2>About Rhombus</h2>
+            <p>A rhombus is a four-sided polygon (quadrilateral) in which all sides have equal length. Opposite sides are parallel, and opposite angles are equal. A special case of a rhombus is a square, where all angles are 90 degrees.</p>
+            <h2>Rhombus Formulas</h2>
+            <ul>
+                <li><b>Area:</b> \( \text{Area} = s^2 \sin(\theta) \), where \( s \) is the side length and \( \theta \) is one of the angles.</li>
+                <li><b>Perimeter:</b> \( \text{Perimeter} = 4s \), where \( s \) is the side length.</li>
+                <li><b>Diagonals:</b> 
+                    <ul>
+                        <li>Diagonal 1: \( d_1 = s \sqrt{2 + 2 \cos(\theta)} \)</li>
+                        <li>Diagonal 2: \( d_2 = s \sqrt{2 - 2 \cos(\theta)} \)</li>
+                    </ul>
+                </li>
+            </ul>
+            <h2>Rhombus Image</h2>
+            <img src="https://ecdn.teacherspayteachers.com/thumbitem/Rhombus-Math-Poster-4007755-1534647469/original-4007755-1.jpg" alt="Rhombus Image">
+            <img src="https://images.squarespace-cdn.com/content/v1/54905286e4b050812345644c/6113636d-4647-4e81-b2d6-2f600e40cef3/Comparison.jpg" alt="Rhombus Image">
+
+        </div>
+    </div>
+   
+    <script>
+        async function calculate() {
+            const side = parseFloat(document.getElementById("side").value);
+            const angle = parseFloat(document.getElementById("angle").value);
+            const response = await fetch("http://localhost:8080/api/rhombus/calculate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ side, angle }),
+            });
+
+            const result = await response.json();
+
+            const resultDiv = document.getElementById("result");
+            if (result.error) {
+                resultDiv.innerText = `Error: ${result.error}`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p>Area: ${result.area}</p>
+                    <p>Perimeter: ${result.perimeter}</p>
+                    <p>Diagonal 1: ${result.diagonal1}</p>
+                    <p>Diagonal 2: ${result.diagonal2}</p>
+                `;
+                drawRhombus(side, angle);
+            }
+        }
+
+        function drawRhombus(side, angle) {
+            const canvas = document.getElementById("rhombusCanvas");
+            const context = canvas.getContext("2d");
+
+            // Adjust canvas size
+            const scale = 20; // Adjust the scale as needed
+            const angleInRadians = angle * Math.PI / 180;
+            const diagonal1 = side * Math.sqrt(2 + 2 * Math.cos(angleInRadians));
+            const diagonal2 = side * Math.sqrt(2 - 2 * Math.cos(angleInRadians));
+            canvas.width = diagonal1 + 100;
+            canvas.height = diagonal2 + 100;
+
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Calculate the coordinates of the rhombus's vertices
+            const halfDiagonal1 = diagonal1 / 2;
+            const halfDiagonal2 = diagonal2 / 2;
+
+            const x1 = centerX - halfDiagonal1;
+            const y1 = centerY;
+            const x2 = centerX;
+            const y2 = centerY - halfDiagonal2;
+            const x3 = centerX + halfDiagonal1;
+            const y3 = centerY;
+            const x4 = centerX;
+            const y4 = centerY + halfDiagonal2;
+
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.lineTo(x3, y3);
+            context.lineTo(x4, y4);
+            context.closePath();
+            context.fillStyle = "#007BFF"; // Change color as needed
+            context.fill();
+            context.strokeStyle = "#0056b3"; // Rhombus border color
+            context.stroke();
+
+            // Draw the side lengths
+            context.fillStyle = "#000";
+            context.font = "16px Arial";
+            context.fillText(`Side: ${side}`, centerX, centerY - halfDiagonal2 - 20);
+        }
+    </script>
+</body>
+</html>

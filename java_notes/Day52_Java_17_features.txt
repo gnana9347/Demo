@@ -1,0 +1,395 @@
+java 17 features:
+=================
+
+1. text blocks : 
+
+  java people  converted string internal implementation from char[] to byte[] in java 9
+  
+  next change is they introduced new feature calles text block concept to store multi line string. 
+  
+  example : 
+          "helloworld how are you" -> singleline 
+		  if we want to print same text in multiple lines like below:
+		  to achieve this requiment we need to tak two operators helps:
+		   1. new line operator 
+		   2. concatination operator (+)
+		  
+           String s = "hello\n"+ 
+				     	"world\n" +
+					    " how are you"; 
+						
+		String text2 = """ 
+                Hello
+                 world
+                 how are you                
+                """;
+						
+			String tb = """ 				
+				""";
+				Note: text block can't end at same line it should have at least one new line between start strign to end string;
+			String tb = """ """;// CTE
+               			  
+   
+
+
+2. String methods : 
+
+     1. repeat(int count): this method will repeat the given string with specified number of time as a duplicate string. 
+	  
+	 2. lines(): this method will split the given string with multiple line with the help new line operator as delimiter i.e '\n'. 
+	 
+	 String s3 = "hello\n"+
+				"world\n"+
+			    " how are you";
+				
+	   	List<String> linesStream = s3.lines().collect(Collectors.toList());
+		System.out.println(linesStream);
+		
+		output: we will get 3 elements inside list 
+		    [hello, world,  how are you]
+	 
+	 3. indent(int count) :  this method will add the one tab space for each count given in input param at starting of the string
+	 
+	      String s4 = "hello";
+		 System.out.println(s4); 
+		System.out.println(s4.indent(1));
+		System.out.println(s4.indent(2));
+		System.out.println(s4.indent(3));
+		
+		output:
+		========
+		hello  -0
+		 hello -1
+
+		  hello -2
+
+		   hello -3
+		   
+		   
+		
+	 4. strip(): its work like trim() it will remove leading and tailing white speace from given string 
+	 
+		String s5 = " Dhanya ";
+		System.out.println(s5);
+		System.out.println(s5.strip());
+		output:
+		" Dhanya "
+		"Dhanya"
+		
+	 5. stripLeading(): it will remove only leading space.
+	 6. stripTailing(): it will remobe only tailing space.
+	 7. stripIndent() : it will remove start and end space same as strip().
+	 
+
+3. Record class: Record is s one of key word introducedin java 17 like interface, enum.
+    it will work like lomBook library for Enity classes or model classes. it will generate
+	setters and getters all specified fields and also it will override toString() and hashCode() and equals() based on content. and also it will generate constructor with all fields and also it will consider  every field as private member. 
+	
+	Record:
+	=======
+	1. it will consider all fields are private 
+	2. it will generate all feiled constructor : it will act like setter method for us.if we want to set the values we should use all field constructor. 
+	3. it will generate getter methods for each field with same name of field name without get() prefix example field: age : getter method is 
+		  public int age(){
+		   return age;
+		  }
+	4. it will override toString(), equals(),hashCode().
+	
+	Note: Record class will contains only one structor either No Arg constructor(if we dont provide any fields), else All arg Constructor with declared feileds. 
+	
+	syntax:
+	package com.k7it;
+
+	public record Person(int age, String name) {
+	 
+	}
+	
+	this code is equals to below code :
+	
+	public class Person{
+	   private int age;
+	   private String name;
+	   
+	   Person(int age, String name){
+		this.age = age;
+		this.name= name;
+	   }
+	   
+	   public int age(){
+	   return age;
+	   }
+	   public String name(){
+	    return name;
+	   }
+	   
+	   public String toString(){
+	   return "Person[age="+age+", name="+name+"]";
+	   }
+	   
+	   public boolean equals(Person p){
+	     return this.age == p.age && this.name.equals(p.name);
+	   }
+	   
+	   //old way override hashCode()
+	   public int hashCode(){
+	     return new String(age).hashCode()+name.hashCode();
+	   }
+	   // new way override() hashCode with help of Objects class and hash()
+	    @Override
+		public int hashCode() {
+			return Objects.hash(age, name); // 
+		}
+	}
+		  
+		  Note: record class can be used  only for  DTO purpose classes. 
+		  DTO: Data Tranfer Object 
+		  
+		  Model classes or Entity classes, POJO classes or DTO classes, bean classes also we can replace with Record class.
+		  
+         but we cant use Recod class for business logic class purpose like Controller , Service, Component or Utility etc.
+   	
+4. enhanced instanceof key word	:  by using this feature we can achieve auto down casting if object type is matched with user specified class type then automatically that object value will downcast into specified class type .
+
+Example:
+
+   package com.k7it;
+
+public class Vehicle {
+	
+	void m1() {
+		System.out.println("M1 Vehicle");
+	}
+
+}
+
+class Lorry extends Vehicle{
+	void m1() {
+		System.out.println("M1 Lorry");
+	}
+	int getWheels() {
+		return 4;
+	}
+}
+
+class Auto extends Vehicle{
+	void m1() {
+		System.out.println("M1 Auto");
+	}
+	int getWheels() {
+		return 3;
+	}
+}
+
+  public class Java17Features {
+	
+	public static void main(String[] args) {
+		
+		Vehicle v1 = new Vehicle();
+		v1.m1();
+		printNoWeels(v1);
+		
+		
+		Vehicle v2 = new Lorry();
+		v2.m1();
+		printNoWeels(v2);
+		
+		
+		Vehicle v3 = new Auto();		
+		printNoWeels(v3);
+		
+		
+		
+	}
+	static void printNoWeels(Vehicle v) {
+		
+	
+//		Lorry l1 = (Lorry)v;  // we will get the class cast exception except lorry type values from vehicle ref.
+//		System.out.println(l1.getWheels());  
+		// to abod this we will use instanceof key word to check object type before down cast.
+		if(v instanceof Lorry ) {
+			Lorry l1 = (Lorry)v;
+			System.out.println(l1.getWheels());
+		}else if(v instanceof Auto) {
+			Auto a1 = (Auto)v;
+			System.out.println(a1.getWheels());
+		}else {
+			System.out.println("for Vehicle type we cant decide no of wheels");
+		}
+		
+		// Enhanced instanceof key word : by using this we can achieve auto down casting 
+		 //if object type is matched with user specified class type .
+		
+		if(v instanceof Lorry lorry) {
+			System.out.println(lorry.getWheels());
+		}else if(v instanceof Auto auto ) {
+		
+			System.out.println(auto.getWheels());
+		}else {
+			System.out.println("for Vehicle type we cant decide no of wheels");
+		}
+		
+		
+	}
+}
+ 
+5. switch case with regular expresions  : older days switch statement was supporting only integers and String and also case will start with :(colon). but using new switch statement we can support all derived data types and also case with sub class type we can achive auto down casting and also it will use landa expresions to achive case logic with help Function interface. 
+
+and also break statement not required for each case. 
+
+example : if we take shape class to calculate area of different shapes using switch case:
+
+package com.k7it;
+
+public class Shape {
+	
+    double getAreaOfShape(Shape shape){
+		
+		double area = switch (shape) {
+									case Rectangle r ->  2* r.length + 2*r.width;
+									case Circle c -> c.radius*c.radius*Math.PI;		
+									case Square sq -> sq.side* sq.side;	
+									default ->
+									throw new IllegalArgumentException("Unsupporetd Shape: " + shape);
+							 };
+
+	    return area;
+     }
+}
+
+		if(shape instanceof Rectangle r) {
+			return  2* r.length + 2*r.width;
+		}else if(shape instanceof Circle c ) {
+		
+			c.radius*c.radius*Math.PI;	
+		}else if( shape instanceof Square sq){
+		    return sq.side* sq.side;
+		}else {
+			throw new IllegalArgumentException("Unsupporetd Shape: " + shape);
+		}
+		
+		
+
+class Circle extends Shape{
+	int radius;
+}
+
+class Square extends Shape{
+	
+	int side;
+	
+}
+class Rectangle extends Shape{
+	int length;
+	int width;
+	
+}
+
+class ZigZag extends Shape{
+	
+}
+    
+	package org.example.com.k7it;
+
+import javax.sound.midi.SysexMessage;
+
+public class ShapeAreaManager {
+
+
+    public static void main(String[] args) {
+        Circle c =  new Circle();
+        c.radius = 10;
+        double circumference  = c.getAreaOfShape(c);
+
+        Rectangle rt = new Rectangle();
+        rt.length=5;
+        rt.width= 10;
+        double rtCircumference = rt.getAreaOfShape(rt);
+
+        Square sq = new Square();
+        sq.side = 6;
+        double sqCircumference = rt.getAreaOfShape(sq);
+
+        System.out.println("circle area:"+circumference);
+        System.out.println("rectangle area:"+rtCircumference);
+        System.out.println("square area:"+sqCircumference);
+
+        ZigZag zz = new ZigZag();
+        zz.getAreaOfShape(zz);
+    }
+
+
+}
+
+output:
+
+circle area:314.1592653589793
+rectangle area:30.0
+square area:36.0
+Exception in thread "main" java.lang.IllegalArgumentException: Unsupporetd Shape: org.example.com.k7it.ZigZag@41975e01
+	at org.example.com.k7it.Shape.getAreaOfShape(Shape.java:27)
+	at org.example.com.k7it.ShapeAreaManager.main(ShapeAreaManager.java:27)
+
+Process finished with exit code 1
+
+	  
+7. sealed classes :  sealed class will prefix the allowed sub classes by uisng permits key word while defining super class or sealed class.  
+
+and permit sub classes should be either of 3 type classes 
+   1. sealed
+   2. non-sealed
+   3. final 
+
+example :
+
+package com.k7it;
+
+public sealed class Animal permits Tiger,Lion,Cheetha{
+
+}
+sealed class Tiger extends Animal permits BengalTiger{
+	 
+ }
+final class BengalTiger extends Tiger{
+	
+}
+
+non-sealed class Lion extends Animal /* permits Shimbha */{//no need to keep permits key word for non-sealed class
+	
+}
+
+ final class  Cheetha  extends Animal{
+	 
+ }
+ 
+// final class Shimbha extends Animal{// we can't make other than permit classes as sub class to sealed class.
+//	 
+// }
+// 
+ final class Gajju extends Lion {
+	 
+ }
+ 
+ sealed class Horse permits ArabianHorse  {// sealed class is non public and direct class then permits 
+	                                        //key word mandatory
+	 
+ }
+
+ sealed class ArabianHorse extends Horse{// even for sub class also if its extending non public sealed class 
+	                                     //it should have permits key word mandatory
+	 
+ }
+
+
+
+
+
+6. Helpfull NullPointerExceptions :  to enable this feature we should use this vm argument input :  -XX:+ShowCodeDetailsInExceptionMessages
+
+it will give more meaning and details NullPointerExceptions messages to user. 
+
+
+
+
+
+
+

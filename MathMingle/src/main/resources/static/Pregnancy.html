@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Calculators</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .calculator {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fafafa;
+        }
+
+        h2 {
+            color: #4CAF50;
+            font-size: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        input[type="date"], input[type="number"], button {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .result, .error {
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pregnancy Calculators</h1>
+
+        <!-- Pregnancy Calculator -->
+        <div class="calculator hidden" id="pregnancy-calculator">
+            <h2>Pregnancy Calculator</h2>
+            <label for="last-period">Date of Last Period:</label>
+            <input type="date" id="last-period">
+            <button onclick="calculatePregnancy()">Calculate</button>
+            <div class="error" id="pregnancy-error"></div>
+            <div class="result" id="pregnancy-result"></div>
+        </div>
+
+        <!-- Pregnancy Conception Calculator -->
+        <div class="calculator hidden" id="conception-calculator">
+            <h2>Pregnancy Conception Calculator</h2>
+            <label for="due-date">Due Date:</label>
+            <input type="date" id="due-date">
+            <button onclick="calculateConception()">Calculate</button>
+            <div class="error" id="conception-error"></div>
+            <div class="result" id="conception-result"></div>
+        </div>
+
+        <!-- Ovulation Calculator -->
+        <div class="calculator hidden" id="ovulation-calculator">
+            <h2>Ovulation Calculator</h2>
+            <label for="cycle-length">Cycle Length (days):</label>
+            <input type="number" id="cycle-length">
+            <label for="period-start">Date of Last Period:</label>
+            <input type="date" id="period-start">
+            <button onclick="calculateOvulation()">Calculate</button>
+            <div class="error" id="ovulation-error"></div>
+            <div class="result" id="ovulation-result"></div>
+        </div>
+
+        <!-- Period Calculator -->
+        <div class="calculator hidden" id="period-calculator">
+            <h2>Period Calculator</h2>
+            <label for="last-period-date">Date of Last Period:</label>
+            <input type="date" id="last-period-date">
+            <label for="average-cycle">Average Cycle Length (days):</label>
+            <input type="number" id="average-cycle">
+            <button onclick="calculateNextPeriod()">Calculate</button>
+            <div class="error" id="period-error"></div>
+            <div class="result" id="period-result"></div>
+        </div>
+
+        <a href="health.html" class="back-button">Back to Health Calculators</a>
+    </div>
+
+    <script>
+        function displayError(id, message) {
+            document.getElementById(id).textContent = message;
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+        }
+
+        function calculatePregnancy() {
+            clearErrors();
+            const lastPeriod = document.getElementById('last-period').value;
+            if (!lastPeriod) {
+                displayError('pregnancy-error', 'Please enter the date of your last period.');
+                return;
+            }
+            const dueDate = new Date(lastPeriod);
+            dueDate.setDate(dueDate.getDate() + 280);
+            document.getElementById('pregnancy-result').textContent = 'Estimated Due Date: ' + dueDate.toDateString();
+        }
+
+        function calculateConception() {
+            clearErrors();
+            const dueDate = document.getElementById('due-date').value;
+            if (!dueDate) {
+                displayError('conception-error', 'Please enter your due date.');
+                return;
+            }
+            const conceptionDate = new Date(dueDate);
+            conceptionDate.setDate(conceptionDate.getDate() - 280);
+            document.getElementById('conception-result').textContent = 'Estimated Conception Date: ' + conceptionDate.toDateString();
+        }
+
+        function calculateOvulation() {
+            clearErrors();
+            const cycleLength = document.getElementById('cycle-length').value;
+            const periodStart = document.getElementById('period-start').value;
+            if (!cycleLength || !periodStart) {
+                displayError('ovulation-error', 'Please enter your cycle length and the date of your last period.');
+                return;
+            }
+            const ovulationDate = new Date(periodStart);
+            ovulationDate.setDate(ovulationDate.getDate() + parseInt(cycleLength) - 14);
+            document.getElementById('ovulation-result').textContent = 'Estimated Ovulation Date: ' + ovulationDate.toDateString();
+        }
+
+        function calculateNextPeriod() {
+            clearErrors();
+            const lastPeriodDate = document.getElementById('last-period-date').value;
+            const averageCycle = document.getElementById('average-cycle').value;
+            if (!lastPeriodDate || !averageCycle) {
+                displayError('period-error', 'Please enter the date of your last period and your average cycle length.');
+                return;
+            }
+            const nextPeriodDate = new Date(lastPeriodDate);
+            nextPeriodDate.setDate(nextPeriodDate.getDate() + parseInt(averageCycle));
+            document.getElementById('period-result').textContent = 'Next Period Date: ' + nextPeriodDate.toDateString();
+        }
+
+        function showCalculator(calculator) {
+            document.querySelectorAll('.calculator').forEach(el => el.classList.add('hidden'));
+            document.getElementById(calculator).classList.remove('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const calculator = urlParams.get('calculator');
+            if (calculator) {
+                showCalculator(calculator + '-calculator');
+            }
+        });
+    </script>
+</body>
+</html>

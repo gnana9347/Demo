@@ -1,0 +1,33 @@
+  P p1 = new P();
+		  B b7 = p1;// CTE 
+		  B b8 = (B)p1;// CTE even though we are doing explicit down casting we are getting cTE, why because there is no relationship bet ween P and B. 
+  
+          
+          B b7 = (B)(A)(B)a2;// CS, RS // -> (B)(A)(B)new B();  (B)(A)B temp1 = new B();, (B)A temp2= temp1;(B)A temp2 = new B();,B temp3 = temp2;, B temp3 = new B(); B b7 = temp3; B b7= new B();
+		  
+		  B b8 = (B)(A)(B)a1;  // CS -> (B)(A)(B)new A();  (B)(A)B temp1 = new A();, RTE ClassCastException 
+		  
+		  Ex3:
+		  
+		    class A{
+			}
+			class B extends A{
+			}
+
+			class C extends B{
+			}
+
+			class D extends A{
+
+			}
+		  
+		    A a1 = new A();
+			A a2 = new B();
+			A a3 = new C();
+			A a4 = new D();
+			
+			
+			B b1 = (B)(A)(C)(A)a3;	 // CS and RS // B b1 = (B)(A)(C)A t1= new C();, B b1= (B)(A)C t2 = t1; (B)(A) C t2= new C();	
+                                    // (B)A t3 = t2; (B) a t3 =  new C();, B t4 =  t3; B t4 = new c();	B b1 =t4; B b1 = new C();
+
+             B b1 = (B)(A)(C)(A)a4;	 CS but RTE// B b1 = (B)(A)(C)A t1= new D();, B b1= (B)(A)C t2 = t1; (B)(A) C t2= new D(); RTE ClassCastException	

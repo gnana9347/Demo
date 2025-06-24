@@ -1,0 +1,329 @@
+  4th member of the class 
+  
+  Initialization blocks:
+  ======================
+        the process of define a block without name and without signature and without return type is called as
+		initialization block.
+		
+		    types of initialization block
+			   1. IIB (Instance Initialization Block)
+			   2. SIB (Static Initialization Block)
+			   
+			   1. IIB : the process of define a block without static key word is called as IIB
+			      
+				   Systax:
+				       {
+					     // body of the IIB 
+					   }
+					   
+					 Ex:  class A{
+					 
+					     {
+						  IIB");
+						 }
+						 
+					   }
+					   
+					   
+					  class A{
+					  
+					  int i = 10;
+					  
+					  A(){
+					   System.out.println("Constructor");
+					  }
+					  void m1(){
+					    System.out.println("m1");
+					  }
+					  
+					   public static void main(String args[]){
+					      
+						  A a1 = new  A();// accessing constructor by using name and Signature 
+						  a1.i =30;
+						  System.out.println(a1.i);//  by using name we are accessing the attrinute 
+						  a1.m1(); // accessing method by using name and Signature 
+						  // how to access blocks without name and signature
+					   }
+					  }
+					  
+					  
+					   // how to access blocks without name and signature:
+					   ==================================================
+					   we can't access IIB's explicitly like attrinutes or methods , IIB are used by
+					   constructor internally, it will invoke automatically after 
+					   executing IIA(Initialize instance attrinutes) inside constructor body. it means IIBs also will execute 
+					   only after executing super() stmt but not after this().
+					   
+					   -> so by using IIB's we can perform any common task for all objects creating using any constructor. 
+					   
+					   
+					     example :
+						 
+						 
+						 class A{
+						 
+						    A(){
+							 System.out.println("Hello K7iT");
+							 System.out.println("Creating object using no arg constructor");
+							 
+							}
+							
+							 A(int i ){
+							 
+							 System.out.println("Hello K7iT");
+							 System.out.println("Creating object using  int type constructor");
+							 
+							}
+							
+							
+							 A(String s ){
+							 
+							 System.out.println("Hello K7iT");
+							 System.out.println("Creating object using  String type constructor");
+							 
+							}
+							
+							public static void  main(String args[]){
+							 
+							 A a1 =new A();
+							 
+							 A a2 =new A(10);
+							 
+							 A a3 =new A("Java");
+							 
+							 
+							}
+							
+						 
+						 }
+					   output:
+					   
+							 Hello K7iT
+							 Creating object using no arg constructor
+							 
+							 Hello K7iT
+							 Creating object using  int type constructor
+							 
+							 
+							 Hello K7iT
+							 Creating object using  String type constructor
+							 
+					in above program Hello K7iT statement is repeating 3 types as duplicate code. 
+					
+				if we want to avoid duplicate code from all constructor we can use IIB. 
+				
+				refractor the code using IIB
+				
+				 class A{
+				 
+				          {
+						  	System.out.println("Hello K7iT");
+						  }
+						 
+						    A(){
+							 System.out.println("Creating object using no arg constructor");
+							}
+							 A(int i ){
+							 System.out.println("Creating object using  int type constructor");
+							}
+							
+							 A(String s ){
+							 System.out.println("Creating object using  String type constructor");
+							}
+							
+							public static void  main(String args[]){
+							 
+							 A a1 =new A();
+							 
+							 A a2 =new A(10);
+							 
+							 A a3 =new A("Java");
+							 
+							 
+							}
+							
+						 
+						 } 
+					 output:
+							 Hello K7iT
+							 Creating object using no arg constructor
+							 Hello K7iT
+							 Creating object using  int type constructor
+							 Hello K7iT
+							 Creating object using  String type constructor
+							 
+				
+				Note: IIB's will execute only once for one object creation even though multiple constructors 
+				      execute also as part of constructor chainging using this(). it means IIB's will invoke
+					  only after executing super();
+					  
+					  example:
+					  
+					   class A // exteds Object{
+							 {
+						     System.out.println("Hello K7iT");
+							 }
+						    A(){
+							  // super();
+							   //IIA
+							   // call IIB's 
+							   // body of the constructor
+							 System.out.println("Creating object using no arg constructor");
+							}
+							 A(int i ){
+							 this();
+							 System.out.println("Creating object using  int type constructor");
+							}
+							 A(String s ){
+							 // super();
+							 // IIA 
+							 // call IIB's
+							 // Body of the constructor
+							 System.out.println("Creating object using  String type constructor");
+							}
+							public static void  main(String args[]){
+							 
+							 A a1 =new A();
+							 
+							 A a2 =new A(10);
+							 
+							 A a3 =new A("Java");
+							}
+						 }
+						 
+				 output:
+					    Hello K7iT
+						Creating object using no arg constructor
+						Hello K7iT
+						Creating object using no arg constructor
+						Creating object using  int type constructor
+						Hello K7iT
+						Creating object using  String type constructor
+						
+	Note: if we have more than one IIB in our class how it will execute 
+	
+	
+	     class A // exteds Object{
+		 
+		    {
+			 System.out.println("IIB1");
+			}
+			
+			{
+			 System.out.println("IIB3");
+			}
+			
+			{
+			 System.out.println("IIB2");
+			}
+			
+			A(){
+			//super();
+			// IIA (Initialization instance attrinutes)
+			// call IIB1
+			// call IIB3
+			// call IIB2 
+			System.out.println("No ARg Constructor");
+			}
+			
+			public static void main(String args[]){
+			
+			   A a1 = new A();
+			}
+			
+		 }
+		 output :
+		 ========
+		   IIB1
+		   IIB3
+		   IIB2
+		   no arg constructor
+		   
+		   Note: in case of multiple IIB's , compiler will keep the calling statements from
+		    top to bottom order. 
+			
+			
+	SIB (Static Initialization Block):
+	  the process of define the block using static key word is called as SIB. 
+	  
+	  syntax:
+	  =====
+	  
+	     static {
+		   // body of SIB
+		 }
+		 
+		 
+		 ex:
+		   class A{
+		   
+		      static {// SIB
+			    System.out.println("SIB");
+			  }
+			  
+			  public static void main(String args[]){
+			  System.out.println("Main start");
+			    A a1 = new A();
+				 System.out.println("Main end");
+			  }
+		   }
+		   
+		   output:
+		      SIB
+			  Main start
+			  Main end
+			  
+			  
+			  Note:
+			  
+			  when ever we load 1st time our .class file into heap memory at runtime 
+			  immediately JRE will perform below actions 
+			  
+			  1.(ISA) look for static attrinutes if present it will initialization with default value or initial values
+			  2. look for SIB's,if present it will invoke all SIB's top to bottom order one by one
+			     call SIB1
+				 call SIB2
+				 call SIB3
+		      3. create thread to main() 
+			  4. load main() and execute remaining normal code .
+			  
+			  
+			  
+			  class A{
+		   
+		      static {// SIB
+			    System.out.println("SIB3");
+			  }
+			  
+			  static {// SIB
+			    System.out.println("SIB1");
+			  }
+			  
+			   static {// SIB
+			    System.out.println("SIB5");
+			  }
+			  
+			   static {// SIB
+			    System.out.println("SIB2");
+			  }
+			  
+			  public static void main(String args[]){
+			    System.out.println("Main start");
+			      A a1 = new A();
+			    System.out.println("Main end");
+			  }
+		   }
+		   output:
+		      SIB3
+			  SIB1
+			  SIB5
+			  SIB2
+			  Main start
+			  Main end
+			  
+			  
+			SIB  usage: if we want to execute any code only once entire excution time or if we want to execute any code 
+			    before main method then keep that code inside SIB's.
+		   
+		   IIB usaga: if want to execute any code common for all objects creating by using any constructors, then keep 
+		      that code in IIB's 

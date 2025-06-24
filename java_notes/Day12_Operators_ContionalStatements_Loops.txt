@@ -1,0 +1,510 @@
+Operators:
+Operators are symbols or keywords in programming and mathematics that perform operations on variables and values. They are essential for manipulating data and controlling the flow of a program.
+1. Arithmetic Operators : These are used to perform basic mathematical calculations.
+	i) Addition (+): Adds two operands.
+	ii) Subtraction (-): Subtracts the second operand from the first.
+	iii) Multiplication (*): Multiplies two operands.
+	iv) Division (/): Divides the numerator by the denominator.
+	v) Modulus (%): Returns the remainder of a division.
+Ex. Addition (+)
+Adds two numbers.
+int a = 10;
+int b = 5;
+int sum = a + b; // sum is 15
+
+Ex. Subtraction (-)
+Subtracts the second number from the first.
+int a = 10;
+int b = 5;
+int difference = a - b; // difference is 5
+
+Ex. Multiplication (*)
+Multiplies two numbers.
+int a = 10;
+int b = 5;
+int product = a * b; // product is 50
+
+Ex. Division (/)
+Divides the first number by the second. For integer division, the result is an integer.
+int a = 10;
+int b = 5;
+int quotient = a / b; // quotient is 2
+
+int c = 10;
+int d = 3;
+int quotient2 = c / d; // quotient2 is 3 (integer division)
+
+Ex. Modulus (%)
+Returns the remainder of the division.
+int a = 10;
+int b = 3;
+int remainder = a % b; // remainder is 1
+
+class ArithmeticOperatorsExample {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 5;
+
+        // Addition
+        int sum = a + b;
+        System.out.println("Sum: " + sum); // Sum: 15
+
+        // Subtraction
+        int difference = a - b;
+        System.out.println("Difference: " + difference); // Difference: 5
+
+        // Multiplication
+        int product = a * b;
+        System.out.println("Product: " + product); // Product: 50
+
+        // Division
+        int quotient = a / b;
+        System.out.println("Quotient: " + quotient); // Quotient: 2
+
+        // Modulus
+        int remainder = a % b;
+        System.out.println("Remainder: " + remainder); // Remainder: 0
+
+        // Demonstrating division with remainder
+        int c = 10;
+        int d = 3;
+        System.out.println("Quotient (10 / 3): " + c / d); // Quotient (10 / 3): 3
+        System.out.println("Remainder (10 % 3): " + c % d); // Remainder (10 % 3): 1
+    }
+}
+o/p
+Sum: 15
+Difference: 5
+Product: 50
+Quotient: 2
+Remainder: 0
+Quotient (10 / 3): 3
+Remainder (10 % 3): 1
+
+
+
+2. Comparison Operators: These compare two values and return a Boolean result (true or false).
+	1.Equal to (==): Checks if two operands are equal.
+	2. Not equal to (!=): Checks if two operands are not equal.
+	3. Greater than (>): Checks if the left operand is greater than the right.
+	4. Less than (<): Checks if the left operand is less than the right.
+	5. Greater than or equal to (>=): Checks if the left operand is greater than or equal to the right.
+	6. Less than or equal to (<=): Checks if the left operand is less than or equal to the right.
+Ex. Equal to (==)
+Checks if two values are equal.
+int a = 10;
+int b = 10;
+boolean isEqual = (a == b); // true
+
+Ex. Not equal to (!=)
+Checks if two values are not equal.
+int a = 10;
+int b = 5;
+boolean isNotEqual = (a != b); // true
+
+Ex. Greater than (>)
+Checks if the left operand is greater than the right operand.
+int a = 10;
+int b = 5;
+boolean isGreater = (a > b); // true
+
+Ex. Less than (<)
+Checks if the left operand is less than the right operand.
+int a = 10;
+int b = 5;
+boolean isLess = (a < b); // false
+
+
+Ex. Greater than or equal to (>=)
+Checks if the left operand is greater than or equal to the right operand.
+int a = 10;
+int b = 10;
+boolean isGreaterOrEqual = (a >= b); // true
+
+Ex. Less than or equal to (<=)
+Checks if the left operand is less than or equal to the right operand.
+int a = 10;
+int b = 15;
+boolean isLessOrEqual = (a <= b); // true
+
+class ComparisonOperatorsExample {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 5;
+
+        // Equal to
+        boolean isEqual = (a == b);
+        System.out.println("Is a equal to b? " + isEqual); // false
+
+        // Not equal to
+        boolean isNotEqual = (a != b);
+        System.out.println("Is a not equal to b? " + isNotEqual); // true
+
+        // Greater than
+        boolean isGreater = (a > b);
+        System.out.println("Is a greater than b? " + isGreater); // true
+
+        // Less than
+        boolean isLess = (a < b);
+        System.out.println("Is a less than b? " + isLess); // false
+
+        // Greater than or equal to
+        boolean isGreaterOrEqual = (a >= b);
+        System.out.println("Is a greater than or equal to b? " + isGreaterOrEqual); // true
+
+        // Less than or equal to
+        boolean isLessOrEqual = (a <= b);
+        System.out.println("Is a less than or equal to b? " + isLessOrEqual); // false
+    }
+}
+
+o/p
+Is a equal to b? false
+Is a not equal to b? true
+Is a greater than b? true
+Is a less than b? false
+Is a greater than or equal to b? true
+Is a less than or equal to b? false
+
+
+3. Logical Operators: These are used to combine multiple Boolean expressions.
+	i) AND (&&): Returns true if both operands are true.
+	ii) OR (||): Returns true if at least one operand is true.
+	iii)NOT (!): Inverts the Boolean value of the operand.
+
+Ex. Logical AND (&&)
+Returns true if both operands are true.
+boolean a = true;
+boolean b = false;
+boolean result = (a && b); // false
+
+Ex. Logical OR (||)
+Returns true if at least one of the operands is true.
+boolean a = true;
+boolean b = false;
+boolean result = (a || b); // true
+
+Ex. Logical NOT (!)
+Inverts the value of the operand.
+boolean a = true;
+boolean result = !a; // false
+class LogicalOperatorsExample {
+    public static void main(String[] args) {
+        boolean a = true;
+        boolean b = false;
+
+        // Logical AND
+        boolean andResult = (a && b);
+        System.out.println("a AND b: " + andResult); // false
+
+        // Logical OR
+        boolean orResult = (a || b);
+        System.out.println("a OR b: " + orResult); // true
+
+        // Logical NOT
+        boolean notResult = !a;
+        System.out.println("NOT a: " + notResult); // false
+
+        // Combining operators
+        boolean combinedResult = (a && (b || !a));
+        System.out.println("Combined Result: " + combinedResult); // false
+    }
+}
+
+o/p
+a AND b: false
+a OR b: true
+NOT a: false
+Combined Result: false
+
+Explanation
+Logical AND (&&): Returns false since b is false.
+Logical OR (||): Returns true since a is true.
+Logical NOT (!): Inverts the value of a, resulting in false.
+Combined Result: Evaluates the expression using both AND and OR operators.
+
+4. Assignment Operators: These assign values to variables, often using shorthand.
+
+	Assignment (=): Assigns the right operand's value to the left operand.
+	Add and assign (+=): Adds the right operand to the left operand and assigns the result.
+	Subtract and assign (-=): Subtracts the right operand from the left operand and assigns the result.
+	Multiply and assign (*=): Multiplies the left operand by the right operand and assigns the result.
+	Divide and assign (/=): Divides the left operand by the right operand and assigns the result.
+	Modulus and Assign (%=):Takes the modulus using two operands and assigns the result to the left operand.
+
+Ex. Simple Assignment (=)
+Assigns the value of the right operand to the left operand.
+int a = 10; // a is now 10
+
+Ex. Add and Assign (+=)
+Adds the right operand to the left operand and assigns the result to the left operand.
+int a = 10;
+a += 5; // a is now 15
+
+Ex. Subtract and Assign (-=)
+Subtracts the right operand from the left operand and assigns the result to the left operand.
+int a = 10;
+a -= 3; // a is now 7
+
+Ex. Multiply and Assign (*=)
+Multiplies the left operand by the right operand and assigns the result to the left operand.
+int a = 10;
+a *= 2; // a is now 20
+
+Ex. Divide and Assign (/=)
+Divides the left operand by the right operand and assigns the result to the left operand.
+
+int a = 10;
+a /= 2; // a is now 5
+
+Ex. Modulus and Assign (%=)
+Takes the modulus using two operands and assigns the result to the left operand.
+int a = 10;
+a %= 3; // a is now 1 (10 mod 3 is 1)
+
+
+
+5. Bitwise Operators : These operate on binary representations of numbers. - not use much
+
+	AND (&): Performs a bitwise AND operation.
+	OR (|): Performs a bitwise OR operation.
+	XOR (^): Performs a bitwise exclusive OR operation.
+	NOT (~): Inverts the bits of the operand.
+	Left Shift (<<): Shifts bits to the left, adding zeros on the right.
+	Right Shift (>>): Shifts bits to the right.
+
+6. Unary Operators : These operate on a single operand.
+
+	Increment (++): Increases the value by one.
+	Decrement (--): Decreases the value by one.
+	Unary Plus (+): Indicates a positive value (usually optional).
+	Unary Minus (-): Negates the value.
+Ex. Increment (++)
+Increases the value of the operand by one. It can be used in two forms.
+
+1. Pre-increment: Increments the value before it is used in an expression.
+2. Post-increment: Increments the value after it is used in an expression.
+int a = 10;
+int b = ++a; // Pre-increment: a is now 11, b is 11
+
+int c = 10;
+int d = c++; // Post-increment: c is now 11, d is 10
+
+Ex. Decrement (--)
+Decreases the value of the operand by one. It can also be used in pre and post forms:
+
+Pre-decrement: Decreases the value before it is used.
+Post-decrement: Decreases the value after it is used.
+int a = 10;
+int b = --a; // Pre-decrement: a is now 9, b is 9
+
+int c = 10;
+int d = c--; // Post-decrement: c is now 9, d is 10
+
+class UnaryOperatorsExample {
+    public static void main(String[] args) {
+        int a = 10;
+
+        // Unary Plus
+        System.out.println("Unary Plus: " + (+a)); // 10
+
+        // Unary Minus
+        int b = -a;
+        System.out.println("Unary Minus: " + b); // -10
+
+        // Increment
+        int preIncrement = ++a; // Pre-increment
+        System.out.println("Pre-increment: " + preIncrement); // 11
+        System.out.println("Value of a after pre-increment: " + a); // 11
+
+        int postIncrement = a++; // Post-increment
+        System.out.println("Post-increment: " + postIncrement); // 11
+        System.out.println("Value of a after post-increment: " + a); // 12
+
+        // Decrement
+        int preDecrement = --a; // Pre-decrement
+        System.out.println("Pre-decrement: " + preDecrement); // 11
+        System.out.println("Value of a after pre-decrement: " + a); // 11
+
+        int postDecrement = a--; // Post-decrement
+        System.out.println("Post-decrement: " + postDecrement); // 11
+        System.out.println("Value of a after post-decrement: " + a); // 10
+    }
+}
+
+o/p
+Unary Plus: 10
+Unary Minus: -10
+Pre-increment: 11
+Value of a after pre-increment: 11
+Post-increment: 11
+Value of a after post-increment: 12
+Pre-decrement: 11
+Value of a after pre-decrement: 11
+Post-decrement: 11
+Value of a after post-decrement: 10
+
+Explanation
+Unary Plus: Simply returns the positive value (no change).
+Unary Minus: Negates the value.
+Increment: Shows the difference between pre- and post-increment, affecting the value of a.
+
+
+
+Conditional statements : Conditional statements control the flow of execution based on specific conditions
+1.if Statement
+2.if-else Statement
+3.if-else if-else Statement
+4.Nested if Statements
+5.Switch Statement
+6.Conditional (Ternary) Operator
+
+if Statement
+Syntax:
+if (condition) {
+    // code to execute if condition is true
+}
+
+Ex.
+int number = 10;
+if (number > 0) {
+    System.out.println("Number is positive.");
+}
+
+if-else Statement
+Syntax
+if (condition) {
+    // code to execute if condition is true
+} else {
+    // code to execute if condition is false
+}
+
+Ex.
+int number = -5;
+if (number >= 0) {
+    System.out.println("Number is non-negative.");
+} else {
+    System.out.println("Number is negative."); // This will be printed
+}
+
+if-else if-else Statement
+Syntax:
+if (condition1) {
+    // code for condition1
+} else if (condition2) {
+    // code for condition2
+} else {
+    // code if neither condition is true
+}
+
+Ex:
+int number = 0;
+if (number > 0) {
+    System.out.println("Number is positive.");
+} else if (number < 0) {
+    System.out.println("Number is negative.");
+} else {
+    System.out.println("Number is zero."); // This will be printed
+}
+
+Nested if Statements
+Syntax
+int a = 10;
+int b = 20;
+
+if (a > 5) {
+    if (b > 15) {
+        System.out.println("a is greater than 5 and b is greater than 15."); // This will be printed
+    }
+}
+
+Switch Statement
+Syntax:
+switch (expression) {
+    case value1:
+        // code to execute if expression equals value1
+        break;
+    case value2:
+        // code to execute if expression equals value2
+        break;
+    default:
+        // code to execute if expression does not match any case
+}
+
+
+Ex:
+int day = 3;
+switch (day) {
+    case 1:
+        System.out.println("Monday");
+        break;
+    case 2:
+        System.out.println("Tuesday");
+        break;
+    case 3:
+        System.out.println("Wednesday"); // This will be printed
+        break;
+    default:
+        System.out.println("Invalid day");
+}
+
+Loops
+
+Loops: loops allow you to execute a block of code multiple times based on a condition
+1.For Loop
+2.While Loop
+3.Do-While Loop
+4.Enhanced For Loop (For-Each Loop)
+
+For Loop:
+Syntax:
+for (initialization; condition; increment/decrement) {
+    // code to be executed
+}
+
+Ex:
+class ForLoopExample {
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Iteration: " + i); // Prints 0 to 4
+        }
+    }
+}
+
+While Loop
+Syntax:
+while (condition) {
+    // code to be executed
+}
+
+Ex:
+class WhileLoopExample {
+    public static void main(String[] args) {
+        int i = 0;
+        while (i < 5) {
+            System.out.println("Iteration: " + i); // Prints 0 to 4
+            i++;
+        }
+    }
+}
+
+Do-While Loop
+Syntax:
+do {
+    // code to be executed
+} while (condition);
+
+Ex:
+class DoWhileLoopExample {
+    public static void main(String[] args) {
+        int i = 0;
+        do {
+            System.out.println("Iteration: " + i); // Prints 0 to 4
+            i++;
+        } while (i < 5);
+    }
+}
+
+
+
+

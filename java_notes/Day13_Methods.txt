@@ -1,0 +1,435 @@
+Methods: Method also one of the executable block in side class, using methods we can execute our business logics. 
+  methods also called as behaviours of the class or entity. 
+  
+   systax of method :
+   
+      AccessSpecifier AccessModifieer returnType methodName(Signature){
+	     method body
+		return statement;
+	  }
+	  
+	  the process of defind the block with any java valid identifier includes class name 
+	    with return type is called as method.
+		
+		example:
+		
+		  void m1(){
+		   System.out.println("this is my first method");
+		  }
+		  
+		  int m2(){
+		    System.out.println("this is my 2nd method");
+			return 10;
+		  }
+		  
+		   int m3(int i){
+		    System.out.println("this is my 2nd method");
+			return i;
+		  }
+		  
+		  method naming rules: 
+		  ===================
+		  method naming rules are same as the attribute naming rules.
+		 1. method name should be start with lower case 
+		 2. if method contains more than one word, from 2nd word onwards we should follow camel case. 
+		 3. method name should not start wit number or special chars except $(dollar) and _(under score).
+		 4. we should not maintain space between any two words.
+		 
+		 return type : 
+		 =============
+		 return type will specifies what type value that method will return back to user. for return types
+		 we can any java valid data types i.e primtives or derived data types. along with this data types we can use one 
+		 special key word for return type i.e void . void key word we can use when even we don't want to return any value to caller
+	     
+		   
+		   signature : signature will specifies what type of values we should pass as input params to that correspoing method
+		              to get the service from that method. 
+          
+		   method body : it will contains actual business logic
+           return statement: return statement will return value based return type, 
+                              it will contains 2 parts 
+                               return key : return key will specifies method body is finished or
+							   we reached the end of the method, go back to ur caller place or previous place.
+                               return value: it will species what type values we should return to user while going back, 
+                                      
+               note: in case of void return type return statement is optional, we need to keep at end of the method.
+
+               -> return statement should be last statement in side method. after return statement we can't keep any code.
+      			   
+		      example :
+			  
+			  
+			    void m1(){
+				    // CS and RS
+				}  // incase of void  no need return statement.
+				
+				 void m2(){
+				 
+				 return;// cS and RS
+				
+				}  // incase of void if we want to use return statement use only return key word, but we should
+				     not use return value. 
+				
+				
+				void m3(){
+				
+				 return 10;// CTE, in case void returnType we can't return any value, if u want make CS 
+				          // 1. change returnType as int  ; 
+						       int m3(){ return 10;}
+						  // 2. remove the return value atleast. 
+						      //void m3(){ return;}
+						   // 3. remove complete return statement. 
+						    // void m3(){}
+				}
+				
+				String m3(){
+				return 50;// CTE for string return type we cant give int return value, 
+				}
+				
+				String m3(){
+				 return "50";// CS
+				}
+				
+				int m3(){
+				  return 08;// 08 is not a integer and also 08 will consider as 
+				            // octal value so in octal there is no 8 and 9 
+	
+				}
+				
+				double m4(){
+				
+				 return 100;// CS 
+				}
+				
+				int i =100;
+				double d1 = i;
+				
+				
+				double m4(){
+				
+				 return 100.0;// CS 
+				}
+				
+				
+			  int getAge(){
+			   System.out.println("my age is 30");
+			   // cTE method is species int type returntype, but we are not returning any int value. 
+			  }// 
+			  
+			  int getAge(){
+			   System.out.println("my age is 30");
+			  
+			   return 10; // CS
+			  }// 
+			  
+			  void getAge(){
+			   System.out.println("my age is 30");
+			  // CS
+			  }// 
+				
+		  example:
+		  class Calculater{
+		    int num1;
+			int num2;
+			
+			Calculater(int num1,int num2){
+			  this.num1 = num1;
+			  this.num2 = num2;
+			}
+			
+			int add(){
+			 return num1+num2;
+			}
+			int sub(){
+			 return num1-num2;
+			}
+			int mul(){
+			 return num1*num2;
+			}
+			int div(){
+			 return num1/num2;
+			}
+		  }
+		  
+		  /*(division) -> quotient 
+		  %(moduler) -> remainder 
+		  
+		   11/2 = 5
+		   11%2 = 1*/
+		   
+		   class AccountManager{
+		   
+		     public static void main(String args[]){
+			   Calculater c1 = new Calculater(30,20);
+			   int sum = c1.add();// i am getting sum of two values as output/returnvalue from add(), and i am storing to sum variable with int type.
+			                      // if we want to store any method return value into one variable, that variable datatype
+								   // should be same as the method return type or biger than that return type. 
+								   
+			    System.out.println("Sum of "+c1.num1+","+c1.num2+":"+sum);
+				
+				int diff = c1.sub();
+				System.out.println("Diff of "+c1.num1+","+c1.num2+":"+diff);
+				
+				 int prd =c1.mul();
+				 System.out.println("Product of "+c1.num1+","+c1.num2+":"+prd);
+				 
+				 int quotient = c1.div();
+				 System.out.println("Quotient of "+c1.num1+","+c1.num2+":"+quotient);
+			 
+			 }
+		   }
+		   
+		   Method overloading :
+		   ====================
+		   the process of defining more than one method with same and different sifnature is called as method over loading
+		   
+		   ex1:
+		     class A{
+				 
+		        void m1(){
+					
+					System.out.println("m1 no arg");
+				}
+				
+				void m1(int i){
+					
+					System.out.println("m1 - with int type");
+				}
+				
+				int m1(String name, int age){
+					
+					System.out.println("m1 -with String-int type");
+					
+					return age;
+				}
+			 }
+			 
+			 ex2:
+			   class B{
+				   
+				   int test(int age){
+					  return age;   
+				   }
+				   
+				   void test(String name){
+					  
+				   }
+				   
+				   double test(int sal){
+					   return 10.25;
+				   }
+				   
+				   void test(String address){
+					   
+				   }
+				   
+				    void test(double age){
+					   
+				   }
+				   
+				   
+			   }
+			   A. CTE     B.CS but RTE     C. CS & RTE  D. CS and RS 
+			   
+			   B b1 = new B();
+			   b1.test(10);
+			   
+			   method overloading rules :
+			   ===========================
+			   1. name of the method
+			   2. List of args or no of args
+			   3. type of args
+			   4. order of args
+			   
+			   here note: 1. we will not use paramater names for signture comparing either method or constructor
+			              2.  we will not consider return type also for signature comparing for methods
+						  
+						  
+						  class C{
+							  
+							   void m1(int a, String b){
+								   
+							   }
+							   void m2(int a, String b){
+								   
+							   }
+							  /* void m1(int c, String s){
+								     duplciate as 1st method
+							   }	*/						   
+							   void m1(String b, int a){
+							   
+							   }							   
+							   void m1(int a, int b, String c){
+								   
+							   }
+							    int m1(int c, String a, int k){
+									
+									return c;
+								}
+								/*void m1(int age, String name, int sal){
+									
+									return ;
+								}
+							   */
+							   
+							  
+						  }
+
+			   
+			   class A{
+				   
+				   void m1(){
+					   
+				   }
+			   }
+			   class B{
+				    void m1(int i ){
+					   
+				   }
+			   }
+			   
+			   // here class  A and class B having same method name with different sign,but those methods are not consider
+			//      as method over loading. since they are in diff classes.
+			   
+			   class D{
+				     void m1(){
+					   
+				   }
+				   
+				   void m1(int i ){
+					   
+				   }
+				   
+			   }
+			   // here both m1() methods are present with in the same with different signature, so these methods are called 
+			   // overloading methods.
+			   
+			   types of methods:
+			   ==================
+			      1. static methods: define method with static key word are called static methods , static methods are called 
+				      class level methods, so we need to access static method by using class name only. but if we try to access 
+					  by using object or object ref var it will replace with correspoing class name at the time of compilation.
+					  
+					  class A{
+					      static void m1(){
+						    System.out.println(" static m1 no arg");
+						  }
+						
+						public static void main(String args[]){
+						  
+						   A.m1();// accessing using class name
+						   A a1 = new A();
+						   a1.m1();// accessing using obj ref var. but after compilation this code will repalce with class name i.e A.m1();
+						   
+						   new A().m1();// accessing using direct object , but after compilation this code will repalce with classname i.e A.m1();
+						}
+					   }
+				                    
+				  2. non static methods or instance methods: define method wihtout static key word are called instance method or non static method
+				       non static methods are also called as object level methods, so without object creation we cant access
+					   non static methods.
+					   
+					     -> non static methods we can access two ways 
+						 1. direct object 
+						 2. object ref var.
+						 
+						 class B{
+						  
+						  void m1(){
+						   System.out.println("non static m1 method");
+						  }
+						  
+						   public static void main(String manish[]){
+						     
+							 B b1 = new B();
+							 b1.m1();// using obj ref var we are calling non static  m1(),
+							 
+							 new B().m1();// using direct object we are calling nonstatic m1();
+							 // in case non static methods or attributes before compilation and after compilation same code
+							 // will present, no changes will happend by compiler.
+						   }
+						 }
+				  
+				  
+				  
+				  
+				     class Person{
+					 
+					   int age;
+					   String name;
+					   double ht;
+					   double wt;
+					   static int legs;
+					   
+					    void getRunRate(){//   we should use only non static 
+					    
+						return (ht*wt)/age;
+					   }
+					   
+					   int getNoOfLegs(){// here we can use either static or non static 
+					     return legs;
+					   }
+					   
+					   void printHelloWorld(){ // here we are not using any attributes, so your wish to define method as
+					                           // static or non static 
+					   
+					     System.out.println("Hello World...!");
+					   }
+					   
+					 static   int calciHelper(int i, int j){// 
+					  
+					       return i+j;
+						 
+					   }
+					   
+					   // calling stmt  int sum  = Person.calciHelper(20,30);
+					 
+					 }
+					 
+					 note: inside static method we can't access non static members directly wihtout using object or obj ref.
+					    but in side non static method we can access both static and non static members directly.
+					 
+					   class Person{
+					    static int legs;
+						String name;
+						void m1(){
+						  System.out.println("m1");
+						}
+					   
+					      static void m2(){
+						    m1();// cTE , we can't access non static members directly inside static methods. 
+							System.out.println(name);// CTE we can't access non static members directly inside static methods. 
+							
+							System.out.println(legs);// cS and RS, output : 0
+							}
+							
+							void m3(){
+							  m1();// CS , we can access non static members directly inside non static methods. 
+							System.out.println(name);// CS we can access non static members directly inside non static methods. 
+							
+							System.out.println(legs);// cS and RS, output : 0
+							   
+							}
+					   }
+				  
+		   Note: if we are accessing any non static member directly without using obj or obj ref var inside any non static method 
+		         or  constructor at time of compilation compiler will add prefix as this.nonstatic member. and for static members 
+				  it will add prefix as classname.
+				 
+				     for example above code inside m3();
+					   class Person{
+					     static int legs;
+						String name;
+						
+					      void m3(){
+						    m1();  					    ->  this.m1();
+							System.out.println(name);	->  System.out.println(this.name);				
+							System.out.println(legs);// ->  System.out.println(Person.legs)
+							   
+							}
+							
+							}
+							
+							
+							recursive and cyclic :
+							======================

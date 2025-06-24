@@ -1,0 +1,159 @@
+class members: class is a entity, which is having the properties and behaviours. 
+		     class is having mainly 4 members.
+			 
+   			  1. attributes / variables
+			  2. constructors
+			  3. methods
+			  4. initialization blocks 
+			  
+			  
+			  attributes: properties of the entity are represented as a attributes in side java class.
+			  
+			  attribute is one of variable type it is called as global variables 
+			  
+			  variable: variable is small memory space , it can store only one value. if we try to give the new value  then it will replace old 
+				values with new value. 
+			  
+			  syntax : 
+			          dataType attributeName / variableName ;
+					  
+					  here 
+					  
+					  attributeName or variableName is act as name of our small memory space.
+					  dataType specifies which type value we can able to store inside that variable or attribute or that small memory space.
+					  
+					  ex: int age;
+					      double height;
+						  
+						  here int , double are act as a datatypes.
+					  
+					  
+					  Attributes naming rules:
+					  =========================
+					  1. attribute name should start lowerCase
+					     ext: String name; - correct
+						      String Name: -> wrong
+						 
+					  2. if attairbute is having more than one word, then from second
+					      word onwards we should folllow camel case.i.e fro 2nd word
+						  onwards every word should start with upper case.
+						  
+						  ex: String firstName; - correct
+						  ex: String placeOfBirth; - correct
+						  ex: String dateOfBirth; - correct
+						      String firstname: -> wrong
+						      String FirstName: -> wrong
+							  
+					   3. atribute name should not start with numner or any special chars 
+					     excpet $ or _(under score). 
+					  
+					  ex: String _firstName; - correct
+						  ex: String $placeOfBirth; - correct
+						  ex: String dateOfBirth; - correct
+						      String #firstname: -> wrong
+						      String @FirstName: -> wrong
+							  
+							 
+					  data types in java: data type will deciede what type of value we cn store in that variable or attribute.
+					  
+					  in java we have 2 types of datatypes.
+					  
+					   1. primitive data type
+					   2. derived data type
+					   
+					   primitive data type: all predefind data types are called as primitive data types.
+					   
+					   in java mainly we have 8 primitive data types   
+						 
+						 byte  
+						 short 
+						 int 
+						 long
+						 float
+						 double 
+						 boolean -> this data type is used to store conditional values like true or false values. 
+						  
+						 char -> this data type we will used to store any single char using single quotes.
+						  ex : char c = 'a';
+						        char c1 = '7';
+								charc3 = '#';
+						 
+						 here these 4 data types 
+								 byte  
+								 short 
+								 int 
+								 long   
+						are used to store numeric values without decimal points, in this 
+						4 data types defult one is int data type.
+						  
+						 here these 2 data types 
+								 float
+								 double   
+						 are used to store numeric values with decimal points,in this 
+						2 data types defult one is double data type.
+						
+						 if we want to assing values to float data type we should use 'f' char end of the number else we can't give values to float.
+						 
+						 float f = 10.25f;  // -> correct
+						 float f = 10.25;  // -> wrong
+						 
+						 but for double we can store both the values
+						 
+						 double d = 10.25f;  // -> correct
+						 double d1 = 10.25;  // -> correct
+						 
+						 
+						 special data type: .
+						 =================
+							String -> this data type we will used to store any alpha numeric values using double quotes.using string we can store multiple chars at a time.
+						 
+						  ex : String name = "k7it";
+						        
+						Note: this data type we can use it as both the ways like primitive data types and derived data types so its called special data type
+						
+						datatype  range      capacity  		 range     	 defaultvalue 
+						======================================================================
+						byte       1byte     	256		-128 to +127	    0
+						short      2byte      65736	 	-32678 to +32767   0
+						int        4byte      2power32	 	 		    0
+						long       8byte      2power64	 	 		    0
+						float      4byte      2power32	 	 		    0.0f
+						double     8byte      2power64	 	 		    0.0
+						boolean    1byte      256	 	 		    false
+						char       2byte      2power16	 	 		    ''or(\u0000)
+						String 							    null
+						 
+						 
+						 in able 6 data types from (byte to double) we can store lower data type values into higer capacity data types but we can't store reverse way.
+						 
+						 int i = 10;
+						 float f = i;//its possible
+						 
+						 shot s =10;
+						 int i1 =s;// its possible 
+						 
+						 but 
+						 
+						 byte b = s; // not possible 
+						 
+						 int i2 = f;// not possible
+						 
+						 
+						 Memory mesurments:
+						 ===========================
+						 unit 				size/capacity
+						 ===================================
+						 1bit 					binay bit either (0 or 1)
+						 8bits					1byte = 2nibble
+						 1024bytes				1KB(kilo bytes)
+						 1024KBs				1MB(Mega bytes)
+						 1024MBs				1GB(Giga bytes)
+						 1024GBs				1TB(Tera bytes)
+						 1024TBs				1PB(Peta bytes)
+						 1024PBs				1EB(Exa bytes)
+						 1024EBs				1ZB(Zetta bytes)
+						 1024ZBs				1YB(Yotta byte)
+						 1024YBs				1BB(Bronto byte)
+						 1024BBs				1GeopB(Geop byte)
+						 
+						 Geop byte is the highest memory.

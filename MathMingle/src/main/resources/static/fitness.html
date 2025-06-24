@@ -1,0 +1,405 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fitness Calculators</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background-color: #f0f0f5;
+      color: #333;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 24px;
+      color: #2c3e50;
+    }
+    .calculator {
+      display: none;
+      padding: 20px;
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .button {
+      width: 100%;
+      padding: 10px;
+      background: #3498db;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .button:hover {
+      background: #2980b9;
+    }
+    .result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #27ae60;
+    }
+    .back-button {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e74c3c;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      transition: 0.3s;
+    }
+    .back-button:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fitness Calculator</h1>
+
+    <!-- BMI Calculator -->
+    <div id="bmi" class="calculator">
+      <h2>BMI Calculator</h2>
+      <input type="number" id="bmi-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="bmi-height" class="input-field" placeholder="Height (cm)">
+      <button class="button" onclick="calculateBMI()">Calculate</button>
+      <p id="bmi-result" class="result"></p>
+    </div>
+
+    <!-- BMR Calculator -->
+    <div id="bmr" class="calculator">
+      <h2>BMR Calculator</h2>
+      <input type="number" id="bmr-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="bmr-height" class="input-field" placeholder="Height (cm)">
+      <input type="number" id="bmr-age" class="input-field" placeholder="Age">
+      <button class="button" onclick="calculateBMR()">Calculate</button>
+      <p id="bmr-result" class="result"></p>
+    </div>
+
+    <!-- Body Fat Calculator -->
+    <div id="body-fat" class="calculator">
+      <h2>Body Fat Calculator</h2>
+      <input type="number" id="body-fat-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="body-fat-waist" class="input-field" placeholder="Waist (cm)">
+      <button class="button" onclick="calculateBodyFat()">Calculate</button>
+      <p id="body-fat-result" class="result"></p>
+    </div>
+
+    <!-- Calorie Calculator -->
+    <div id="calories" class="calculator">
+      <h2>Calorie Intake Calculator</h2>
+      <input type="number" id="calories-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="calories-height" class="input-field" placeholder="Height (cm)">
+      <button class="button" onclick="calculateCalories()">Calculate</button>
+      <p id="calories-result" class="result"></p>
+    </div>
+
+    <!-- Water Intake Calculator -->
+    <div id="water" class="calculator">
+      <h2>Water Intake Calculator</h2>
+      <input type="number" id="water-weight" class="input-field" placeholder="Weight (kg)">
+      <button class="button" onclick="calculateWaterIntake()">Calculate</button>
+      <p id="water-result" class="result"></p>
+    </div>
+
+    <!-- Protein Intake Calculator -->
+    <div id="protein" class="calculator">
+      <h2>Protein Intake Calculator</h2>
+      <input type="number" id="protein-weight" class="input-field" placeholder="Weight (kg)">
+      <button class="button" onclick="calculateProtein()">Calculate</button>
+      <p id="protein-result" class="result"></p>
+    </div>
+
+    <!-- Ideal Weight Calculator -->
+    <div id="ideal-weight" class="calculator">
+      <h2>Ideal Weight Calculator</h2>
+      <input type="number" id="ideal-weight-height" class="input-field" placeholder="Height (cm)">
+      <button class="button" onclick="calculateIdealWeight()">Calculate</button>
+      <p id="ideal-weight-result" class="result"></p>
+    </div>
+
+    <!-- Pace Calculator -->
+    <div id="pace" class="calculator">
+      <h2>Pace Calculator</h2>
+      <input type="number" id="pace-distance" class="input-field" placeholder="Distance (km)">
+      <input type="number" id="pace-time" class="input-field" placeholder="Time (minutes)">
+      <button class="button" onclick="calculatePace()">Calculate</button>
+      <p id="pace-result" class="result"></p>
+    </div>
+
+    <!-- Army Body Fat Calculator -->
+    <div id="army-body-fat" class="calculator">
+      <h2>Army Body Fat Calculator</h2>
+      <input type="number" id="army-body-fat-height" class="input-field" placeholder="Height (inches)">
+      <input type="number" id="army-body-fat-neck" class="input-field" placeholder="Neck (inches)">
+      <input type="number" id="army-body-fat-waist" class="input-field" placeholder="Waist (inches)">
+      <button class="button" onclick="calculateArmyBodyFat()">Calculate</button>
+      <p id="army-body-fat-result" class="result"></p>
+    </div>
+
+    <!-- Lean Body Mass Calculator -->
+    <div id="lean-body-mass" class="calculator">
+      <h2>Lean Body Mass Calculator</h2>
+      <input type="number" id="lean-body-mass-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="lean-body-mass-body-fat" class="input-field" placeholder="Body Fat (%)">
+      <button class="button" onclick="calculateLeanBodyMass()">Calculate</button>
+      <p id="lean-body-mass-result" class="result"></p>
+    </div>
+
+    <!-- Healthy Weight Calculator -->
+    <div id="healthy-weight" class="calculator">
+      <h2>Healthy Weight Calculator</h2>
+      <input type="number" id="healthy-weight-height" class="input-field" placeholder="Height (cm)">
+      <button class="button" onclick="calculateHealthyWeight()">Calculate</button>
+      <p id="healthy-weight-result" class="result"></p>
+    </div>
+
+    <!-- Calories Burned Calculator -->
+    <div id="calories-burned" class="calculator">
+      <h2>Calories Burned Calculator</h2>
+      <input type="number" id="calories-burned-weight" class="input-field" placeholder="Weight (kg)">
+      <input type="number" id="calories-burned-duration" class="input-field" placeholder="Duration (minutes)">
+      <input type="number" id="calories-burned-met" class="input-field" placeholder="MET Value">
+      <button class="button" onclick="calculateCaloriesBurned()">Calculate</button>
+      <p id="calories-burned-result" class="result"></p>
+    </div>
+
+    <!-- One Rep Max Calculator -->
+    <div id="one-rep-max" class="calculator">
+      <h2>One Rep Max Calculator</h2>
+      <input type="number" id="one-rep-max-weight" class="input-field" placeholder="Weight Lifted (kg)">
+      <input type="number" id="one-rep-max-reps" class="input-field" placeholder="Reps Performed">
+      <button class="button" onclick="calculateOneRepMax()">Calculate</button>
+      <p id="one-rep-max-result" class="result"></p>
+    </div>
+
+    <button class="back-button" onclick="goBack()">Back</button>
+  </div>
+
+  <script>
+    function showCalculator(id) {
+      document.querySelectorAll('.calculator').forEach(calc => calc.style.display = 'none');
+      let selectedCalculator = document.getElementById(id);
+      if (selectedCalculator) {
+        selectedCalculator.style.display = 'block';
+      }
+    }
+
+	function calculateBMI() {
+	    let weight = document.getElementById('bmi-weight').value;
+	    let height = document.getElementById('bmi-height').value;
+
+	    if (weight && height) {
+	        // Convert height from cm to meters
+	        height = height / 100;
+
+	        let bmi = (weight / (height * height)).toFixed(2);
+	        document.getElementById('bmi-result').innerText = "Your BMI: " + bmi;
+	    } else {
+	        document.getElementById('bmi-result').innerText = "Please enter both weight and height.";
+	    }
+	}
+
+    function calculateBMR() {
+      let weight = document.getElementById('bmr-weight').value;
+      let height = document.getElementById('bmr-height').value;
+      let age = document.getElementById('bmr-age').value;
+      let bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+      document.getElementById('bmr-result').innerText = "Your BMR: " + bmr.toFixed(2);
+    }
+
+    function calculateBodyFat() {
+      let weight = document.getElementById('body-fat-weight').value;
+      let waist = document.getElementById('body-fat-waist').value;
+      let bodyFat = ((waist / weight) * 100).toFixed(2);
+      document.getElementById('body-fat-result').innerText = "Body Fat: " + bodyFat + "%";
+    }
+
+    function calculateCalories() {
+      let weight = document.getElementById('calories-weight').value;
+      let height = document.getElementById('calories-height').value;
+      let calories = (weight * 22) + (height * 1.8);
+      document.getElementById('calories-result').innerText = "Daily Calories: " + calories.toFixed(2);
+    }
+
+    function calculateWaterIntake() {
+      let weight = document.getElementById('water-weight').value;
+      let water = (weight * 0.033).toFixed(2);
+      document.getElementById('water-result').innerText = "Water Intake: " + water + " liters/day";
+    }
+
+    function calculateProtein() {
+      let weight = document.getElementById('protein-weight').value;
+      let protein = (weight * 0.8).toFixed(2);
+      document.getElementById('protein-result').innerText = "Protein Intake: " + protein + " grams/day";
+    }
+
+    function calculateIdealWeight() {
+      let height = document.getElementById('ideal-weight-height').value;
+      let idealWeight = (height - 100) * 0.9;
+      document.getElementById('ideal-weight-result').innerText = "Ideal Weight: " + idealWeight.toFixed(2) + " kg";
+    }
+
+    function calculatePace() {
+      let distance = document.getElementById('pace-distance').value;
+      let time = document.getElementById('pace-time').value;
+      if (distance && time) {
+        let pace = (time / distance).toFixed(2);
+        document.getElementById('pace-result').innerText = "Pace: " + pace + " min/km";
+      }
+    }
+
+    function calculateArmyBodyFat() {
+      let height = document.getElementById('army-body-fat-height').value;
+      let neck = document.getElementById('army-body-fat-neck').value;
+      let waist = document.getElementById('army-body-fat-waist').value;
+      if (height && neck && waist) {
+        let bodyFat = 86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+        document.getElementById('army-body-fat-result').innerText = "Army Body Fat: " + bodyFat.toFixed(2) + "%";
+      }
+    }
+
+    function calculateLeanBodyMass() {
+      let weight = document.getElementById('lean-body-mass-weight').value;
+      let bodyFat = document.getElementById('lean-body-mass-body-fat').value;
+      if (weight && bodyFat) {
+        let leanBodyMass = weight * (1 - bodyFat / 100);
+        document.getElementById('lean-body-mass-result').innerText = "Lean Body Mass: " + leanBodyMass.toFixed(2) + " kg";
+      }
+    }
+
+    function calculateHealthyWeight() {
+      let height = document.getElementById('healthy-weight-height').value;
+      if (height) {
+        let healthyWeight = (height - 100) * 0.9;
+        document.getElementById('healthy-weight-result').innerText = "Healthy Weight: " + healthyWeight.toFixed(2) + " kg";
+      }
+    }
+
+    function calculateCaloriesBurned() {
+      let weight = document.getElementById('calories-burned-weight').value;
+      let duration = document.getElementById('calories-burned-duration').value;
+      let met = document.getElementById('calories-burned-met').value;
+      if (weight && duration && met) {
+        let caloriesBurned = (weight * duration * met) / 60;
+        document.getElementById('calories-burned-result').innerText = "Calories Burned: " + caloriesBurned.toFixed(2) + " kcal";
+      }
+    }
+
+    function calculateOneRepMax() {
+      let weight = document.getElementById('one-rep-max-weight').value;
+      let reps = document.getElementById('one-rep-max-reps').value;
+      if (weight && reps) {
+        let oneRepMax = weight * (1 + reps / 30);
+        document.getElementById('one-rep-max-result').innerText = "One Rep Max: " + oneRepMax.toFixed(2) + " kg";
+      }
+    }
+	
+	function calculatePace() {
+	  let distance = document.getElementById('pace-distance').value;
+	  let time = document.getElementById('pace-time').value;
+	  if (distance && time) {
+	    let pace = time / distance;
+	    document.getElementById('pace-result').innerText = `Your pace is ${pace.toFixed(2)} min/km`;
+	  } else {
+	    document.getElementById('pace-result').innerText = "Please enter valid values";
+	  }
+	}
+
+	function calculateArmyBodyFat() {
+	  let height = document.getElementById('army-body-fat-height').value;
+	  let neck = document.getElementById('army-body-fat-neck').value;
+	  let waist = document.getElementById('army-body-fat-waist').value;
+	  if (height && neck && waist) {
+	    let bodyFat = 86.01 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+	    document.getElementById('army-body-fat-result').innerText = `Your body fat percentage is ${bodyFat.toFixed(2)}%`;
+	  } else {
+	    document.getElementById('army-body-fat-result').innerText = "Please enter valid values";
+	  }
+	}
+
+	function calculateLeanBodyMass() {
+	  let weight = document.getElementById('lean-body-mass-weight').value;
+	  let bodyFat = document.getElementById('lean-body-mass-body-fat').value;
+	  if (weight && bodyFat) {
+	    let leanBodyMass = weight * (1 - (bodyFat / 100));
+	    document.getElementById('lean-body-mass-result').innerText = `Your lean body mass is ${leanBodyMass.toFixed(2)} kg`;
+	  } else {
+	    document.getElementById('lean-body-mass-result').innerText = "Please enter valid values";
+	  }
+	}
+
+	function calculateHealthyWeight() {
+	  let height = document.getElementById('healthy-weight-height').value;
+	  if (height) {
+	    let minWeight = 18.5 * (height / 100) ** 2;
+	    let maxWeight = 24.9 * (height / 100) ** 2;
+	    document.getElementById('healthy-weight-result').innerText = `Your healthy weight range is ${minWeight.toFixed(2)} - ${maxWeight.toFixed(2)} kg`;
+	  } else {
+	    document.getElementById('healthy-weight-result').innerText = "Please enter valid values";
+	  }
+	}
+
+	function calculateCaloriesBurned() {
+	  let weight = document.getElementById('calories-burned-weight').value;
+	  let duration = document.getElementById('calories-burned-duration').value;
+	  let met = document.getElementById('calories-burned-met').value;
+	  if (weight && duration && met) {
+	    let caloriesBurned = (met * 3.5 * weight / 200) * duration;
+	    document.getElementById('calories-burned-result').innerText = `You burned ${caloriesBurned.toFixed(2)} kcal`;
+	  } else {
+	    document.getElementById('calories-burned-result').innerText = "Please enter valid values";
+	  }
+	}
+
+	function calculateOneRepMax() {
+	  let weight = document.getElementById('one-rep-max-weight').value;
+	  let reps = document.getElementById('one-rep-max-reps').value;
+	  if (weight && reps) {
+	    let oneRepMax = weight * (1 + (reps / 30));
+	    document.getElementById('one-rep-max-result').innerText = `Your One Rep Max is ${oneRepMax.toFixed(2)} kg`;
+	  } else {
+	    document.getElementById('one-rep-max-result').innerText = "Please enter valid values";
+	  }
+	}
+
+    function goBack() {
+      window.location.href = 'health.html';
+    }
+
+    window.onload = function() {
+      let calculatorType = new URLSearchParams(window.location.search).get('calculator');
+      if (calculatorType) showCalculator(calculatorType);
+    };
+	window.onload = function() {
+	      let calculatorType = new URLSearchParams(window.location.search).get('calculator');
+	      if (calculatorType) {
+	        showCalculator(calculatorType);
+	        // Scroll to calculator after load
+	        document.getElementById(calculatorType).scrollIntoView();
+	      }
+	    };
+  </script>
+</body>
+</html>

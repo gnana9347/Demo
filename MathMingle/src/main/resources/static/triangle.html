@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #83a4d4, #b6fbff);
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: calc(100% - 24px);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #FF5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #C70039;
+            transform: scale(1.05);
+        }
+        .back-button::before {
+            content: "← ";
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">Back</a>
+        <h1>Triangle Calculator</h1>
+        <p>Use this calculator to determine the area, perimeter, and diagonal of a triangle based on its side lengths. Enter the lengths of the sides below and click "Calculate" to get the results and see the triangle visualized on the canvas.</p>
+        <label for="side1">Side 1:</label>
+        <input type="number" id="side1" required>
+        <label for="side2">Side 2:</label>
+        <input type="number" id="side2" required>
+        <label for="side3">Side 3:</label>
+        <input type="number" id="side3" required>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+        <canvas id="triangleCanvas" width="500" height="500"></canvas>
+        <img src="https://curvebreakerstestprep.com/wp-content/uploads/2021/04/Triangle-Area-and-Perimeter.png" alt="Triangle Types" style="margin-top: 20px; width: 100%; border-radius: 10px;">
+    </div>
+   
+    <script>
+        function drawTriangle(side1, side2, side3) {
+            const canvas = document.getElementById("triangleCanvas");
+            const context = canvas.getContext("2d");
+
+            // Calculate the triangle's vertices using the law of cosines
+            const angleA = Math.acos((side2 ** 2 + side3 ** 2 - side1 ** 2) / (2 * side2 * side3));
+            const angleB = Math.acos((side1 ** 2 + side3 ** 2 - side2 ** 2) / (2 * side1 * side3));
+
+            // Determine the maximum side length to set the canvas size
+            const maxSide = Math.max(side1, side2, side3);
+
+            // Adjust canvas size based on the longest side
+            canvas.width = maxSide * 2 + 40;
+            canvas.height = maxSide * 2 + 40;
+
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+            // Scale the triangle to fit the canvas
+            const scale = (Math.min(canvas.width, canvas.height) - 40) / maxSide;
+            const scaledSide1 = side1 * scale;
+            const scaledSide2 = side2 * scale;
+            const scaledSide3 = side3 * scale;
+
+            // Calculate the coordinates of the triangle's vertices
+            const x1 = canvas.width / 2 - scaledSide3 / 2;
+            const y1 = canvas.height / 2 + scaledSide1 / 2;
+            const x2 = x1 + scaledSide3;
+            const y2 = y1;
+            const x3 = x1 + scaledSide2 * Math.cos(angleA);
+            const y3 = y1 - scaledSide2 * Math.sin(angleA);
+
+            // Draw the triangle
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.lineTo(x3, y3);
+            context.closePath();
+            context.fillStyle = "#007BFF"; // Change color as needed
+            context.fill();
+            context.strokeStyle = "#0056b3"; // Triangle border color
+            context.stroke();
+
+            // Draw the side lengths
+            context.fillStyle = "#000";
+            context.font = "14px Arial";
+            context.textAlign = "center";
+            context.fillText(`${side1.toFixed(2)}`, (x2 + x3) / 2, (y2 + y3) / 2);
+            context.fillText(`${side2.toFixed(2)}`, (x1 + x3) / 2, (y1 + y3) / 2);
+            context.fillText(`${side3.toFixed(2)}`, (x1 + x2) / 2, y1 - 5);
+        }
+
+        async function calculate() {
+            const side1 = parseFloat(document.getElementById("side1").value);
+            const side2 = parseFloat(document.getElementById("side2").value);
+            const side3 = parseFloat(document.getElementById("side3").value);
+
+            // Validate input before sending request
+            if (isNaN(side1) || isNaN(side2) || isNaN(side3)) {
+                document.getElementById("result").innerText = "Error: Please enter valid numbers for all sides.";
+                return;
+            }
+            if (side1 <= 0 || side2 <= 0 || side3 <= 0) {
+                document.getElementById("result").innerText = "Error: Side lengths must be positive numbers.";
+                return;
+            }
+
+            const response = await fetch("http://localhost:8080/api/triangle/calculate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ side1, side2, side3 }),
+            });
+
+            const result = await response.json();
+
+            const resultDiv = document.getElementById("result");
+            if (result.error) {
+                resultDiv.innerText = `Error: ${result.error}`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p>Area: ${result.area}</p>
+                    <p>Perimeter: ${result.perimeter}</p>
+                    <p>Diagonal: ${result.diagonal}</p>
+                `;
+                drawTriangle(side1, side2, side3);
+            }
+        }
+
+        // Add input event listeners to update the results and canvas in real-time
+        document.getElementById("side1").addEventListener("input", calculate);
+        document.getElementById("side2").addEventListener("input", calculate);
+        document.getElementById("side3").addEventListener("input", calculate);
+
+    </script>
+</body>
+</html>

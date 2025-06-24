@@ -1,0 +1,196 @@
+ Optional class: 
+===============
+	 Optional class is one of important class in java 8, it is mainly introduced for reduce the NullPointerException chances in our programs, Optional class having some of the important methods to check any objects is having values or not and either object is empty or nor and object is having null value or not etc. 
+	 
+	 with the help of optional classes null checks became very simple in our codes and we are avoiding unwanted NullPointerException from our code.
+	 
+	package com.k7it;
+
+import java.util.Optional;
+
+class Student {
+	String name;
+	int age;
+	String branch;
+
+	public Student(String name, int age, String branch) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.branch = branch;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+}
+
+class StudentRepo {
+	public static Student getStudentByName(String name) {
+
+		if (name.equals("K7iT") || name.equals("Dhanya") ) {
+			return new Student(name, 12, "CSE");
+		} else {
+			return null;
+		}
+	}
+}
+
+public class OptionalDemo {
+	public static void main(String[] args) {
+
+		Student student = StudentRepo.getStudentByName("K7iT");
+		if (student != null) {
+			System.out.println(student.name);
+		}
+
+		Student s1 = StudentRepo.getStudentByName("Raju");
+		//System.out.println(s1.name);// NPE, if we need to avoid this NPE then we need verify null check before use the object
+		if (s1 != null) {
+			System.out.println(s1.getName());
+		}else {
+			System.out.println("No student present in direct call");
+		}
+		
+		/*
+		  to avoid this manual null checks we can go with Optional classes. 
+		 */
+		
+		Optional<Student> opSt  = Optional.of(StudentRepo.getStudentByName("Dhanya"));
+		
+		if(opSt.isPresent()) {
+			Student s = opSt.get();
+			System.out.println(s.getName());
+		}
+		
+		
+//		Optional<Student> opSt1  = Optional.of(StudentRepo.getStudent("Rani"));//NPE
+//		// of() will  not allow  null values. suppose if we want to allow null values also inside optional class
+//		// then use ofNullable() instead of  of() method
+//		
+//		if(opSt1.isPresent()) {
+//			Student s = opSt1.get();
+//			System.out.println(s.getName());
+//		}
+		
+		Optional<Student> opSt2  = Optional.ofNullable(StudentRepo.getStudentByName("Rani"));//NPE
+		// of() will  not allow  null values. suppose if we want to allow null values also inside optional class
+		// then use ofNullable() instead of  of() method
+		
+		if(opSt2.isPresent()) {
+			Student s = opSt2.get();
+			System.out.println(s.getName());
+		}else {
+			System.out.println("No student present inside opst2");
+		}
+		
+		// here by using of() or ofNullable() methods we can avoid manual null checks but still we are using 
+		// if and else statements how to reduce if and else also.
+		
+		
+		Student s3  = Optional.ofNullable(StudentRepo.getStudentByName("Rani"))
+				          .orElse(new Student("No student found",0,"no branch"));//NPE
+		System.out.println(s3.getName());
+		
+		Student s4  = Optional.ofNullable(StudentRepo.getStudentByName("Dhanya"))
+		          .orElseThrow( () ->  new StudentNotFoundException("No student found"));//NPE
+         System.out.println(s4.getName());
+		
+         Student s6  = Optional.ofNullable(StudentRepo.getStudentByName("Rani"))
+		          .orElseGet(() -> new Student("No student found",0,"no branch") );//NPE
+     System.out.println(s6.getName());
+     
+         Student s5  = Optional.ofNullable(StudentRepo.getStudentByName("Rani"))
+		          .orElseThrow( () ->  new StudentNotFoundException("No student found for given name:"+"Rani"));//NPE
+        System.out.println(s5.getName());
+        
+      
+        
+        
+        
+        // here orElseThrow() internally he will use the Supplier functional interface , so we need provide
+        // implementation for Supplier F/I and provide definition for get() 
+        
+      //  isPresent(): he will verify is optional value is empty or not, 
+                      //if  value present it will return true else it will trurn false.
+	  // isEmpty(): it is reverse of isPresent()
+       // of(): this method will create optional class object with given input value is not null. 
+                //else it will throw NPE while creating Optional class object.  it means of() will not
+                 // allow null values
+        // ofNullable(): this method will works same as of() but it will allow Null values also. he will not 
+            // throw NPE even value is not present.
+        // orElse(): this method we will use as pipeline method for ofNullable() to provide default if actual 
+                   // value not present.
+		// orElseThrow(): this method also works same as orElse only but this method will throw 
+        //the custom exception in case actual value not present with the help of Supplier F/I, 
+        //instead of giving default value 
+        //orElseGet() : this will works same as orElse() , he will also give the default value in case actual
+      // value not present, but he will use internally Supplier F/I.
+		
+       // get(): to get the actual value from optional class. 
+        
+          Optional<Student> op =  Optional.of(new Student(null, 0, null));
+          Student s =  op.get();
+          
+          Student s7 =  new Student(null, 0, null);
+          
+          // empty(): it will create empty optional class object.
+           Optional op1 =  Optional.empty();
+           
+          // ifPresent(): this method will works like isPresent() and also if statement both together.
+           // it will use internally Consumer F/I i.e void accept(T t);
+           
+           Optional<Student> op6  = Optional.of(StudentRepo.getStudentByName("Dhanya"));
+   		   op6.ifPresent(s8 -> System.out.print(s8.getName()));
+   		
+   		   
+      		//   same code earlier we are writing like this 
+      		   
+   		   		Optional<Student> opSt7  = Optional.of(StudentRepo.getStudentByName("Dhanya"));
+   		   		
+   		   		if(opSt7.isPresent()) {
+   		   			Student s9 = opSt7.get();
+   		   			System.out.println(s9.getName());
+   		   		}
+   		   		
+   		   		
+   		   // ifPresentOrElse(): this method will works like isPresent() and if and else statements : this guy
+   		   	//	will use 2 F/I internally i.e 
+   		   		// Consumer F/I in case of value present i.e if block, -> void accept(T t)
+   		   		// Runnable F/I in case of value not present i.e else block - void run()
+   		   		
+   		   		op6.ifPresentOrElse((s9)-> System.out.println(s9.getName()), 
+   		   				               () -> System.out.println("No student found"));
+		
+	}
+
+}
+
+	 
+	 
+	 
+			 
+			 
+ */
+ 

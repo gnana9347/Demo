@@ -1,0 +1,987 @@
+String class: String class is one of the important class in java , 
+	it is available under java.lang package, so we can use this class diretly without import stmt
+	like object class. 
+	
+	String is one of the derived data type.string class mainly using for manpulating or storing alphanumeric data into a variable. using
+    double quotes. by using String data type we can store multiple chars or sequance of chars or 
+    array of chars. 
+
+-->String class is final class like wrapper class, So we cant make any class is sub class of String or 
+   there is no sub class for String class.
+
+	Syntax:
+		public final class String{
+		
+		}	
+-->-> String class will produce immutable objects. 
+	
+	for string class we can assing values in  2 ways , 
+	
+	1. litteralway 
+	2. using new operator 
+	
+	String s1 = "abc";//litteralway
+	String s2  = "xyz"//litteralway
+	
+	String s1 = new String("abc"); // object way 
+	String s1 = new String("xyz");
+	
+	String class is a immutable class : here immutable means
+	once we create the object we can't modify data inside object in the same memory location,
+	if we try to modify the data in object it will create another object with modify data 
+	in another memory location. 
+	
+	
+	String s1  = "abc";
+    s1 = "abc"+"123"= "abc123"
+	s1 = "abc"+"xyz" = "abcxyz"
+    s1 = "raju"
+	
+obj       location/index
+  "abc" - 1001
+  "123" - 1002
+  abc123 - > 1003
+  xyz -> 1004
+  abcxyz -> 1005
+ s1 ->  "raju"  - 1006 
+  
+  
+  Person p1 = new person()
+  
+  p1.age = 20;
+  p1.age = 30+10;
+  p1.name = "abc";
+  p1.name ="xyz"
+  
+  here if u do 100 times modify the person class object it will create only one object in the heap
+  memory. 
+  
+  once we create the object if we want change any value in the same memory location,
+  its called as muttable object. 
+  
+  or
+  once we create the object we can't modify any object in same memory location
+   means that is called immutable object.
+   
+   
+   In String class while storing values into heap memory, there two parts 
+     	1. String constant pool
+	2. string non Constant pool
+	3. by using valueOf method :
+        
+       example for valueOf:
+	================== 
+         String s1  = String.valueOf("abc");
+         String s2  = String.valueOf("xyz");
+       		sop(s1);// abc  sop(s1); - > sop(s1.toString());// abc, 
+                sop(s2);// xyz
+                
+         Note : in side String class toString(), equals(), hashCode() got override based on content of the object.
+           
+	equals operator(==) and equals() usage in String class objects comparison :
+  * 	===========================================================================
+  *       String s1 = "abc";
+  *       String s2  =  "abc";
+  *       String s3 = s2;
+  *       String s4  = "xyz";
+  *       String s5 = "xyz";
+  *       
+  *       sop( s1 == s1 );//  true
+  *       sop( s1 == s2 );//  true
+  *       sop( s2 == s3 );//  true
+  *       sop( s4 == s2 )//   false
+  *       sop( s4 == s5 );//  true
+  *       
+  *       sop( s1.equals(s1) );// true
+  *       sop( s1.equals(s2) );//true
+  *       sop( s2.equals(s3) );//true
+  *       sop( s4.equals(s2) );//false
+  *       sop( s4.equals(s5) );//true
+  *       
+  *       String s6 =  new String("abc");
+  *       String s7 =  new String("abc");
+  *       String s8 =  s6;
+  *       String s9 =  new String("xyz");
+  *       String s10 =  new String("xyz");
+  *       
+  *       sop( s6 == s6 ); // true
+  *       sop( s6 == s7 ); // false
+  *       sop( s7 == s8 ); // false
+  *       sop( s9 == s7 ); // false
+  *       sop( s9 == s10 ); //false
+  *       
+  *       sop( s6.equals(s6) ); // true
+  *       sop( s6.equals(s7) ); // true
+  *       sop( s7.equals(s8) ); // true
+  *       sop( s9.equals(s7) ); // false
+  *       sop( s9.equals(s10) );// true
+  *       
+  *       sop(s1 == s6); //  false
+  *       sop(s1.equals(s6)); //  true
+	 
+---->In general entire java development comapared to other classes , String objects are creating more,
+	 so max memory space was utilized by string objects, to save memory space java people came up with 
+	 one solution called Sting constant pool. 
+   
+   String Constant pool :  it is also one type heap memory, it will not allow duplicate objects with 
+       same content, even though if we create multiple object with same content it will create only
+	   one object in constant pool, all referance variables will point to same obj. 
+	   
+ ---> what are the object we are creating using litteralway ,those objects will store in constant pool and what are the objects we will create using new 
+	   operator those objects will create in non constant pool.
+	   
+	   String s1 ="abc";
+	   String s2 ="abc";
+	   String s3 ="abc";
+	   String s4 ="xyz";
+	   String s5 ="xyz";
+	   String s6 ="abc";
+	   
+	   here we are trying to create total 6 string objects, but in heap memonry only 2 objects 
+	   will create side constant pool. i.e 
+	     1. abc  --> its pointing by s1,s2,s3,s6
+		 2. xyz -> its pointing by s4 and s5. 
+		 
+		 due to constant pool we are saving 4 memory locations 
+		 
+		 but here we may get one more new issue i.e 
+		 
+		 if any of the referance variables of abc object wants modify with difference value like 
+		  "123". 
+		  
+		  s2 = "123";
+		  
+		  in this case if we allow s2 to modify at same memory location with "123" at the place of "abc"
+then other referance s1,s3,s6 also will effect with new value i.e "123". here 
+s1,s3,s6 are loosing their data due to s2 modification.  means we are getting data security issue. 
+
+to fix this data security issue java people came up with new solution called Immutable concept.
+
+		  
+immutable: once we create the object we can't modify data inside object in the same memory location,
+	if we try to modify the data inside object, it will create another object with modify data 
+	in another memory location. 
+	
+	
+	example:
+	=========
+	
+	String s1 = "abc"; -> it will create 1 object under SCP
+	Strign s2 = new String("xyz"); // it will create 2 objects 1. under SCP 2. under SNCP 
+	String s3 = "xyz"; // this will not create new object it will point to existing "xyz" obj inside SCP
+	String s4 = "abc"; // // this will not create new obj, it will also point to exisitn "abc" inside SCP i.e s1 location
+	String s6 = "abc"+"123"; 
+	// in case of concatination if both objs are temp or litterals result will store under SCP,
+	// if there is  any permanent ref variavle then result will store under SNCP. 
+	// in above s6 obj -> it will one new obj under SCP "123", sicne "abc" already available,
+	// the result of "acb"+"123" = "abc123", it will create another object under SCP only 
+	
+	String s7 = s1+"pqr"; -> here "pqr" will goes into SCP and "abcpqr" -> will goes into SNCP
+	String s8 = s1+s3; -> here result "abcxyz" will goes into SNCP 
+	String s9 = new String("abcxyz"); // ->  it will create one more "abcxyz" under SCP and SNCP , even though already "abcxyz" present , 
+	                                  // sicne SNCP will allow duplicate object.
+	String s10 = new String("abc"); // it will create "abc" under SNCP .
+	
+	Examples1:
+	===========
+	
+	package com.k7it;
+
+public class StringDemo {
+ public static void main(String[] args) {
+	    String s1 = "abc"; //-> it will create 1 object under SCP
+		String s2 = new String("xyz"); // it will create 2 objects 1. under SCP 2. under SNCP 
+		String s3 = "xyz"; // this will not create new object it will point to existing "xyz" obj inside SCP
+		String s4 = "abc"; // // this will not create new obj, it will also point to exisitn "abc" inside SCP i.e s1 location
+		String s5 = "abc"+"123"; 
+		String s6 = "abc"+"123"; 
+		String s11= s1+"123"; 
+		String s13= "123";
+		String s12= s1+s13; 
+		// in case of concatination if both objs are temp or litterals result will store under SCP,
+		// if there is  any permanent ref variavle then result will store under SNCP. 
+		// in above s6 obj -> it will one new obj under SCP "123", sicne "abc" already available,
+		// the result of "acb"+"123" = "abc123", it will create another object under SCP only 
+		
+		String s7 = s1+"pqr";// -> here "pqr" will goes into SCP and "abcpqr" -> will goes into SNCP
+		String s8 = s1+s3; //-> here result "abcxyz" will goes into SNCP 
+		String s9 = new String("abcxyz"); // ->  it will create one more "abcxyz" under SCP and SNCP , even though already "abcxyz" present , 
+		                                  // sicne SNCP will allow duplicate object.
+		String s10 = new String("abc"); // it will create "abc" under SNCP .
+		
+		System.out.println(s1 ==  s10);// false since one CP and another one NCP 
+		System.out.println(s1.equals(s10));
+		System.out.println(s1.hashCode());
+		System.out.println(s10.hashCode());
+		
+		System.out.println(s8 ==  s9);// false means both are different memory locations 
+		System.out.println(s2 ==  s3);// false means both are different memory locations 
+		System.out.println(s5 ==  s6);// true means both are same memory locations 
+		System.out.println(s5 ==  s11);// false means both are different memory locations 
+		System.out.println(s5 ==  s12);// false means both are different memory locations 
+		
+		String s15 = s5;  // this will point only where s5 is pointing either CP or NCP, here that permanent ref var concept not effect.
+		String s16 = "abc123";
+		
+		
+		
+		
+}
+	
+}
+
+// write a java program to create our own immutable class . 
+	
+	public final class Person{
+	
+	  private int age;
+      private String name;
+      private double ht;
+      private double wt;
+	  
+	  public Person(int age, String name, double ht, double wt){
+	    this.age = age;
+		this.name = name;
+		this.ht = ht;
+		this.wt = wt;
+	  }
+	  
+	}
+	
+	class PersonManager{
+	
+	  public static void main(String... args){
+	     
+		Person p1 = new Person(25,"K7iT",5.5,60.25);
+		 
+		// p1.age = 40; we can't modify since age is private we can't access 
+		p1 = new Person(40,"K7iT",5.5,60.25);
+		
+		p1 = new Person(40,"Java",5.5,60.25); 
+		
+		Person p2 = new Person(25,"K7iT",5.5,60.25);
+		 
+		 
+	  }
+	}
+	
+	
+	public final class MyString{
+	
+	  private String value;
+	  
+	  public MyString(String value){
+	  this.value = value;
+	  }
+	  
+	  public String toString(){
+	    return this.value;
+	  }
+	
+	}
+	
+	class Manager{
+	
+	  public static void main(String... args){
+	  
+	     MyString mys1 = new MyString("K7iT");
+	     System.out.println(mys1);// K7iT
+		 
+		 String s1 = new String("Java");
+		 System.out.println(s1);// Java
+		 
+		 mys1 = new MyString("MongoDB");
+		 System.out.println(mys1);// MongoDB
+		 
+	  }
+	}
+	
+   
+  
+  String class methods:
+  ====================
+ ---> toString(): it will convert obj value into a string format
+  this method already overriden in the string so it will work based on content of the object. 
+  
+  in side String class equals and hashCode methods also got overriden based on content. 
+  
+  Note: basically String is a collection array of chars or collection of multiple chars
+                   or sequance of chars , here each char will have one index ,
+		   index will start from zero and end with n-1 
+  
+   example :
+   
+      String s1 ="abc"; here 'a' will store in index 0 and 'b' will store in index 1 and 'c' will store in index 2
+	              012
+				      
+---->indexOf(char c): 			  
+      it will return the index position of given char in the string object, 
+	  incase char is not present in the string obj it will return -1;
+  
+  
+   index will start from 0 and end with n-1 
+   count will start from 1 and end with n 
+   
+   String s1 = "hello world";
+                012345678910
+   sop(s1.indexOf("d"));// 10
+   sop(s1.indexOf("w"));// 6
+   sop(s1.indexOf("o"));// 4// indexOf will scan for char from start to end or left to right, if char present multiple places then it will return 1st occurence index 
+   sop(s1.indexOf("e"));// 1
+   sop(s1.indexOf("s"));// -1
+   sop(s1.indexOf("Manish"));// -1
+   sop(s1.indexOf("xyz"));// -1
+   sop(s1.indexOf("123"));// -1
+   sop(s1.indexOf("llo"));// 2 
+   sop(s1.indexOf("llo"));// 2
+   
+   in case of semi string or sub string if u give for indexOf() it will return that word starting 
+   index. here "llo" is starting at 2nd index and end at 4 but we will get the output is 2.
+   
+----->lastIndexOf():it will also return the index of given char or string from original string
+     like indexOf();but here one difference is lastIndexOf will scan for the given chars 
+	 from right to left  , end  to starting . 
+   
+     String s1 = "hellow world";
+                  01234567891011
+   sop(s1.lastIndexOf("d"));// 11
+   sop(s1.lastIndexOf("w"));// 7
+   sop(s1.lastIndexOf("o"));// 8
+   sop(s1.lastIndexOf("e"));// 1
+   sop(s1.lastIndexOf("s"));// -1
+   sop(s1.lastIndexOf("llo"));//  2
+   
+   how to find out what char is preset at given index:
+   ==================================================
+   
+---->charAt(int index): this method will give the char from specifed index location , here index should be 0 to n-1.  
+   here if index is less than zero or greater than n-1,
+    we will get the IndexOutOfBoundException.
+   
+   String s1 = "hellow world";
+                01234567891011
+   
+   sop(s.charAt(4));// o
+   sop(s.charAt(10));// l
+   sop(s.charAt(20));// IndexOutOfBoundException 
+   sop(s.charAt(-10));// IndexOutOfBoundException 
+   	
+   
+---->length(): this method will give output as   number of chars or count chars  
+              are present in the given string in int format.
+   
+   
+    String s1 = "hellow world";
+                01234567891011
+				
+	sop(s1.length());// 12 - n
+	
+	String s2  = "abc";
+	sop(s2.length());// 3
+	
+	example  problem statement is : print the each char from given string :
+	=====================================================================
+	
+	
+	String s1 = "hellow world";
+1st way using direct index:
+=============================	
+   sop(s1.charAt(0));
+   sop(s1.charAt(1));
+   sop(s1.charAt(2));
+   sop(s1.charAt(3));
+   sop(s1.charAt(4));
+   sop(s1.charAt(5));
+   sop(s1.charAt(6));
+   sop(s1.charAt(7));
+   sop(s1.charAt(8));
+   sop(s1.charAt(9));
+   sop(s1.charAt(10));
+   sop(s1.charAt(11));
+   
+   2nd way is uisng for loop with dynamic index with help of charAt() and length():
+   =============
+   for(int i=0;i<s1.length();i++){
+	   sop(s1.charAt(i));
+	}
+	
+	problem2: reverse a given string: 
+	=================================
+	 String s ="abc"; output: cba
+	 
+	 String reverse = "";
+	 for(int i=0;i<s.length();i++){// read char from start 
+	   reverse = s.charAt(i)+reverse;
+	 }
+	  i=0 char = a r = a+"" = "a";
+	  i=1 char = b r = b+"a" = "ba";
+	  i=2 char = c r = c+"ba" = "cba";
+	  
+	   String reverse = "";
+	 for(int i=s.length()-1;i>=0;i--){// read char from end 
+	   reverse = reverse+s.charAt(i);
+	 }
+	  i=0 char = c r = ""+c = "c";
+	  i=1 char = b r ="c"+b = "cb";
+	  i=2 char = a r = "cb"+a = "cba";
+	  sop(reverse);// cba 
+	  
+	  problem3: find given string is a palindrom or not 
+	  ================================================
+	  palindrom means after reversing original string and reverse string should be same. 
+	  
+	  1. reverse a string 
+	  2. compare reverse str with original str 
+	  
+	  String s = "aba";
+	 String reverse = "";
+	 for(int i=0;i<s.length();i++){// read char from start 
+	   reverse = s.charAt(i)+reverse;
+	 }
+	 if(s.equals(reverse)){
+	   sop("given string is palindrom");
+	 }else{
+	    sop("given string is not a palindrom");
+	 }
+	  
+	  
+---->substring(int startindex, int endIndex): this method will retun all the chars between startindex to endIndex as sub string from original string.
+	note: here startindex is a include operation but endIndex is a exclude operation.
+	
+    String s1 = "hellow world";
+                 01234567891011
+				
+    String s3   =  s1.substring(0,5);
+	sop(s3);hello
+	sop(s1.substring(7,10));// wor
+	
+	sop(s1.substring(3,9));//"low wo"
+	
+	if we want to get the some portion of the string from original string then we can use 
+	 the substring method.
+	
+---->substring(int startindex): this method will give the substring from startindex to 
+	                            end of the original string .
+	
+	   String s1 = "hellow world";
+                    01234567891011
+	sop(s1.substring(4));// "ow world"
+	sop(s1.substring(9));// "rld"
+	sop(s1.substring(0));// "hellow world"
+	
+	note: 
+	  1.startindex - > include ,  endIndex -> exclude
+	  2. startindex <= endIndex
+	  3. any index >=0  and index <=n-1 else we will get IndexOutOfBoundException
+	  
+	  
+	  example:
+	   if we want to get hello or world from "hellow world";
+	   
+	   String s1 = "hellow world";
+                    01234567891011
+					
+	   Sop(s1.substring(0,5));// hello
+	   Sop(s1.substring(7,12));// world
+	   
+	
+---->contains(String s):
+     ===================
+	by using contains method we can verify given char or substring is present in the original
+	string, if it present it will return  boolean true value, 
+	if not present it will return  boolean false value.
+	
+	String s1 = "hellow world";
+                 01234567891011
+				 
+	Sop(s1.contains("llo"));// true 
+	Sop(s1.contains("Raju"));// false 
+	Sop(s1.contains("w"));// true 
+	Sop(s1.contains("lloH"));// false 
+	Sop(s1.contains("oello"));// false 
+	Sop(s1.contains("o"));// true 
+	Sop(s1.contains("w wor"));// true 
+	
+	
+---->chars(): 
+     ========
+	this method it will convert given string into a char array.
+	
+	char[] chars =  s1.chars();
+	
+	example:
+	
+	String s1 = "abc";
+	char[] chars  = s1.chars();// string value convert into char array 
+	[a][b][c]
+	 0  1  2
+	 sop(chars[0]);// a
+	 sop(chars[1]);// b
+	 sop(chars[2]); // c
+	 
+	 for(int i =0;i<chars.length;i++){
+	    sop(chars[i]);
+	 }
+	 
+---->split(String strRegex): 
+     =======================
+	this method also split the original string into multiple sub strings based
+	on user provided delimiter and it will give output as multiple strings as arry format.
+	
+	String s1  = "hello world, good morning to every one.today we are discussing string class";
+	
+	String [] multipleStrs =  s1.split(".");// here we will get 2 string with index 0 to 1
+	//0.  hello world, good morning to every one
+	//1.  today we are discussing string class
+	
+	String s2 = "Hello world good morning";
+	
+	String s3[] = s2.split(" ");//  here we will get 4 strings  with index 0 to 3
+	// 0. hello 
+	   1. world
+	   2. good
+	   3. morning
+	sop(s3[0]);//hello
+	sop(s3[3]);//morning
+	sop(s3[2]);//good
+	//print using for loop
+	  for(int i =0 ;i< s3.length;i++){
+	    sop(s3[i]);
+	  }
+	
+	String s4[] =  s2.split(":");// here there is no given string char at original string , 
+	                        in this case whole string we will return as output at 0 index.
+	
+	// 0. Hello world good morning
+	
+	sop(s2);// Hello world good morning
+	sop(s4[0]);// Hello world good morning
+	
+	
+---->replace(String oldString, String newString): this method will replace old string with new string in original string if given old string is present in the original string. 
+	
+	
+	String s2 = "Hello world good morning";
+	 
+	sop(s2.replace("Hello", "Bye"));// Bye World good morning
+	sop(s2.replace("o", "123"));// Hell123 w123rld g123123d m123rning
+	sop(s2.replace("Raju", "rani"));// Hello world good morning
+ Note: in case of any String modification methods it wont effect on original string 
+  	those modifications unstill unless we should reAssing forcefully to the original string
+  	ref variable.
+	
+---->replaceAll(String regex, String replaceValue): this will works same as replace method.
+	
+---->concat(String str): this method will concat old string with new string and it will give the 
+                        result as concatination of two string as single string. 
+
+         String s1 = "abc";
+         String s2 = "xyz";
+         Sreinf s3 = s1.concat(s2); 
+       sop(s1);	// abc	 
+       sop(s2); // xyz
+       sop(s3);	// abcxyz
+	      s1 = s1.concat(s2);
+		  sop(s1); abcxyz
+	
+---->trim():
+     ======         
+             it will remove the empty spaces from given string at starting position and ending position 
+             or  it will remove the leading space or tailing space from the given string.
+            
+            this type of concept usually we will use in email id cases or user id cases,
+                but we should not use same logic for password case. 
+             
+             
+             String email = "         kesavulu.arthala@k7itech.com                      ";
+              
+             sop("'"+ email+"'");// '               kesavulu.arthala@k7itech.com           ';
+             sop("'"+ email.trim()+"'");// 'kesavulu.arthala@k7itech.com';
+             
+             String password = "abc  123  xyz";
+             
+             sop(password); // "abc  123  xyz";
+             sop(password.trim()); // "abc  123  xyz"; trim() wont remove empty spaces in midle of the string.
+             
+	
+---->isEmpty(): this method will verify either given string is empty or not.
+                 if empty it will returj true else it will return false.
+                  
+                  String s1  =  "";// empty string
+                  String s2 = "java";
+                  String s3  = null;//this is null string  not empty string 
+                  
+                 // empty: clear or no value
+                 // null : nothing like vacuum space, here we can do anything. 
+                  
+                  sop(s1.isEmpty());// true
+                  sop(s2.isEmpty());// false
+                  sop(s3.isEmpty());// NPE
+---->isBlank(): this is same as isEmpty(). 	
+	
+----> split(String delimiter): this method will split the original string with given delimter 
+	    or split char or split string. and it will return out put as array of subSTrings.
+                  
+            		0123456789 11   1617   23    29 
+	String str   = "welcome To every one from K7iT";
+   
+             String strs[] = str.split(" ");
+             sop(strs.length);// 6
+             for(String s : strs){
+                sop(s);
+                }
+           o/p:
+	        Welcome
+                To
+                every
+                one
+                from
+                K7iT  
+
+                  
+---->  Q. reverse the given string 
+  
+  String str   = "welcome To every one from K7iT";
+  
+  
+  sop(revrseGivenString(str));// "Ti7K morf eno yreve oT emocleW"
+  // using inxrement index
+  
+  String revrseGivenString(String str){
+  
+  String rStr =  "";
+  for(int i =0;i<str.length();i++){
+  
+  char c =  str.charAt(i);
+  rStr = c+rStr; W+"" = "W", "e"+"W" = "eW" , l+ew = lew......
+  }
+  return rstr; 
+  }
+  
+  // unsing decrement index
+  String revrseGivenString(String str){
+  
+  	String rStr =  "";
+  	for(int i =str.length()-1;i>=0;i--){
+  
+  	char c =  str.charAt(i);
+  	str = str.concat(c); ""+T ="T", "T"+i = "Ti","Ti"+7 =  Ti7, Ti7+K = Ti7K.....
+  	}
+  	return rstr; 
+  	}
+  
+              
+---->Q: reverse the given string for each word wise.
+  
+  i/p : String str   = "welcome To every one from K7iT";
+  expectd : "emoclew ot yreve eno morf Ti7K"
+  
+  1. split whole string into a words format using space as a delimiter.
+  
+  String reverseGivenStringForEachWordWise(String str){
+  
+  String words[] = str.split(" ");
+  
+  	String rStr ="";
+	//for(int i =0;i<words.length;i++){
+		//  String word = words[i];
+							   
+	// }
+  
+  	for(String word : words){// henhanced for loop 
+  
+  		Sting rword="";
+  		for(int i=word.length()-1;i>=0;i--){
+  			rword =  rword.conact(word.charAt(i));
+  		}
+  		rStr = rStr+rword+" ";-> ""+ emoclew + " " = "emoclew "
+  	}
+  	/// rstr = "emoclew ot yreve eno morf Ti7K "
+  		return rstr.trim(); // "emoclew ot yreve eno morf Ti7K"
+  
+  	}
+  
+ ---->assertEqual("emoclew ot yreve eno morf Ti7K", "emoclew ot yreve eno morf Ti7K " );
+
+---->equalsIgnorCase(String str) : this will works as same as equals() method, but only diffrence
+  	is equals() will comapare 2 objects with case sensitive it will treat lower case values and upper
+  	case values are different for same string. but equalsIgnoreCase() will treat lower case and upper 
+  	case values are same. 
+  	
+  ex:
+  	
+  	"K7iT".equals("k7it"); // false
+  	"K7iT".equalsIgnoreCase("k7it"); // true
+
+---->Enhanced for loop:
+  ===================================
+  this for loop added in jdk 1.5 
+   it will works similar to normal for loop without index opetaios 
+      syntax:
+	==========
+	   for(innerValueDataType refvar : arrayRefVar){
+		   // body
+		   
+	   }
+	     example 1:
+		  int[] a =  {1,2,3,4,5,6};
+		  a[0];
+		  a[1];
+		  a[2];
+		  for(int i=0;i<a.length;i++){
+			  sop(a[i]);
+		  }
+		  for(int v :a){// henhanced for loop
+			  sop(v);
+		  }
+		  
+		    String strs[] = {"k7it","Java","Mongodb","sql"};
+		  
+             for(String str :strs){
+				 sop(str);
+			 }
+           Peron[] perons = {new Person(10,"k7it"), new Peron(29,"java")};
+		   for(Person person: perons){
+			   sop(person);
+		   }
+
+
+Programs:::::
+=============
+
+1.Remove Duplicate/Repeated words from String?
+===========================================
+
+package com.k7it.Assisment;
+
+
+public class RemoveDupWords {
+
+	public static void main(String[] args) {
+      String s = "Hi every one, hello every one, welcome to k7it, welcome to java world and hello world";
+     
+		
+      String distStr = removeDuplicateWord(s);
+      System.out.println(distStr);
+      }
+      private static String removeDuplicateWord(String s) {
+	
+	 String[] s1=s.split(" ");
+     String result="";
+     
+		for(int i=0;i<s1.length;i++) {
+			
+			if(!result.contains(s1[i])) {
+				result +=" "+s1[i];
+			}
+		}
+		
+	return  result.trim(); 
+}
+	}
+			
+-----------------------------------------------------------------------------------------------------------------------------------------------------------	
+
+2. Print each character count or frequency of given string 
+
+		String s ="abcacbefd";
+		Output : 
+		a:2, b:2,c:2,d:1 e:1,f:1
+========================================================
+package com.k7it.Assisment;
+
+public class Count_Char {
+    public static void main(String[] args) {
+        String s = "abcacbefd";
+
+        for (int i = 0; i < s.length(); i++) {
+            int count = 0;
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(i) == s.charAt(j) && i > j) {
+                    break; 
+                }
+                if (s.charAt(i) == s.charAt(j)) {
+                    count++;
+                }
+            }
+            if (count > 0) {
+                System.out.println(s.charAt(i) + ": " + count);
+            }
+        }
+    }
+}
+---------------------------------------------------------------------------------------------------------------------------
+3. Print all unique words of a String
+Input: Java is great. Grails is also great
+	Output:Java
+              Grails
+              also
+=========================================
+package com.k7it.Assisment;
+
+public class Unique_words {
+
+    private static void unique_Words(String str) {
+        String[] str1 = str.split(" ");
+        boolean isUnique;
+
+        for (int i = 0; i < str1.length; i++) {
+            isUnique = true;
+            for (int j = 0; j < str1.length; j++) {
+                if (i != j && str1[i].equalsIgnoreCase(str1[j])) {
+                    isUnique = false;
+                    break;
+                }
+            }
+            if (isUnique) {
+                System.out.print(str1[i] + " ");
+            }
+        }
+    }
+
+    public static void main(String... args) {
+        String str = "Java is great. Grails is also great.";
+        unique_Words(str);
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+4...How many objects will be created in the following code?
+//String s1="javatpoint";
+//String s2="javatpoint";
+
+//Ans:Only one object will be created in String Constant Pool,Why bcz
+//		String Constant pool will not allow duplicate values .so,s1 and s2
+//		is having same values.so it will not create a new object and both 
+//s1,s2 will pointing to same memory location so, we will get only one
+//object .....		
+
+----------------------------------------------------------------------------------------------------------------------------
+5.//Write a program to Compare the strings using equals(), compareTo() and == operator.
+=======================================================================================
+package com.k7it.Assisment;
+//Write a program to Compare the strings using equals(), compareTo() and == operator
+ 	public class Compare {
+		static String str1="k7it";
+		static String str2="k7it";
+		static String str3=new String("k7it");
+	
+	public static void main(String[] args) {
+		System.out.println(str1.equals(str2));
+		System.out.println(str1.compareTo(str2));
+		System.out.println(str1==(str2));
+		System.out.println(str2.equals(str3));
+		System.out.println(str2==str3);
+		}
+	}
+---------------------------------------------------------------------------------------------------------------------------
+6) Write a java program to capitalize each word in string?
+Input:
+
+this is k7 infotech 
+Output: This Is K7 Infotech*/
+================================================================
+package com.k7it.Assisment;
+
+		public class Capitalize {
+			static String str="this is k7 infotech";
+		public static void main(String[] arsgs) {
+			//String str="this is k7 infotech ";
+			String[] str1=str.split(" ");
+			String result;
+			for(int i=0;i<=str1.length;i++) {
+				if(i<str1.length){
+					result=str1[i].substring(0,1).toUpperCase();
+					result=result+str1[i].substring(1);
+					System.out.println(result);
+			}
+		}
+	}
+}
+-----------------------------------------------------------------------------------------------------------------------------------
+7)write a program to check whether the given Strings in Anagram or not
+String str="k7it";
+String str1="7itk";
+===========================================================
+package com.actualjava;
+
+public class Anagram {
+	private static boolean isAnagrams(String s1, String s2) {
+		if (s1.length() == s2.length()) {
+			char[] s3 = s2.toCharArray();
+			for (int i = 0; i < s3.length; i++) {
+				if (s2.contains("" + s3[i])) {
+					return true;
+				}
+			}
+		} else {
+			return false;
+
+		}
+		return true;
+	}
+
+	public static void main(String[] args) {
+		String s1 = "Babu";
+		String s2 = "bBau";
+		boolean flag = isAnagrams(s1, s2);
+		if (flag) {
+			System.out.println("both are anagrams");
+		} else {
+			System.out.println("both are not anagrams");
+		}
+	}
+
+}
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+8)/*
+ * ....What will be the output of the following code?
+ * 
+ * public class Compare { 
+		public static void main(String[] args) 
+		{ 
+			String s1 ="Scaler";
+			String s2=new String("Scaler");
+		 	System.out.println(s1==s2);
+		 }
+	 }
+ 
+ * true
+ * 
+ * false------------------------------------------->correct,why bcz s1 will be stored in constant pool and s2 will be stored in 
+				//non-constant pool ,so both s1 and s2 memory locations are different i.e. (s1==s2)--->false.
+ * 
+ * Compilation Error
+ * 
+ * None of the above
+ */
+--------------------------------------------------------------------------------------------------------------------------------
+9./*
+ * String s= "welcome to K7infoTech" 
+   String s1= s.substring(4,8); //"ome "
+ * String s2=s.substring(9,11); //"o " 
+   String s3= s.substring(12,15);"7in"
+ * String s4="K7";
+   String s5=new String(String s1= s.substring(4,7));//"ome"
+ * 
+ * Total how many objects will create from above code?
+ */
+//-----------3 objects will be created, why because substring will 
+//not create new object ,substrings will use portion the main String...
+----------------------------------------------------------------------------------------------------------------------------------
+10./*
+ * String s1= "hello java world";
+ * String sub= s1.substring(6,10);//"java"
+ * 
+ * s1 =null;
+ * 
+ * After executing above code is s1 object will eligible for garbage collector
+ * or not
+ */
+//---------------no,it is not eligible for garbage collector..why bcz even though s1=null,but the sub attribute is pointing to 
+		//portion of the s1 object.so,s1 is not eligible for the garbage collector....
+  
+-----------------------------------------------------------------------------------------------------------------------------------

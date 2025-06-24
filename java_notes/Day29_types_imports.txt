@@ -1,0 +1,59 @@
+package com.k7it;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+import java.util.*;
+
+1. normal import for each class seperate : single class
+2. multiple classes import using * : it will load entore package classes 
+3. static import : by static import we can import only one static member from specific class, after import that static member act like a our own class member. we can use that members directly without using classname, we can use direct static member insid eour class.: single static member
+
+syntax :  import static fullyqualifiedclassname.staticmembername;
+package com.k7it.pack1;
+public class A{
+public static String name = "k7iT";
+
+}
+package com.k7it.pack2;
+import com.k7it.pack1.A;
+public class B{
+
+void m1(){
+   sop(A.name);
+   sop(A.name);
+}
+}
+
+package com.k7it.pack2;
+import static com.k7it.pack1.A.name;
+public class C{
+
+void m1(){
+   sop(name);
+   sop(name);
+}
+}
+
+note: we can't import more than one static import with same attribute name from different classes. 
+
+import com.k7it.pack1.Person;
+import static com.k7it.pack1.Person.age;
+import static com.k7it.pack1.Person.name; // static name import from Person
+
+import com.k7it.pack1.Animal;
+
+import static com.k7it.pack1.Person.location;
+import static com.k7it.pack1.Animal.address;
+import static com.k7it.pack1.Animal.name;// static name import from Animal
+
+public class StaticImportExample {
+  public static void main(String[] args) {
+	System.out.println(Person.name);
+	System.out.println(Animal.name);
+	System.out.println(Person.location);
+	System.out.println(age);
+	System.out.println(name);// CTE with ambiguity error. from which class we need to read name attribute either person or animal.
+	System.out.println(location);
+}
+}

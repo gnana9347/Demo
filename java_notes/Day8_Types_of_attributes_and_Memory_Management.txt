@@ -1,0 +1,231 @@
+					types of Attributes: 
+					======================
+							1. instance Attributes or non static attributes: the process of defining the attributes without
+							using static key word those attributes are called as instance attributes or non static attributes.
+							
+							syntax : 
+									dataType attributeName / variableName ;
+					  
+							-> instance attributes are specific to each Object, it means every object will maintain 
+							seperate copy of values, if we change the value in one object it wont effect on another object.
+							
+							-> instance attributes are store where the object is store / instance attaributes will store inside object memory space. 
+							   
+							-> instance attributes will specifies state of the object.
+							
+							-> instance attribtes are object level attairbutes
+							
+						    2. static Attributes or class level attributes : the process of defining the attairbutes
+           							with static key word, those are called as static attributtes.
+							   
+							   syntax: 
+							        static dataType attributeName;
+									
+						 -> static attributes are common to all objects, it means if  we change value in object it will effect 
+						 on all other objects as well.
+						 
+						 -> static attaributes are called as class level attributes 
+						    so it will store under class memory location
+						 
+						 
+						 example: person is one entity
+						    
+							 properties :  age,name,address,color, height, weight, gender, foodtype,
+							 legs, hands , eyes etc..
+							 
+							 
+						instance  or specific to each obeject :
+                            				age
+						    	name
+							address
+							gender
+							color
+							height
+							weight
+						
+						static or common to all objects :
+						
+						foodtype
+						legs
+						hands
+						eyes
+						
+						
+						class Person:
+						{ 
+						  int age;
+						  String name;
+						  String address;
+						  char gender;
+						  String color;
+						  double height;
+						  double weight;
+						  
+						  static String foodtype
+						  static int legs;
+						  static int hands;
+						  static int eyes;						
+						}
+						
+						
+						Example:
+					class Person1{
+
+					  int age;
+					  String name;
+					  static String food;
+
+					 public static void main(String args[]){
+
+						Person1 p1 = new Person1();
+						p1.age   =  27;
+						p1.name  =  "k7iT";
+						p1.food  =  "rice";
+
+						Person1 p2 = new Person1();
+						p2.age   =  37;
+						p2.name  =  "java";
+						p2.food  =  "grass";
+						p2.name  =  "mysql";
+						
+						System.out.println("p2 details");
+						
+						System.out.println(p2.age);//37
+						System.out.println(p2.name);//mysql
+					    System.out.println(p2.food);// grass
+						 
+						 
+						System.out.println("p1 details");
+
+						System.out.println(p1.age);//27
+						System.out.println(p1.name);//k7it
+						System.out.println(p1.food);// grass
+
+						
+
+						p1.food  = "raw meat";
+						
+					    System.out.println("p1 and p2 after update from p1 details");
+						System.out.println(p2.food);// raw meat
+						System.out.println(p1.food);//raw meat
+
+						Person1 p3 = new Person1();
+						
+					    System.out.println("p3 details");
+					    System.out.println(p3.age);// 0 
+						System.out.println(p3.name);// null 
+						System.out.println(p3.food);//  raw meat
+
+					   
+
+						
+					  }
+					}
+
+					out put:
+					p1 details
+					27
+					k7iT
+					grass
+					p2 details
+					37
+					java
+					grass
+					p1 and p2 after update from p1 details
+					raw meat
+					raw meat
+					p3 details
+					0
+					null
+					raw meat
+												 
+										   
+										  
+		Note: all atributes are having default value concept, if we dosen't provide any value for the attaributes,
+   		then will initialize with default value for that attribute based on corresponding attribute data type.
+    
+                byte , short, int, long : dafult value : 0
+                float, double : default value 0.0				
+                boolean : default value flase			
+                char : default value : empty char ''
+				
+                any derived data type : default value : null
+				
+		String is a derived data type only so we are getting null for string type variables as defult values,
+		but it will support like primitive values also. 
+		thats the reason we are calling string class as a special data type.
+
+            primitive values:
+			===================
+            int i = 10; literal value
+			String s = "Hello"; // literal value
+			
+			 derived values always be object format using new operator
+			 
+			 Person p1 = new Person();
+			 String s1 = new String("Hello");
+			 
+			 sop(s);//Hello
+			 sop(s1);//Hello
+			 
+			
+ 		
+		Note:
+
+		static attairbutes are common to all objects , so it will maintain only one copy for all the objects. 
+		so lastest modification will effect for all other objects, 
+		
+		but                  
+		
+		instance attributes not like that, each object will maintain sepearte copy of values.
+		so if one obj value will modify it won't effect on other object instance attribute values. 
+				
+		Memory Management :
+		===================
+		
+		 in java we have 2 types of memories 
+			1. stack memory
+			2. heap memory 
+			
+			stack memory : this is one type memory in java ,it will works based on  First In Last out
+			algoritham (FILO) or Last In First Out algoritham(LIFO).
+			
+			Queue: FIFO or LILO 
+			
+			java will use the stack memory for executing all methods , constructors , any
+			executable blocks and local variables or ref variables or arguments or parameters
+
+            in side stack memory if any of the member will come for execution it will occupie 
+			the some memory space, once the execution over it will remove automatically from stack memory
+			and it will release occupied space.
+			
+			it means, the allocation of memory and releasing of memory will happen automatically 
+			inside stack memory. 
+			
+			
+			Heap Memory : java will use the heap memory for storing all class files , objects, attributes.
+
+			in side heap memory have rights to load the .class files or create the objects,
+			but 
+			we dont have rights to delete or clean those members from heap memory even after useage completed.
+			
+			if any of the object usage is completed or the object which dosent have any 
+			reference from stack to heap memory then those ojects are called as unused objects 
+			or orphan objects or nullify objects, these types of objects are delete by
+			one special thread called Garbage collector(GC). 
+			
+			GC is having the responsibility of deleting the un used objects from heap memory.
+			when ever he will come for execution. 
+			
+			in case heap memory is getting full before GC is coming for execution , that time
+			user can request GC to come for execution by using 2 ways 
+			    1. System.getRuntime().gc();
+				2. Runtime.gc();
+			but we can't compile the GC to come for execution. so even though if we request GC 
+			to come for execution there is no guarentee he will come for execution. 
+			he may or maynot accept our requests. 
+			
+			GC will works based Mark and Sweep algoritham. it means when GC will come for execution 1st time 
+			if he finds any unused objects he will mark those objects and he will go,
+			when 2nd time gc will come for execution he will delete all object  which are already marked 
+			and if he find any new objects those objects he will mark newly and he go away.

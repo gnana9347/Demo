@@ -1,0 +1,124 @@
+  	how many ways we can access the non static Attributes:
+			===========================================
+			
+			non static attributes we can access 2 ways
+			  1. by using Object : create the obj without reference variable directly 
+				and access the instance attributes. in this case the life time of the object is only single line. 
+				-> in this 	by using one object we can able access only one attribute.			
+			  
+			  class Person{
+			     int age;
+				 String name;
+			  }
+			   class PersonManager{
+			      public static void main(String args[]){
+				     
+					sop(new Person().age); // direct object usage without ref variable.
+					/* above one line is equals to below 3 lines of code.
+					   Person temp1 = new Person();
+					   sop(temp1.age);
+					   temp1 = null;
+					*/
+					sop(new Person().name);
+					 /* above one line is equals to below 3 lines of code.
+					   Person temp2 = new Person();
+					   sop(temp2.age);
+					   temp2 = null;
+					*/
+					// here temp1 , temp2 variables life time is only single line.
+					// to access 2 attributes we are creating 2 objects. 
+				  }
+			     
+			   }
+			  note: objects which are creating without ref variable those objects are 
+			  called as temporary objects. those objects life time is only single line.
+			  
+			  2. by using Obj reference varaible 
+			  
+			  class Person{
+			    int age;
+				String name;
+			  }
+			  class Manager{
+			    static public void main(String[] args){
+				
+				Person p1 = new Person();
+				sop(p1.age);
+				sop(p1.name);
+				sop(p1.age);
+				sop(p1.name);
+				/*
+				 here p1 is a ref variable for person class object, pa scope is entire 
+				 main method scope. we can use p1 object any where in the main method how
+				 many times you want to use it.
+				*/
+				}
+			  }
+			
+				How many ways we can access static attribtes:
+				==============================================
+				static attairbutes we can access 3 ways 
+				1. using direct object 
+				2. using object ref varable
+				3. using direct class name
+				
+				-> as per the rule static attributes are called as a class level attairbutes
+				so static attribtes should be access by using class name it self. we dont need to create any objects to access the static attributes. 
+				
+				-> even though if we try to access the static attribtes by using object or object ref var, at the time copilation it will replace object or obj ref variable with corresponding class name. 
+				
+				ex1 :// access static attributes using class name 
+                 class Person{
+				    static int noOfLegs;
+					static String foodType;
+				 }	
+
+                 class PersonManager{
+				    static public void main(String []args){
+
+						  Person.noOfLegs = 2;
+						  Person.foodType = "rice";
+						  sop(Person.noOfLegs);// 2
+						  sop(Person.foodType);// rice
+						  
+					
+					}
+				 }	
+
+			ex2 :// access static attributes using direct object  
+                 class Person{
+				    static int noOfLegs;
+					static String foodType;
+				 }	
+
+                 class PersonManager{
+				    static public void main(String []args){
+
+						  new Person().noOfLegs = 2;    // -> Person.noOfLegs=2;
+						  new Person().foodType = "rice";//-> Person.foodType = "rice"
+						  sop(new Person().noOfLegs);// 2//-> sop(Person.noOfLegs)
+						  sop(new Person().foodType);// rice//sop(Person.foodType);
+					}
+				 }						 
+				
+				Note: in case of static attribtes we should access static attairbute by using class name ,if we try to access using obj or obj ref var it will 
+				replace with corresponding class name at the time of compilation by complier. 
+				
+				
+				ex3 :// access static attributes using  object  ref var
+                 class Person{
+				    static int noOfLegs;
+					static String foodType;
+				 }	
+
+                 class PersonManager{
+				    static public void main(String []args){
+						  Person p1 = new Person();  // -> Person p1 = new Perosn();
+						
+						  p1.noOfLegs = 2;    // -> Person.noOfLegs=2;  // after compilation object is replace with class name.
+						  p1.foodType = "rice";//-> Person.foodType = "rice";
+						  sop(p1.noOfLegs);// 2//-> sop(Person.noOfLegs);
+						  sop(p1.foodType);// rice//sop(Person.foodType);
+					}
+				 }	
+				

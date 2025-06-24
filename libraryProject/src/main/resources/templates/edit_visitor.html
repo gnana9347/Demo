@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Visitor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff; /* Light Blue */
+            margin: 0;
+            padding: 20px;
+            color: #333; /* Default font color */
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff; /* White */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #4b0082; /* Indigo */
+            background-color: #e6e6fa; /* Lavender */
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .navigation {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .navigation button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff; /* Blue */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="email"],
+        form input[type="tel"],
+        form input[type="file"],
+        form input[type="submit"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="email"],
+        form input[type="tel"],
+        form input[type="file"] {
+            background-color: #e6f7ff; /* Light Cyan */
+            color: #00008b; /* Dark Blue */
+        }
+        form input[type="submit"] {
+            color: #fff;
+            background-color: #28a745; /* Green */
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Visitor</h1>
+        <div class="navigation">
+            <button onclick="location.href='/list-visitors'">Back to Visitor List</button>
+            <button onclick="location.href='/'">Home</button>
+        </div>
+        <form id="editForm" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="id" name="id">
+            Name: <input type="text" id="name" name="name"><br>
+            Age: <input type="number" id="age" name="age"><br>
+            Email: <input type="email" id="email" name="email"><br>
+            Phone: <input type="tel" id="phone" name="phone"><br>
+            Aadhar: <input type="file" id="aadhar" name="aadhar"><br>
+            Photo: <input type="file" id="photo" name="photo"><br>
+            <input type="submit" value="Update Visitor">
+        </form>
+    </div>
+
+    <script>
+        // Get visitor ID from query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const visitorId = urlParams.get('id');
+
+        // Fetch visitor details from the backend
+        function fetchVisitorDetails(id) {
+            fetch(`/api/v1/visitor/${id}`)
+                .then(response => response.json())
+                .then(visitor => {
+                    document.getElementById('id').value = visitor.id;
+                    document.getElementById('name').value = visitor.name;
+                    document.getElementById('email').value = visitor.email;
+                    document.getElementById('phone').value = visitor.phone;
+                    document.getElementById('age').value = visitor.age;
+                })
+                .catch(error => {
+                    console.error('Error fetching visitor details:', error);
+                });
+        }
+
+        // Handle form submission with PUT request
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(`/api/v1/visitor/${visitorId}`, {
+                method: 'PUT',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Visitor updated successfully.');
+                    window.location.href = '/list-visitors';
+                } else {
+                    alert('Failed to update visitor.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating visitor:', error);
+            });
+        });
+
+        // Initial fetch and populate visitor details on page load
+        fetchVisitorDetails(visitorId);
+    </script>
+</body>
+</html>

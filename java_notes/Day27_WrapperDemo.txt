@@ -1,0 +1,449 @@
+    Wrapper classes:  in order to achieve 100% oops in java, java people introduced
+	      Wrapper classes concept for each primitive data types. 
+	      
+		  usage:
+		  =====
+	      by using wrapper classes we can convert primitive to wrapper(derived objects) 
+		     or wrapper(Derived Objs) to primitive with help of pridefined
+			 methods inside wrapper classes. 
+		  
+		  for every primitive data types java people developed one corresponding class type 
+		   those classes are called as a wrapper classes like below.
+	      
+	      primitive     wrapper data type (Class type)
+	      ============  =================
+	      byte           Byte
+	      short          Short
+	      int            Integer
+	      long           Long
+	      float          Float
+	      double         Double
+	      boolean        Boolean 
+	      char           Character 
+	      
+		  wrapper classes also will work same as string class,  i.e 
+		  
+		  String class          		 					wrapper classes 
+		  =============================================================================================
+		  immutable class        							immutable classes 
+		  2 ways we can create obj 			 				2 ways we can create obj 
+		  toString(), equals(), hashcode() overrriden       toString(), equals(), hashcode() 	overrriden
+		  based on content                                  based on content
+		  String s1 = "abc"									  int i = 10;
+		  String s2 = new String("abc");                      Integer j =  new Integer(10);
+		  
+		  
+	      literal type value      object type value
+	         int i =10;              Integer i = new Integer(10);
+	      sop(i);// 10 				 sop(i);// 10
+	      int j =20                 Integer j = new Integer(20);
+	    int sum = i+j; 30             i+j// 
+	      
+		  
+		   Wrapper classes Hierarchy:
+		  ==========================
+		  
+				    ->	Object 
+			            -> Number 
+						        -> Byte
+								-> Short
+								-> Integer
+								-> Long
+								-> Float
+								-> Double
+						-> Boolean
+						-> Character
+						
+						in case of primitive data type no Hierarchy process.
+						
+		  
+	      Boxing: the process of converting the primitive values to wrapper  type values
+      		  is called Boxing. 
+	      
+	      UnBoxing: the process of converting wrapper to primitive is called unBoxing.
+		  
+	      
+	      let see how to convert primitive to wrapper (boxing):
+	      ====================================================
+	      inside every wrapper classes we have 2 constructors 
+		  
+	             1. corresponding primitive data type parameter constructor 
+	                      Byte(byte b)
+	                      Short(short s)
+	                      Integer(int i).......
+						  Long(long l)
+						  Double(double d)......
+	                      
+	          By using this primitive type constructor we can convert primitive datatype 
+			   to wrapper type or class type or derived type .
+	          
+	                int i = 10;	                
+	                Integer i1 =  new Integer(i);
+	                Integer i2 =  new Integer(10);// boxing primitive int to derived Integer
+	                
+					int k = 50;
+					Integer k1 = new Integer(k);
+					
+					double d1 = 40.25;
+					Double d2 = new Double(40.25);/ Boxing converting primitive double to derived Double.
+					Double d3 = new Double(d1);
+					
+	                      
+	             2. String type constructor
+	             
+	                      Byte(String b)
+	                      Short(String s)
+	                      Integer(String i).......   
+	                By using this constructor we can convert String numbers into a Wrapper class objects.
+	                 
+					 String s = "10";    // string 10 consider as alphanumeric value
+	                 Integer i3  = new Integer("10");// "10"  this numeric 10
+	                 Integer i3  = new Integer(s);//10
+					 
+	               
+	               
+	       2ns way of converting primitive to wrapper :
+	       ===========================================
+		   valueOf():
+		   ==========
+	          by using valueOf() method also we can convert primitive to Wrapper class type.
+	          in side every wrapper class we have 2 types of valueOf() methods with overloaded methods
+	          same as constructors :
+	            
+	                valueOf(int i)
+	                vlaueOf(String s)
+					
+	                Syntax: 
+	                Integer:
+	                public static Integer valueOf(int i){
+	                
+	                }
+	                
+	                 public static Integer valueOf(String s){
+	                
+	                }
+					
+					Double:
+					
+					 public static Double valueOf(double i){
+	                
+	                }
+	                
+	                 public static Double valueOf(String s){
+	                
+	                }
+					
+					Boolean :
+					
+					 public static Boolean valueOf(boolean i){
+	                
+	                }
+	                
+	                 public static Boolean valueOf(String s){
+	                
+	                }
+					
+					
+ Note: direct Usage of wrapper class constructor is not advisable for 
+   converting primitive to wrapper/derived  , 
+   so java people introduced valueOf() with same signature of constructors.
+  because they made constructor usage is deprecated from JDK 9. 
+  so dont use constructors try to use only valueOf().
+  
+  Note: valueOf() will create the object for corresponding wrapper class internally.
+	          
+	          
+	  */
+	  
+	  int i = 10;
+	  Integer i1 = new Integer(i);// here strike out line  indicates this constructor is deprecated, 
+	                             //so its not advisible us it //  @Deprecated
+	  Integer i2 = new Integer(20);
+	  Integer i3 =  new Integer("10");
+	  
+	  System.out.println(i);
+	  System.out.println(i1);
+	  System.out.println(i2);
+	  System.out.println(i3);
+	  
+	  
+	  int j = 10;
+	  Integer j1 = Integer.valueOf(j);
+	  Integer j2= Integer.valueOf(10);
+	  Integer j3= Integer.valueOf("10");
+	  
+	  short s=20;
+	  Short s1  = Short.valueOf(s);	  
+	  //Short s2  = Short.valueOf(12);// CTE if we give any value without decimal point it will consider as int
+	                               // type value , so we can't pass direct int value to valueOf(short s);
+	 
+	  byte b = 10;
+	  Byte b1 = new Byte(b);
+	  Byte b2 = Byte.ValueOf(10);// CTE 
+	  Byte b2 = Byte.ValueOf(b);// CS 
+	  
+	  Note: in case of Byte and short dont pass direct numberic value as input param to valueOf(short s) or valueOf(byte b);
+	        why bzc direct value is consider as int type value, so int value we can't give to
+			 short or byte.
+	  
+	  /*
+	  // UnBoxing : it is a process of converting derived to primitive is called as unBoxing. 
+	      inside every wrapper class we have xxxValue(); by using xxxValue()
+		  method we can convert wrapper to primitive. 
+		  here  xxx represent corresponding primitive dataType.
+		  
+	      every wrapper class having 6 xxxValue() except Boolean and Character.
+	       exm:  
+	           byteValue();
+	           shortValue();
+	           intValue();
+	           longValue();
+	           floatValue();
+	           doubleValue();
+			   
+			in side Boolean and Character classes we will have only one method with corresponding primitive data type.
+			
+			booleanValue() -> Boolean
+			charValue() - > Character
+			
+			these methods are no static methods , so we should access these methods by using objects or obj ref
+			we cant access like valueOf() using class name. 
+	           
+	     */
+	   
+	  Integer i5 = new Integer(20);
+	  
+	  int i6 = i5.intValue();
+	  
+	  byte b5 = 20;
+	  Byte b6 = Byte.valueOf(b5);// boxing 
+	  byte b7 = b6.byteValue();// unBoxing
+	  
+	  Long l1 = new Long(13232);
+	  long l2 = l1.longValue();
+	   
+	  
+	  short s = b6.shortValue();
+	  
+	  Note : still jdk 1.4 we are doing this boxing and unboxing cocnepts explicit 
+	  by user. but from jdk 1.5 onwards this process become automatic.
+	  
+	  AutoBoxing and UnBoxing: 
+	 /* 
+	  but from jdk 1.5 onwards java people made this boxing and unBoxing Object
+	  automatic with concept of AutoBoxing and AutoUnBoxing as part of this 
+	  we can assign primitive val ues directly to wrapper class type ref var and 
+	  we can assing wrpper object to primitive data type ref variables.
+	*/
+	  
+	  Integer i8 = 10;  // auto boxing // Integer i8= new Integer(10);
+	  
+	  /*
+	   *    Integer i8 = 10; meaning it is a combination of 2 line 
+	   *    
+	   *    int temp = 10; 
+	   *    Integer i8 = Integer.valueOf(temp);
+	   *    
+	   */
+	  
+	  int i7 = new Integer(10); // auto unboxing example
+	  /*
+	    Integer temp =  new Integer(10);
+	    
+	    int i7 = temp.intValue();
+	    int i7 = 10;
+	    
+	   */
+	  
+	  /*
+	       How to convert String to Primitive :
+	       ====================================
+	       By using parseXXX() we can convert direct String value into
+ 		   primitive data type.
+	       here XXX represents corresponding primitive datatype key words,
+		   
+	        example : if we want to convert String to int type 
+	        		parseXXX() --> parseInt() 
+	         example : if we want to convert String to float type 
+	        		parseXXX() --> parseFloat() 
+	        		
+	        		String s1 = "10";
+	        		int i = Integer.parseInt(s1);// 10
+	        		
+	        		short s2 = Short.parseShort("10");// 10
+	        		double d1 = Double.parseDouble(s1);// 10.0
+					
+					String s2  = "true";
+					boolean b1 = Boolean.parseBoolean(s2);
+					
+	        "100" =  100
+			"100000" =  100000
+			"abc" = ?
+	        Note: if input String contains other than numeric values parseXXX() will throws one exception 
+	          i.e java.lang.NumberFormatException
+	          
+	          example
+	          
+	          String s = "1xyz";
+	          int i = Integer.parseInt(s);// java.lang.NumberFormatException
+	          
+	          String s1  = "#$%67686786";
+	          
+	          short s2 =  Short.parseShort(s1);// java.lang.NumberFormatException
+	          
+	       
+	       String to Wrapper :
+	       ==================
+	        1.  by using   valueOf(String str) we can convert String values into direct wrapper type 
+	          
+	          ex: 
+	          String str1 = "121";
+	          Float f1  = Float.valueOf(str1);
+	          Syso(f1);//121.0f
+	          
+	        2. by using String type Constructor also we can convert String values into Wrapper or derived type
+	        
+	        ex:
+	           String str2  = "121";	           
+	           Float f1 = new Float(str2);
+	           or 
+	           Float f1 = new Float("121");
+	           
+	             Syso(f1);//121.0f
+	           
+	        
+	         Note: if input String contains other than numeric values valueOf() with String type 
+	           and Constructor() with string type will throws one exception 
+	          i.e java.lang.NumberFormatException
+	          
+	          ex : 
+	          
+	          String str = "12345HIJK";
+	          Integer i = new Integer(str);// java.lang.NumberFormatException
+	          or 
+	          Byte b =  Byte.valueOf(str);//java.lang.NumberFormatException
+	       
+	       
+	       Wrapper to String type:
+	       ========================
+	          by using toString() method we can convert wrapper obj into String format 
+	          
+	          Byte b = new Byte(10);// 10
+	          
+	          String strByte  =  b.toString();//"10"
+	          
+	          Integer i = Integer.ValueOf(100);
+	          
+	          String strI = i.toString();// "100"
+	      
+	      
+	      primitive to String :
+	      ====================
+	      1. if we want to convert primitive to string we dont direct methods , we should follow  the steps
+	        1. convert into primitive to wrapper 
+	        2. wrapper to String 
+	        
+	        step1: primitive to wrapper 
+	        int i = 20;	        
+	        Integer i1  = new Integer(i);
+	        
+	        step2: wrapper yo string 
+	        String strI =  i1.toString();//"20"
+			
+			Integer i = 10;
+			i.toString();
+			
+	       
+	       2. use empty string obj with plus operator along with primitive values it will convert into string 
+	       
+	        int i = 20
+	        String strI = ""+i; // "20"
+	        
+	        String strI = i+"";//"20"
+	        
+	        How to convert one base to another base :
+	        ==========================================
+	        by using toXXXString() method we can convert decimal numbers to 
+			 other base numbers.
+	        here XXX - Hex, Octal, Binary
+	          Decimal to Hexa   ---- toHexString()
+	           Decimal to octal   ---- toOctalString()
+	            Decimal to Binary   ---- toBinaryString()   
+	        
+	        
+	      
+	   */
+	  
+	 Integer decimal = new Integer(10);
+	 System.out.println(decimal.toBinaryString(decimal));  // 1010
+	 System.out.println(decimal.toOctalString(decimal));// 12
+	 System.out.println(decimal.toHexString(decimal));// a
+	  
+	 
+	/* 
+	  Auto widening :   auto widening is one of key feature in jdk 1.5.  as part of this we can assing 
+	  lower size data type values into upper size data type  variables. for example 
+	  
+	        byte      -----  wider least data type
+	        short
+	        int
+	        long
+	        float
+	        double    ----- wider most data type
+	   
+	    size of the primitives are top to bottom order it will increase. 
+	    
+	    byte b = 10;
+	    
+	    int i = b;
+	    
+	    short s  = b;
+	    
+	    int j = 50;
+	    
+	    long l1 = j;
+	    
+	    double d1 = j;
+	    
+	    float f1 = l1;
+	    
+	    byte b2 = j;// CTE we cant give upper value to lower data type variables 
+	   
+	   Integer i2 = j;
+	   byte b2 = i2.byteValue();// explicit narrow type 
+	   
+	   in case of primitive data type:  auto widening:  means the process of assinging 
+	   the lower data type values into upper data type ref variables .
+	   
+	   but in case of derived data type auto widening means:
+ 	   the process of assigning the sub class objects into  
+	      super ref variables. 
+		  it means by using co relationship we can achive 
+		  auto widening from jdk 1.5 onwards 
+		  in case of derived data types 
+		  auto widening means auto up casting
+	   
+	    class A{
+	    }
+		class B extends A{
+		}
+	    
+	    A a1 = new B();// auto up casting  sup class ref and sub class obj 
+	    
+	    B b1 = new B(); 
+	    
+	    A a1 = b1;// this also auto up casting assign sub class ref into sup ref var.
+	    
+	    B b1 = new A();// CTE we can't assign sup class obj into sub ref directly. 
+	    
+	    B b1 = a1;// CTE we can't assign sup class ref var into sub ref variable directly 
+	    
+	    // because from jdk 1.5 we have auto up casting but we dont auto down casting, in case of down casting
+	     we should do it explicit down casting when ever it required . 
+	     
+	     B b1 = (B)new A();// CS but RTE java.lang.ClassCastException
+	     
+	     B b2 = (B)a1;// CS and RS   == B b2 = new B();
+	    
+	    
+	  

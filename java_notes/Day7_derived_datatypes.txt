@@ -1,0 +1,147 @@
+          
+
+						examples of data types:
+						 =========================
+						 class Test{
+							 public static void main(String args[]){
+							   
+							int i =20;
+							short s= 100;
+							byte b1= 127;
+							byte b2 = -128;
+							byte b3  = 200;
+							//Test.java:8: error: incompatible types: possible lossy conversion from int to byte
+							//byte b3  = 200;
+								//	   ^
+								
+							double d1 = 20.45;
+							float f1 = 5.5;
+							/*
+								Test.java:15: error: incompatible types: possible lossy conversion from double to float
+								float f1 = 5.5;
+								
+								for float datatype we can't assign decimal values directly, why bzc decimal values 
+								are by default consider as a double values. 
+								so if we want to give values for float type we should use 'f' char after the decimal number.
+								
+								like 
+								
+								float f1 = 5.5f;
+
+							*/
+							int i = 100000;
+							byte b= 100;
+							byte b2 = 07;
+							int k = 06;
+							int l = 08;// here we will get CTE, in java if we use zero in front of any number it will 
+							           // consider as octal number. in case octal number will available only 0 to 7, there
+									   is no 8 and 9 values in octal.
+							
+
+							}
+							}
+							
+					2.Derived Data Type: any data types which are created by user him
+					self for his convinent requiments those data types are called as 
+					derived data types or user defind data types. 
+				    or the data types which are created by user is called derived data types or user data types. 
+					
+					example is : all java classes are user defined data types. it means 
+					we can use every class name as a data type for some of the variable or attribtes. 
+					those data types are called as derived data types.
+					or
+					Any java class we can use it as derived data types.
+					
+					Syntax: 
+					ClassName refVar; // only declarationtion, no initialization 
+					ClassName refVar = null; // declaration and initialization
+					ClassName refVar = new ClassName(); // declaration and initialization
+					
+					ClassName refVar; // declaration
+					refVar = new ClassName();// initialization
+					refVar = null; // re initialization
+					
+					class Person{
+					  
+					}
+					
+					Person p1 = new Person();
+					
+					here p1 is a variable or ref variable or attribute 
+					Person is a data type for that p1 variable. 
+					
+					new Person() : it is value for that derived  person data types attairbutes.
+
+
+					ex2:
+					class A{
+					}
+					A a1 = new A();// same class object 
+					A a1 = null; // null value 
+					
+					class Car{
+					}
+					Car c1 = null;
+					Car c2 = new Car();
+					
+					
+					
+                    possible values for derived data types:
+					=========================================					
+					for derived data types only 3 types values possible 
+					1. null : null means nothing it will consider as no value
+					    Perosn p1 = null;
+					2. corresponding class object : it measn assinging same class objects into same class variable types 
+						Person p1 = new Person();
+					3. corresponding child/ sub class objects 
+							Parent ref = new Child(); -> correct possible
+							Child ref = new Parent(): -> not possible
+							
+					in this 3 values null is the defualt value for derived data types.
+					
+					
+						
+						types of numbers 
+						================
+						
+						(binary- 0,1)2   (octal 0 to 7)8   (decimal 0 to 9)10     (HexaDecimal 0to9,AtoF)16
+						
+						  0                0                   0                            0
+						  1		   1                   1                            1
+						  10               2                   2                
+						  11               3                   3
+						  100              4                   4
+						  101              5                   5
+						  110              6                   6
+						  111              7                   7
+						  1000             10                  8
+						  1001             11                  9                            9
+						  1010             12                  10                           A
+						  1011             13                  11                           B
+						  1100             14                  12                           C
+						  1101             15                  13                           D
+  						  1110             16                  14                           E
+						  1111             17                  15                           F
+						  10000            20                  16                           10
+						  
+						  
+						  (1010)2 = (?)10
+						   3 2 10
+						   1010
+						   (2*2*2)*1 + (2*2)*0 + 2*1 + 1*0 = 8+0+2+
+						   
+						   (64)10 = (?)2
+						    
+							64/2 = Q = 32 - r= 0
+							32/2 = Q = 16 - r= 0
+							16/2 = Q = 8 - r= 0
+							8/2 = Q = 4 - r= 0
+							4/2 = Q = 2 - r= 0
+							2/2 = Q = 1 - r= 0
+							1/2 = Q = 0 - r= 1
+							
+							take all reminders as reverse order i.e = (1000000)2
+							
+							(64)10 =(?)16
+							
+							

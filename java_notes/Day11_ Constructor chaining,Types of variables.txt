@@ -1,0 +1,775 @@
+ Constructor chaining:
+ ====================
+	      it is a process of invoking one constructor to another constructor by using this() or super() 
+		  without using new operator is called as constructor  chanining. 
+		  
+		  here
+		  this(): it is act as calling stament for one constructor to another constructor 
+		          with  in the same class .
+				  if we have such kind of requiments then we can use this() statement.
+		  
+		  super(): its is act like calling statement for Super class constructor from sub class constructor.
+
+		  if we have such kind of requiments then we can use super() statxement.
+		  
+		    
+			exm:
+			  A.java                        A.class
+			 class A {                  class A extends Object{
+			            -> javac ->                   A(){
+														super();
+			}								          }            
+											}
+			 in java every class should have parent class or it should be child of any other java class.
+			 in case if any of class dosent have parent then java compier will make object class is a parent
+			 for that class using extends key word at the time compilation.
+			
+			 
+compiler will verify all these steps while converting .java file into .class file
+=================================================================================
+		
+ 1. it will verify is our code as per the java standards or not  i.e it verify all syntax errors and is there proper open statemensts and corresponding closing stmts or not, etc ..
+		
+2. it will verify , is this class having parent class or not, if not -> then it will make this  class is a sub class to object class. 
+		 
+3. it will verify this class is having any constructors or not, if there is no constructor in side that class then it will add one default constructor i,e no arg constructor.
+		 
+4. it will verify what is the 1st statement inside the constructor either super() or this(). if there is no super()
+		  or this() statemensts then it will keep super() as first stament in side constructor. 
+		  
+		 Note: super() or this() should be first stament of constructor, we can't keep these statemensts
+		 second line or third line in the constructor. so if we want to use super() inside constructor
+		 then we cant use this() in side same constructor. beacuse both functions are should be at first line
+		 only. so either one statement only possible at a time. 
+		  
+		  if user want to use either super() or this(), he have 2 options , but comipler will have only 
+		  one option that is super(). compiler always keeps only super() at first line of constructor
+ 		  if and only if there is no super() or this() statemensts.
+		  compiler never keeps this() statemensts at first line of constructor.
+		   ex1;
+		   
+		   class A{
+		   
+		     A(){
+			 
+			 }
+			 A(int i){
+			    this();
+				// this is calling stmt for A class no arg constructor
+			 }
+		   }
+		    after compilation A.clss will be like bellow
+			
+		   class A extends Object{
+		   
+		     A(){
+			     super();// this is created by compiler
+			 }
+			 A(int i){
+			    this();
+				// this is calling stmt for A class no arg constructor
+			 }
+		   }
+		   
+		   
+		   
+		   class A {		   
+		     A(){
+			   System.out.println("no-arg");			    
+			 }			 
+			 A(int i){
+			  this();// this is calling stmt for one constructor to another constructor with in the same class. it will call no arg constructor.
+			  System.out.println("int constructor with value of :"+i);
+			 }			 
+			 A(String str){
+				this(30); // this ia calling for int type constructor
+			  System.out.println("Sring constructor with value of:"+str);
+			 }
+			A(int i,String str){
+				this();
+			  System.out.println("int-Sring constructor with value of:"+str+":"+i);
+			 }			 
+			 public static void main(String args[]){
+			System.out.println("Now we are creating object using no arg"); 			   
+			   A a1 = new A();// no arg 
+				System.out.println("Now we are creating object using int type constructor");
+				A a2 = new A(10);// no arg and "int constructor with value of :10
+				System.out.println("Now we are creating object using String arg");
+				A a3 = new A("k7it");
+				System.out.println("Now we are creating object using int and string");
+				A a4 =  new A(10,"Prasad");
+			 }
+		   }
+		  output:
+			Now we are creating object using no arg
+			no-arg
+			Now we are creating object using int type constructor
+			no-arg
+			int constructor with value of :10
+			Now we are creating object using String arg
+			no-arg
+			int constructor with value of :30
+			Sring constructor with value of:k7it
+			Now we are creating object using int and string
+			no-arg
+			int-Sring constructor with value of:Prasad:10
+
+   example: 
+   
+     class A {
+		   
+		     A(){
+			   System.out.println("no-arg");
+			    this(20);// this is the calling statment for same class constructor with
+                     // int type parameter.
+			 }
+			 
+			 A(int i){
+           this("Lucky");// this is the calling statment for same class constructor 
+                       //with String type parameter.
+			  System.out.println("int constructor with value of :"+i);
+			 }
+			 
+			 A(String str){
+			  System.out.println("String constructor with value of:"+str);
+			 }
+			 
+			 public static void main(String args[]){
+			 
+			    A a1 = new A();
+				//A a2 = new A(10);
+				//A a3 = new A("k7it");
+			 
+			 }
+
+}
+
+output: 
+
+D:\lab\202401_JavaBatch\src>javac -d ../classes A.java
+A.java:5: error: call to this must be first statement in constructor
+                            this(20);// this is the calling statment for same class constructor with
+                                ^
+1 error
+
+     Exp3: 
+	    class A {
+		   
+		     A(){
+			    this(20);// this is the calling statment for same class constructor with
+                     // int type parameter.
+				 System.out.println("no-arg");
+			 }
+			 
+			 A(int i){
+           this("Lucky");// this is the calling statment for same class constructor 
+                       //with String type parameter.
+			  System.out.println("int constructor with value of :"+i);
+			 }
+			 
+			 A(String str){
+			 // super();
+			  System.out.println("String constructor with value of:"+str);
+			 }
+			 
+			 public static void main(String args[]){
+			 
+			    A a1 = new A();			
+			 
+			 }
+		}
+		
+		
+		
+		Output:
+		D:\lab\202401_JavaBatch\dev\classes>java A
+			String constructor with value of:Lucky
+			int constructor with value of :20
+			no-arg
+	 
+	 Note: here i am creating only one object using no arg constructor but all 3 constructors are executing as part this
+	   single object creation, because of we are using the constructor chaining with the help of  
+	   this() statemenst.
+	   
+	   erlier for each object creation only one corresponding constructor was exected from our class. 
+	   
+	   
+	   How to install the notepad++: this is a advanced editor for java development programs, 
+	     it will give better suggesion for developer while writing the code with different colors identiifcations for 
+		 java key words ans java classes , proper identification for every open braces with corresponding closing braces etc.
+		 
+		 downloan notepad++ latest verson : https://notepad-plus-plus.org/downloads/
+		 
+		 
+	   
+	 super(): by using super() we can invoke super class constructor from sub class constructor. 
+		  in java every class is sub class of Object class or Object class is act like master super class for all java classes.
+		   if our class not extending any other class java compiler will automaticaly makes our class will extends by 
+		   Object class.
+		   
+		   
+		   A.java                         A.class
+		    class A{    			 class A extends Object {
+											A(){
+					    -> javac ->		     	 super();
+											}
+			}							}
+			
+		   
+		   
+		   
+		  
+	    here: Object class is called as super class or parent class or master/general or base  class  
+		and  A class is called as  sub class or child class or specialization class or derived class. 
+		
+		
+		here Object class is predefinf java class its avaiable under java.lang package under src folder. in side object '
+		there is only one constructor i.e default constructor. but it wont have any sop statment.
+		
+		   public class Object{
+		   
+		        public  Object(){
+				  /// Object no arg constructor
+				}
+		   }
+		   
+		   Note: for every object creation minium 2 constructor will execute one is from corresponding class 
+		   constructor, second one from object class no arg constructor.
+		   without executing Object class constructor we cant create any class objects. 
+		   
+		   example:
+		    Person.java                                  Person.java
+		   
+		    class Person {                               class Person extends Object{
+			 
+			    Person(){                                   Person(){
+			     System.out.println("no arg");                super();// calling statemenst for Object class no arg Constructor
+			   }                                              System.out.println("no arg"); 
+			                                                  }
+			   Person(int i){ 								Person(int i){
+					System.out.println("int constructor");   super();  // callint statement  for Object class no arg Constructor
+															 System.out.println("int constructor");
+			   }											}
+						
+			}										      }
+		   
+		   
+		   
+		   
+		   class PersonManger{
+		   
+		     public static void main(String args[]){
+			 
+			    Person p1 = new Person();// this is a calling stmt person class no arg constructor
+				Person p2  = new Perspon(10);//  this is a calling statement for int type constructor in side person class
+			 }
+		   
+		   }
+		   
+		
+		
+        Memory Managemnet: in java we have 2 types of memory 
+		1. stack : it is using for executing all types executable blocks (constructor, methods,initialization blocks etc) and
+		    all local variable and ref varables and parameter variables all are store under stack memory.
+			
+			stack memory will works based Fist in last out algorithem (FILO) or Last In First Out Algorithem(LIFO) 
+			-> inside stack memory any of the member will finish the executuon it will remove automaticaly from stack memory. 
+			 once that member removed from stack all the variable or ref variavle which are created as part of that those also
+			 will remove automaticaly. 
+			
+		2. heap memory:  .class files , Objects and atributes(static or non static/instance) will store under heap memory. 
+		   if we want to access any of the object from heap memory we should use ref variables from stack memory. wihtout using
+		   ref variables we cant access object from heap momory. 
+		   
+		   -> in side heap memory if there are any objects which dosent have direct link from stack to heap memory, then those object are 
+		       called as abandoned objects or nullify objects or orphan objects . 
+			   
+		   -> in side heap memory un used objects will not delete immediately once usage is over like stack memory. 
+		   -> we can able to create the object inside heap memory, but we dont have rights to delete or clean the objects 
+		      from heap memory. 
+			  
+			Who will delete un used objects from heap memory:
+			=================================================
+			 there is a one special daemom thread in java with the name of Garbage collector (GC). this thread will take care 
+			 about deleting the unused objects from heap memory. 
+			 
+			 but we dont know when he will come for  executuion / cleaning unused objects .
+			 
+			 gargabe collector will works based on mark and sweap algoritham , it means when ever garbage collector will 
+			 come for execution first time it will identify the un used objects or orphan objects it will mark those objects 
+			 and he will call finalized() method from object class and he will go.  but it wont delete immediately.
+			 
+			 when second time GC will come for executuion it will delete all marked objects automaticaly and he will look for
+			  is there any new object are eligible for gargabe collector. if he finds any orphan or nullify object he will mark
+			   and call the finalized() from object class and he will go away. when next he will come for execution he will delete
+			   these newly marked objects.
+			   
+		    -> we can make a request for garbage collector but we cant command or demand the garbage collector. even though 
+			if we make request there is no guarentee GC will come execution. 
+			
+			  how to make request for G.C:
+			  1. System.gc();
+			  2. Runtime.getRuntime().gc();
+			  
+			  
+			  variables and its initalization: 
+			  ================================
+			  
+			         in java we have maily 4 types variables 
+					   
+						1. global variables
+						2. local variables
+						3. parameter or arguments variable 
+						4. conststans variable 
+						
+						
+			       1. globale variables: the varaibles which are declared under class level scope those are called as 
+						global variables or attributes or properties . 
+						  
+						    these globle variables are again 2 types :
+							
+							1. instance attaributes / non static attaributes: these atribute are part of the object , where objetc is 
+							 present thse instance atributes also present there only.  i.e objects are store under heap memory so our 
+							  instance atributes also store under heap memory with in the object allocation memory space.
+							  instance atributes are specific to each object, i.e every object will have seperate copy of instance atribute
+						      if we change the value of instance attairbute inside object it will  not effect on other object.
+							  
+							  -> instance attributes should be access by corresponding class Object or object ref variables
+							    without object there is no instance attributes.
+								
+							-> instance attribtes are having default value concept it means if we dont provide the values for instance atributes
+                               while creating object inside constructor will provide the default values  based on  attribute datatype
+							    after executing the super() but not after exectuing this().
+								
+						   -> instance attributes are initialize with default for every object creation. 		
+							  +
+							2. static attairbutes / class attaributes : static atributes are common to all objects , for all objects static 
+							 attaributes maintain only one copy. if once object will update the value for static attaributes it will effect 
+							 for all other objects as well. 
+							 
+							 -> static atributes we can access directly  by using class name. we dont need to create object and we dont need use 
+							    obj ref variable to access static atributes. why because static atribute are part of the .class file
+								
+								
+						    -> even though ig we try to access the static attributes by using Object or Object ref variable at the time 
+							   of compilation compiler will replace object with corresponding class name and ref varables with corresponding variable 
+                               dataType.							   
+							   
+							 -> static atributes also having default value concept , but it will initialize with default value 
+							    at the time first time when our .class file will load into the heap memory. static attribtes will'
+								initalization be default value only once entire execution time.
+								
+								 Person.java                                        Person.class
+								class Person{                                  class Person extends Object{
+								    int age;  										int age;  
+									String name;									String name;
+									static int legs;  								static int legs;
+									static String food;								static String food;
+									Person(){										Person(){
+									  System.out.println("No arg");					  super();
+																			          -> initalization instance Attributes (IIA)
+									}                                                 -> body of the constructor
+																				    }
+									public static void main(String args[]){      public static void main(String args[]){
+									   
+									  Person p1 = new Person();							 Person p1 = new Person();
+									  
+									   System.out.println(p1.age);                      System.out.println(p1.age);//
+									   System.out.println(p1.name);					    System.out.println(p1.name);//
+									   System.out.println(p1.legs);                     System.out.println(Person.legs);//
+									   System.out.println(p1.food);						System.out.println(Person.food);
+									   
+									}												  }
+									
+								
+								}                                                  }
+							   
+							   
+							    compiler main steps for developer support:
+								===========================================
+								
+								1. check is our class is having parent or not 
+								2. check our class is having any constructor or not
+								3. check 1st line of constructor either super() or this()? 
+								4. keep initalization instance atributes(IIA) after super() only 
+								5. keep calling stmt for IIB's
+								6. check how we are accessing the static members 
+								
+								JRE steps  for developers support:
+								======================================
+								1. load .class file into heap 
+								2. Initialize Static Attributes (ISA)
+								3. keep calling stmts for SIBS
+								4. create thread to main()
+								
+								
+								
+							 
+							   2. local variables :  it is a variableble which are declared under any of the executable blocks 
+							     like constructors, methods, or initalization blocks  are called as local variable.
+								 
+								 or 
+								 
+								variables which are  delcaring under memeber of the classes those
+								 variables are called as local variables .
+
+								 
+								  class A{
+								  
+								     int i =10;
+									 
+									 public static void main(String args[]){
+									 
+									    int k =10; 
+									 }
+								  }
+								  
+								  
+								  -> in above program varaible i is called global varable and k is called as local variable to main method.
+								  
+								  scope of the global variable:  is entire class 
+								  ===============================================
+								  class A{
+								  
+								     int i=10;
+									 
+									 A(){									 
+									 sop(i);		// 10								 
+									 }
+									 A(String s1){
+									 
+									   sop(i);		//10
+									 }								 
+									 
+								  }
+								  
+								  scope of the local variable: with in the same block.
+								  ====================================================
+								  class A{
+								  
+								    A(){
+									  int k =10;// here  k is act like local variable to no arg constructor.
+									  sop(k);//10
+									  k =k-2;
+									  sop(k); //8
+									}
+									
+									A(String s){
+									
+									   sop(k);//CTE  cannot find symbol:k
+									 
+									}
+								  }
+								  
+								  Scope of global variable: entire class members 
+								  scope of the local variable : with in the same block.i.e in which executable block 
+								  we declared with in that block we can able to use it. 
+								  but we cant able to use out side of that block. 
+								  if we try to access out side the block it we will get compile time error. 
+									
+									
+								 -> any of the varibale  with in the same scope 
+								  we should not use more than one variable with same  name.
+								  it will consider as duplicate variable name.
+								  in side java duplicate variable name we will not support ,
+								  so we will get compile time error 
+            Ex1:
+								  
+								  class A{
+								  
+								     int i=10;
+									 int i =20;//cte  duplicate attairbute i.e i ;
+								  }
+								  
+								   class A{
+								  
+								     int age=10;
+									 String age ="abc";//cte duplicate attairbute i.e age;
+								  }
+				Ex2:
+							 
+							class A{
+							   int i=10;
+							}
+							
+							class B{
+							
+							  int i = 20; cs
+							}
+		  
+		  
+		      Ex3:
+		             class A{
+					    int age = 10;
+						String age  = "20"; //CTE even though data type is different we cant use same name for more than one variable with in the same scope
+					 
+					 }
+				   Ex4:	 
+					 
+					 class  A{
+					 
+					     int i = 10;
+						 
+						 A(){
+						 
+						    int i = 40;
+							
+							sop(i);// 40
+						 }
+						 
+						 A(String s){
+						 
+						    sop(i);//10
+						 }
+						 // if local and global variable both are having same name then how to differentiate local to global variable. 
+						  a(int age, string name){
+						     int i = 50;
+						    sop(i);//50
+							
+							sop(i);//50
+							sop(this.i);// 10  // ny using this operator we can identify global variables but we dont have any special key word for local variables.
+						 }
+						 
+						 public static void main(String args[]){
+						 
+						    int i = 30;
+							
+							sop(i);// 30	
+
+
+						  // here if we want to access global i variable how to access ?
+                      //  sop(this.i);//CTE  why bzc this operator or super operator we can use only with in the non static members, but we cant use 
+                       inside static members. 
+
+                         // then how to access non static global variables inside static members :
+                          ans: if we want to access non static global variables inside staitc members we should access thorugh 
+                                  object or object reference variavles. 
+
+							A a1 = new A();								  
+							sop(a1.i);// this accessing thorugh obj ref variavle , if we are accessing memebers by using ref variable then object life is depending on main method life time.
+							sop(new A().i);// this is accessing using direct object.  if we access by using direct object that object life time is only one line
+							sop(a1.i);//
+							
+						 }
+					 }
+					 
+					 Note: local variable should be initalize our self before use it , 
+					                why because for local varaible there is no default value concept
+									
+									
+									example :
+									
+									 class A{
+									 
+									     A(){
+										 
+										    int i;
+											sop(i);// cTE  A.java:13: error: variable i might not have been initialized
+										 }
+										 
+										 public static void main(String args[]){
+										 
+										    String name;
+										//	System.out.println(name);//CTE  A.java:13: error: variable name might not have been initialized
+										 
+											name ="k7iT";
+											System.out.println(name);// k7iT;
+											name =  null;
+											System.out.println(name);// null
+										}
+									   }
+									   
+									   
+									   
+					 
+ object  ref variale access                        direct object access 
+========================================================================
+life time depending on                              only one line
+method life time					 
+		              
+			   
+we can reuse the same object                         we cant reuse this object.
+more than one line 
+					  
+					  
+A a1 = new A();	      			     		sop(new A().i);
+sop(a1.i);	
+		
+
+ 
+                     Ex5: 
+					 
+					  class A{
+					     int i ;
+						 
+						 public static void main(String arags[]){
+						 
+						   int k;
+						   
+						   A a1 = new A();
+						    sop(a1.i);// 0 
+							sop(k);//CTE why bzc ,  for local variables there is no default value concept 
+							       // so we should initialize our self before use the local variable else 
+								    // we will CTE.
+							int j = k+10;//CTE k is not initalized before use it. 
+							
+						 }
+					     
+					  }
+					  
+					  
+					 exm 6:
+					 
+					  class A{
+					  
+					     int age = 30;
+						 static int legs = 2;
+						 
+						 public static void main(String args[]){
+						 
+						    int k = 20;
+							static int l = 40;//CTE in case local variavle there is no static local variable 
+							                  // concept. static key is applicable only for global or common 
+											  // to all scope but not local or speciifc to each one.
+							
+							
+						 }
+					  }
+					  
+					  
+					  3. parameter variables or arguments variable:
+					  =============================================
+					  the variables which are declaring inside the signature those are called as 
+					  parameter variables or argument variables.
+					   
+					   paramter or argument variables possible to declare only with in the constructor
+					   signature or method signature. 
+					   
+					   
+					   ex1:
+					     class A{
+						 
+						       A(int i ){ // here i is called as paramter varable or argument varable
+							     sop(i);// 10, 100, 200
+							   }
+							   
+							   public static void main(String args[]){
+							   
+							     A a1 = new A(10);// calling statemenst 
+							     A a2 = new A(100);
+							     A a2 = new A(200);
+							   }
+							}
+							
+							Note: here we are not getting CTE even though we are not initalizing i value before 
+							use it. why because, paramter values has to initialize be caller at time calling statement
+							
+							even for paramter variable also we dont have default value concept.callrer has to initalize
+							the all parameter varable at the time calling statement.
+							
+							ex2:
+							
+							  class A{
+							  
+							    A(static int age ){//CTE we can't delcare paramter variables or local variable as static type
+								                    // static is only for global purpose not for local purpose.
+								
+								   sop(age);
+								}
+							  }
+							
+							
+							Ex3:
+							
+							class A{
+							    int i = 20;// cs
+								
+								A(int k = 30){ // cTE we can't initalize the values  
+								              // for parameter varable at the time declaration
+								   sop(k);
+								}
+							
+							}
+							
+							ex4:
+							
+							class A{
+							
+							   A(int k){  
+								   k = 30; //       this is called reinitialization 
+								   sop(k);// 30,30,30
+								}
+								
+								public static void main(String args[]){
+								
+								  A a1 = new  A(10);
+								  A a2 = new  A(200);
+								  A a3 = new  A(2000);
+								 
+								}
+							}
+							
+							ex5:
+							
+							class A{
+							
+							
+							   A(int i){
+							   
+							     sop(i);
+							   }
+							   A(int k , String s){
+							      sop(k);//
+								  sop(s);//
+								  sop(i);// CTE parameter variable scope is with in the same block.							   
+							   }
+							}
+							
+					  Note: local variable and parameter variable life scope is same i.e with in the block.
+					  
+					  
+					  variable    					 scope     			initalization                       
+					  instance  Attributes   		entire class         constructor 
+					  static   Attributes           entire class          JRE 
+					  local    variable             with in the block     developer him self 
+					  parameter variable            with in the block     caller  by calling statemenst
+					  
+					  
+					  Note: static key word only for global vraible, we cant use for local or parameter variables.
+					  
+					  
+					  
+Operators
+--------------------------------------
+Operators are different types
+1.Equals Operator (==)
+ ex: if(a==0){
+		sop("Please enter the a value");
+		}
+2.Not Equals Operator(!=0)
+ex: if(a!=0){
+		sop(a+b);
+		}
+3.Greater then Operator(>)
+ex: if(a>0){
+		
+		}
+4.Less then Operator(<)
+ex: if(a<10){
+		}
+5. Greator then or equals Operator(>=)
+ex: if(a>=0){
+		
+		}
+6. Less then or equals operator(<=)
+ex: if(a<=100){
+		}
+7. And operator(&&)
+ex: if(a>0 && b>0){
+		
+		}
+8. OR operator(||)
+ex: if(a>0 || b>0){
+
+		}
+		

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathMingle</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .top-navbar .logo img {
+            width: 50px; /* Adjust width as needed */
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .top-navbar h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .nav-links a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            transition: background 0.3s;
+            font-size: 20px; /* Increase font size */
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .shape-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .shape {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+
+        .shape:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .shape img {
+            width: 120px;
+            height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 32px; /* Add this style for the heading */
+        }
+
+        .faq {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+            text-align: left;
+            max-width: 800px;
+        }
+
+        .faq h3 {
+            color: #FFD700; /* Gold color for the FAQ heading */
+            margin-top: 0;
+        }
+
+        .faq p.question {
+            color: #00FFFF; /* Cyan color for questions */
+            font-weight: bold;
+        }
+
+        .faq p.answer {
+            color: #ADFF2F; /* GreenYellow color for answers */
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-navbar">
+        <div class="logo">
+            <img src="https://www.pngitem.com/pimgs/b/284-2844245_calculator-clipart-png.png" alt="MathMingle Logo">
+            <h1>MathMingle</h1>
+        </div>
+    </div>
+    <div class="main-container" style="display: flex; flex: 1;">
+        <div class="sidebar">
+            <div class="nav-links">
+                <a href="currency.html">💲 Currency</a>
+                <a href="algebra.html">➕ Algebra</a>
+                <a href="health.html">🩺 Health</a>
+                <a href="scientific.html">🔢 Scientific</a>
+                <a href="trigonometry.html">📐 Trigonometry</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <h2>📏Geometry</h2> <!-- Add this heading -->
+            <div class="shape-container">
+                <div class="shape" onclick="window.location.href='circle.html'">
+                    <img src="https://i.imgflip.com/4odmhz.png" alt="Circle">
+                    <p>Circle</p>
+                </div>
+                <div class="shape" onclick="window.location.href='rectangle.html'">
+                    <img src="https://img.freepik.com/premium-vector/rectangle-icon-vector-illustration-design-template_827767-5457.jpg" alt="Rectangle">
+                    <p>Rectangle</p>
+                </div>
+                <div class="shape" onclick="window.location.href='square.html'">
+                    <img src="https://i.imgflip.com/5zay82.png" alt="Square">
+                    <p>Square</p>
+                </div>
+                <div class="shape" onclick="window.location.href='triangle.html'">
+                    <img src="https://cdn.vectorstock.com/i/preview-1x/69/41/triangle-shape-rounded-corner-stroke-high-quality-vector-42946941.jpg" alt="Triangle">
+                    <p>Triangle</p>
+                </div>
+                <div class="shape" onclick="window.location.href='pentagon.html'">
+                    <img src="https://th.bing.com/th/id/R.93d1125a387a56d2e707c6dd588d41fa?rik=f3a40UEaebTxpw&riu=http%3a%2f%2f1.bp.blogspot.com%2f-jX7IKV-ZE-U%2fTv6LS3zMu_I%2fAAAAAAAAJ9c%2f-NZVYTn2_NY%2fs400%2fbasic-geometric-shapes-regular-pentagon-ns-bw.gif&ehk=DQvODHHQ%2fzcPeKiuLrXFgxxG0t9RINjMLPKzXQS4DhY%3d&risl=&pid=ImgRaw&r=0" alt="Pentagon">
+                    <p>Pentagon</p>
+                </div>
+                <div class="shape" onclick="window.location.href='rhombus.html'">
+                    <img src="https://clipground.com/images/white-outline-diamond-clipart-20.jpg" alt="Rhombus">
+                    <p>Rhombus</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <h3>Geometry – FAQs</h3>
+                <p class="question"><strong>What is geometry in math?</strong></p>
+                <p class="answer">Geometry is a branch of mathematics that deals with the properties, relationships, and measurements of points, lines, angles, shapes, and spaces.</p>
+
+                <p class="question"><strong>What are some fundamental types of geometry?</strong></p>
+                <p class="answer">The fundamental types of geometry are: Euclidean geometry, Plane geometry, Solid geometry, Coordinate geometry (Analytical geometry), Non-Euclidean geometry, and Trigonometry.</p>
+
+                <p class="question"><strong>What are the basic types of angles in geometry?</strong></p>
+                <p class="answer">The basic angles are acute (less than 90°), right (90°), obtuse (greater than 90° but less than 180°), and straight (180°).</p>
+
+                <p class="question"><strong>What is the difference between congruent and similar shapes?</strong></p>
+                <p class="answer">Congruent shapes have the same size and shape, while similar shapes have the same shape but different sizes (proportional dimensions).</p>
+
+                <p class="question"><strong>What are the properties of parallel lines?</strong></p>
+                <p class="answer">Parallel lines never meet, are equidistant from each other, and have the same slope when represented on a coordinate plane.</p>
+            </div>
+        </div>
+
+    </div>
+	<footer>
+	    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 10px 20px; background: rgba(0, 0, 0, 0.5);">
+	        <div style="margin: 10px;">
+	            <p style="margin: 0;">&copy; 2025 MathMingle. All rights reserved.</p>
+	        </div>
+	        <div style="margin: 10px;">
+	            <ul style="list-style: none; padding: 0; display: flex; gap: 15px; margin: 0;">
+	                <li><a href="#" style="color: #FFD700; text-decoration: none;">About Us</a></li>
+	                <li><a href="#" style="color: #FFD700; text-decoration: none;">Contact</a></li>
+	                <li><a href="#" style="color: #FFD700; text-decoration: none;">Privacy Policy</a></li>
+	            </ul>
+	        </div>
+	        <div style="margin: 10px;">
+	            <p style="margin: 0;">Follow us:</p>
+	            <div style="display: flex; gap: 10px; margin-top: 5px;">
+	                <a href="#" style="color: #FFD700; text-decoration: none;">"🔵Facebook"
+	                </a>
+	                <a href="#" style="color: #FFD700; text-decoration: none;">"🐦Twitter"
+	                </a>
+	                <a href="#" style="color: #FFD700; text-decoration: none;">"📸Instagram"
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,371 @@
+         HelloWorld program code walkthrough :
+		=====================================
+		class : one of the key word in java 
+		HelloWorld : name of the class which is userdefined name 
+		public : it is also one of the key word in java, 
+		         it is called access specifier 
+		static : it is also one of the key word in java, 
+		         it is called access modifier
+		 void : it is also one of the key word in java, 
+		        it is called  return type of method
+		main: it is one of the predefined method in java, 
+			  it will use to execute any of the java code. 
+			  java code execution will start from main(). 
+			  wihtout main() we can't execute any of the code in java. 
+		String : this is one of the predefined class in java, 
+		   by using this class we can store alpha numeri values 
+		    in double quotes. 
+		args : it is called as paramter variable or method arguments
+		[] : this is callled Array Symbol. it will allow to store 
+		     multiple values.
+
+		String args[] : this is one of String type array with 
+                 		the name of args. 
+
+		System : its also one of the prededined class.
+		out: it is one of the static variable inside system class
+          		with PrintStream class type.
+		println(): this is one of the predefined method 
+		           inside printstream class, 
+				   which is using to print any of the message
+				   inside console form our java program as 
+				   our program output. 
+
+		key words: class, public, static, void -- in java all keywords will be lower case
+		predefined class: String, System
+		predefined method: main 
+
+
+		
+		
+		Namaing Rules for class name in java:
+		====================================
+		1. class name should be start with capital letter.
+		    class Hello{
+			}
+		2. if class name contains more than one word in each word
+     		first letter should be a capital
+		   this case is called camel case.
+		   
+		     class HelloWorld{
+			 }
+			  
+			 class GoodMorningAll
+			 
+			 lower case: helloworld
+			 upper case: HELLOWORLD
+			 camel case: HelloWorld
+			
+	    3. class name should not start with any number or special chars, 
+		except $ or undrscore(_).
+		
+		    class 123Hello{ // this is wrong pattern
+			} 
+
+			class #Hello{ // this is wrong pattern
+			} 
+			
+            class $Hello{ // this is  fine
+			} 	
+			class _Hello{ // this is also fine
+			}
+			class -Hello{ // this is wrong pattern (iphan) 
+			}
+			
+		4. we should not maintain any space between two words 
+		   in the class name.but we can use 
+		   undrscore(_). or camel case use can use .
+		    
+			class Hello World{ // wrong
+			}
+			class Hello_World{ // correct
+			}
+			
+			class HelloWorld{ // correct
+			}
+			
+		Q. how many types of classes we can defined in .java file ?
+		
+		    we can define 2 types classes in .java file 
+			
+			 1. default class : define a class without public key word
+			    HelloWorld.java
+				===============
+				class HelloWorld{// this is called as default class
+				
+				}
+			 2. public class: defind the class with public key word 
+			    
+				Car.java
+				=========
+			    public class Car{ // this is called as public class
+				
+				}
+				HelloWrold.java
+				-----------------
+				public class HelloWorld{
+				
+				}
+		
+		How many classes we can keep in side one .java file?
+		
+		ans: we can keep N number of classses in one .java file 
+		  if those class are default class type. 
+		  but in case of public class type only one class allowed
+		  per one .java file.
+		
+		
+		class Person{
+		 public static void main(String args[]){
+		   System.out.println("I am person");
+		 }
+
+		}
+
+		class Address{
+		 public static void main(String args[]){
+		   System.out.println("I am address of person");
+		 }
+		}
+		
+		if we keep more than one classes in .java file  by using 
+		which class  name i should save my java file ?
+		
+		ans: we can use any name no problem like Person.java or Address.java 
+		       or PersonAddress.java or XYZ.java 
+		   
+		    PersonAddress.java 
+       
+	   while compilation of .java file which is having more than 
+	     one class how many .class files generate or 
+		 what is the .class file name   ?
+	   
+	   src>  javac  PersonAddress.java 
+	     this cmd will generate 2 .class files
+		  1. Person.class
+		  2. Address.class
+		  
+	   
+	    ans: number of .class files are depending on
+   		the number of classes in .java file 
+		and name of the .class files are depending on
+		the name of the classes 
+		but not depending on name of the .java file. 
+		
+		for example if we compile  PersonAddress.java  file it will generate 2 .class files under src folder with the name of  Person.clss and Address.class but not PersonAddress.class 
+		
+		Q: how to execute java files which is having more than
+     		one classes ?
+		  ans: we should use corresponding .class file name 
+		   which class we need execute. 
+		   
+		   for example from above program we got 2 .class files 
+		   one Person.class and Address.class.
+			
+			if we want to execute person class then use 
+			 java Perosn.class file name without .class extention
+			  src> java Person 
+			  I am person
+			  
+			  src> java Address
+			  I am address of person
+			  
+			  note: if we want to execute any .class file 
+			  that class should contain main method 
+			  else we cant execute any .class file 
+			  with out main method even though .class file present. we cant start any execution in java without main method.
+			  
+	   Q.  if we try to run any .class file which is not having 
+	        main method what will happen ?
+	           Car.java
+			   ===========
+			  public class Car{
+			  }
+			  
+			D:\lab\6th_batch\dev\src>javac Car.java
+                compile success and it will create Car.class
+				
+			D:\lab\6th_batch\dev\src>java Car
+			Error: Main method not found in class Car, please define the main method as:
+			   public static void main(String[] args)
+			or a JavaFX application class must extend javafx.application.Application
+			
+			1. jre will look for Car.clss inside current location 
+			i.e src folder by appending the .class for given
+  			class name i.e Car + .class  = Car.class
+			then it will look for car.class inside src folder.
+			
+		    2. if Car.class file find in src folder 
+     			then JRE will load that .class file
+				into memory for execution 
+				
+				if Car.class not found in src then we will get this 
+				error 
+				Caused by: java.lang.ClassNotFoundException: Car.class
+			
+			3. JRE will create one thread to main method with 
+			   name of main thread , his responsibility is
+			   he has to execute what ever the code avaiable
+			   inside main method. 
+		    4. main thread will look for  main method in that class
+			5. if class is having main method then 
+			thread will load main method for execution and 
+			it will print the output 
+			
+			6. if main method not there in specified class. 
+			he will return this error.
+			
+			     D:\lab\6th_batch\dev\src>java Car
+				Error: Main method not found in class Car, 
+				please define the main method as:
+				   public static void main(String[] args)
+				or a JavaFX application class must extend javafx.application.Application
+
+			
+	  
+	   Q: how many public classes we can keep inside one .java file ?
+        ans: only one public class we can keep inside one .java file.
+		
+		in case of public class type we can able to keep only
+		one public class inside one  .java file .
+		or 
+       we can't keep more than one public class in side 
+	   one .java file
+	   
+	   why because in case public class,  .java file should be save
+	   with same name as the public class name.
+	   here if we have only one public class then no problem
+	   we can save our .java file name with that public class name.
+	   
+	   exm:
+	         Car.java
+			 =========
+	    public class Car{
+		   public static void main(String args[]){
+			System.out.println("I am a car");
+		  }
+		 }
+
+		 from above example my java file is having public class
+		 with the name Car, so i should save my java file
+		 with Car.java only, 
+		 we should not use diffrent name incase public class 
+		 i.e Xyz.java it is wrong 
+		 
+		    ==========================
+					Xyz.java
+			 =====================
+				 public class Lorry{
+				   public static void main(String args[]){
+					System.out.println("I am a Lorry");
+				  }
+				 }
+				 
+		 ============================
+ 	 
+			D:\lab\6th_batch\dev\src>javac Xyz.java
+				Xyz.java:1: error: class Lorry is public, 
+				should be declared in a file named Lorry.java
+				public class Lorry{
+					   ^
+				1 error	 
+		 
+		 
+		 Q how many public classes we can keep one .java file
+  		   or what is the java file we should give?
+		 
+		    A: we can't keep more than one public class in one 
+			.java file.
+			
+			Jagan.java
+			===========
+			public class Jagan{
+
+			}
+
+			public class CBN{
+
+			}
+		 
+		 D:\lab\202402_JavaBatch\src>javac Jagan.java
+			Jagan.java:5: error: class CBN is public, should be declared in a file named CBN.java
+			public class CBN{
+				   ^
+			1 error
+			
+			CBN.java
+			===========
+			public class Jagan{
+
+			}
+
+			public class CBN{
+
+			}
+			
+			D:\lab\202402_JavaBatch\src>javac CBN.java
+			CBN.java:1: error: class Jagan is public, 
+			should be declared in a file named Jagan.java
+			public class Jagan{
+				   ^
+			1 error
+			
+			So due to this naming priority issue 
+			we can't keep more than one public class inside
+			one *.java file.
+
+
+			
+		 
+		 Q: i want to create  100 default access level classes, 
+		 for this how many min *.java files required and 
+		 How many max .java file required ?
+			 
+		options : 
+		a. min :1 and max : 1  
+		b. min :1 max: 100  
+		c. min:100 , max : 100 
+		d. min :0 max:0
+		
+		ans:  b is the correct answer 
+		  i.e we can keep all 100 classes in side one .java file or we can keep each class seperately in seperate .java file so  min 1 and max 100
+		
+		Q: if i want to create 100 public classes 
+		then how many min .java files required or
+		how many max .java files required ?
+		  
+		  options:  
+		  a. min :1 and max : 1  
+		  b. min :1 max: 100  
+		  c. min:100 , max : 100 
+		  d. min :0 max:0
+		  
+		  ans: option c correct answer . because we cant keep more than one public class inside one .java
+		  so 100 public classes means we need 100 .java files .
+		  
+		Q: if i want to create 100 public classes and
+   		100 default class then how many min .java files required 
+		or how many max  .java files required ?
+		  
+	    options:  
+		a. min :1 and max : 1 
+		b. min :1 max: 100  
+		c. min:100 , max : 100 
+		d. min :100 max:200
+		    
+		 op1.  each java can have 1public and 1default = 100
+		 op2:  99 java will have 1public and 
+		 op3: 1 java file java 1 public and 100 default = 100
+		  each java will only one class either public or default = 200
+		  
+		  
+		  so option d is correct answer.
+		  
+		Q: no of .classes are depending on ?
+		  options: a. its depending on no of .java files
+              	   b. its depending on no of classes in .java file 
+		           c. its always produce only one .class file 
+				   d.it will not depending on .java or .classes
+		 
+		 ans: b , no of .class files are always 
+		   depending on  no of classes in .java file

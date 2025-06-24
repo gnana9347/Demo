@@ -1,0 +1,152 @@
+encapulation: 
+  =============
+  wrapping the similar or related  data into a single unit is called as a encapulation. 
+  
+  -> the binding of the data is called as encapulation
+  
+ best examples for encapulation is all of our java classes. 
+ 
+ type of encapulations:
+ ====================
+ 1. strong encapulation: if any of the class we need to declare as strong encapulation then that class should contains all attributes should be private and all methods should be public. then that called as strongly encapulated class. 
+ 
+ best example for strong encapulation class is POJO classes or Model classes or bean classes. 
+ 
+ pojo : plain old java object :   
+ 
+ class User{
+   private String name;
+   private  int userId;
+   
+   // develop setters and getters method for each attributes
+   
+   public void setName(String name){
+     this.name = name;
+   }
+   public String getName(){
+    return this.name;
+   }
+   
+   public void setUserId(int userId){
+     this.userId = userId;
+   }
+   public int getUserId(){
+	return this.userId;
+   }
+   
+ }
+ 
+ setter method rules:
+ ===================
+ 1. setter method name should be start with set and followed by corresponding attribute name with camel case.
+     setName
+	 setUserName
+	 setAge
+	 setHeight
+2. setter method should take one argument with same type attribute
+    setName(String name)
+    setAge(int age)
+
+3. setter method  return type should be a void. 
+   void setName(String name){
+   }
+4. setter method should have public access level
+  public void setName(String name){
+   
+  }
+ 5. initialize the globaal attribute with paramer variable
+     public void setName(String name){
+     this.name = name;
+	}
+	
+	
+	getter method rules:
+ ===================
+ 1. getter method name should be start with get and followed by corresponding attribute name with camel case.
+     getName
+	 getUserName
+	 getAge
+	 getHeight
+	 
+2. getter method should not take any arguments it should be no arg method.
+    getName()
+    getAge()
+
+3. getter method  return type should be same as attribute data type
+   String getName(){
+   }
+4. getter method should have public access level
+  public String getName(){
+   }
+ 5. return corresponding attribute as return value
+    public String getName(){
+	 return this.name;
+   }
+   
+   
+   example:
+   
+     class UserManager{
+	 
+	   public static void main(String args[]){
+	      
+		  User u1= new User();
+		 // u1.name = "K7iT";// name is priate member we cant access outside of the class. 
+		 // u1.userId = "007";
+		 
+		 u1.setName("K7iT");
+		 u1.setUserId(007);
+		 
+		 //System.out.println(u1.name);
+		// System.out.println(u1.userId); now we cant access like this we should use methods for setting or gettign values from attributes
+		
+		 System.out.println(u1.getName());
+		 System.out.println(u1.getUserId());
+		  
+		  
+	   }
+	 }
+	
+	
+ 2. weak encapulation : if any of class having non provate attributes r non public  methods that class is called as a week encapulation class.
+ 
+   class Person{
+     int age; // age is not priate attribute so this class is not a strong encapulated class.
+	 private String name;
+	 private int salary;
+	 
+	 // setters and getters 
+	 
+   }
+  
+  class A{
+    priate int i;
+	
+	private void m1(){
+	}
+  }
+  
+  
+  class Person{
+	 private int age; 
+	 private String name;
+	 private int salary;
+	 
+	 public double getRunRate(){
+	   return 10.25;
+	  }
+	  
+	  public void m1(){}
+   }
+   
+   class Person{
+	  int age; 
+	 private String name;
+	 private int salary;
+	 
+	 public double getRunRate(){
+	   return 10.25;
+	  }
+	  
+	  public void m1(){}
+   }

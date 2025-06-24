@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rectangle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        label {
+            font-size: 18px;
+            color: #333;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .geometry-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .geometry-info img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #FF5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #C70039;
+            transform: scale(1.05);
+        }
+        .back-button::before {
+            content: "← ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">Back</a>
+        <h1>Rectangle Calculator</h1>
+        <label for="length">Length:</label>
+        <input type="number" id="length" required><br>
+        <label for="breadth">Breadth:</label>
+        <input type="number" id="breadth" required>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result" class="result"></div>
+        <canvas id="rectangleCanvas"></canvas>
+        
+        <div class="geometry-info">
+            <h2>Understanding Rectangles</h2>
+            <p>A rectangle is a four-sided polygon with opposite sides equal and all angles at 90 degrees.</p>
+            <p>Formulas:</p>
+            <ul>
+                <li>Area = Length × Breadth</li>
+                <li>Perimeter = 2 × (Length + Breadth)</li>
+                <li>Diagonal = √(Length² + Breadth²)</li>
+            </ul>
+            <img src="https://image1.slideserve.com/2510925/rectangle-all-angles-are-90-degrees-area-l-x-w-diagonals-sqrt-l-2-w-2-l.jpg" alt="Rectangle Geometry">
+        </div>
+    </div>
+
+    <script>
+        async function calculate() {
+            const length = parseFloat(document.getElementById("length").value);
+            const breadth = parseFloat(document.getElementById("breadth").value);
+            const response = await fetch("http://localhost:8080/api/rectangle/calculate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ length, breadth }),
+            });
+            const result = await response.json();
+            const resultDiv = document.getElementById("result");
+            if (result.error) {
+                resultDiv.innerText = `Error: ${result.error}`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p>Area: ${result.area}</p>
+                    <p>Perimeter: ${result.perimeter}</p>
+                    <p>Diagonal: ${result.diagonal}</p>
+                `;
+                drawRectangle(length, breadth);
+            }
+        }
+
+        function drawRectangle(length, breadth) {
+            const canvas = document.getElementById("rectangleCanvas");
+            const context = canvas.getContext("2d");
+            canvas.width = length * 10 + 80;
+            canvas.height = breadth * 10 + 80;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            const scaledLength = length * 10;
+            const scaledBreadth = breadth * 10;
+            const startX = 40;
+            const startY = 40;
+            context.rect(startX, startY, scaledLength, scaledBreadth);
+            context.fillStyle = "#28a745";
+            context.fill();
+            context.strokeStyle = "#218838";
+            context.stroke();
+            context.fillStyle = "#000";
+            context.font = "16px Arial";
+            context.fillText(`${length}`, startX + scaledLength / 2 - 10, startY - 10);
+            context.fillText(`${breadth}`, startX - 25, startY + scaledBreadth / 2 + 5);
+        }
+    </script>
+</body>
+</html>

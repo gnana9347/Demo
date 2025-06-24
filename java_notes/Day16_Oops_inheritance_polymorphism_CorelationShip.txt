@@ -1,0 +1,409 @@
+ oops: object oriented programing language : as part of oops we will consider 4 concepts
+		  1. inheritance
+		  2. polymorphisum
+		  3. abstraction
+		  4. encapulation
+		  
+		  
+		  1. Inheritance : it is a process of acquiring super class members into a sub class. 
+		   ==============
+		                     in java using extends key word we can achive inheritance features between
+                             		2 classes. 
+
+                          
+                       synatx :
+                            class A{
+							
+							}
+
+                           class B extends A{
+						   
+						   }	
+
+ here class A act like a parent/ super / base  class. 
+      class B is called as child / sub / derived class. 						   
+ 
+        ex2: 	  Accessing one class members into another class directly without inheritance.
+                 we should create object for corresponding class and access those members. 
+
+ below code we are trying to access class A member inside class B directly. 				 
+
+             class A{
+			   int i =10;
+			   A(){
+			   
+			   }
+			 }
+			 
+			 class B{
+			 
+			   void m1(){
+			    System.out.println(i);//10// CTE I can;t be a resolve type .bzc there is no i member inside class B. 
+			   }
+			   public static void main (String args[]){
+			      // if we want to access class A members into class B:
+				  
+				   A a1 = new  A();
+				   System.out.println(a1.i);//10
+				   
+				  // System.out.println(i);//10// CTE I can;t be a resolve type .bzc there is no i member inside class B. 
+			   }
+			 }
+
+
+
+   // accessing one class members as another class own member , then we should use inheritance by using extends key word. 
+            		class A{ 
+						int i = 10; // 2 members  1. i attribute 2, default constructor
+						A(){
+						}
+					}
+					
+					class B extends A{
+					
+					    int j = 40; 
+						B(){
+						}
+						void m1(){
+						  System.out.println(i);// 10
+						  System.out.println(j);// 40
+						}
+						public static void main (String args[]){
+						
+						  B b1 = new B();
+						  System.out.println(b1.i);// 10
+						  System.out.println(b1.j);// 40
+						  
+						  
+						  A a1 = new A();
+						  
+						  System.out.println(a1.i);// 10
+						 // System.out.println(a1.j);// CTE
+						}
+					}
+					
+					// how many members there in class B?
+						a.1  b.2  c.4 d.3 e.5 f.0
+					
+					 ans : d  i.e 3 
+					Note: as part of the inheritance constructors and initialization blocks wont inherit to sub class.
+ 					only methods and attributes or behaviors and properties we will inherit to sub class.
+					
+		Note: in java every class should have super class, without super class we can't create any indepent classes in java,
+  		even though if we try to create any class without super classes like indepent class, 
+		at the time of compilation compiler will make Object class is a super class for corresponding class.
+		
+		ex :  class A{   -->  javac -->      class A extends Object{
+												A(){
+												 super();
+												}
+		       }							}
+		
+		here Object class is act like a Master super class for all java classes or it is act like god father of all java classes.
+		without Object class features we can't create any classes in java. 
+		every class is a direct or indirect sub class to Object class. 
+		
+		we can say another way also without inheritance or wihtout extends key word we can't create any java class,
+		even if we create class without extends key word compiler will keep extends by Object class 
+		at the time of compilation like above example.
+		
+		types inheritance : 
+		 1. single inheritance 
+		 2. multiple inheritance : 
+		 3. multi level inheritance :
+		 4. hybrid inheritance: 
+		 5. heirarchy inheritance :
+		 
+		 1. Single inherit : one child will have only one parent is called as single inheritance.
+		 
+		    class A{
+			}
+
+           class B extends A{// this is called as single inheritance class B having only one parent i.e class A
+		   
+		   }		 
+		 
+		 
+        2. multiple inheritance :  one child having more then one parent is called multiple inheritance.
+		 
+		 
+		     class A {
+			 
+			 }
+			 
+			  class B{
+			  
+			  }
+			  
+			  class C extends A,B{ // here class C is a children of two parents (class A and class B )
+			  
+			  }
+			  
+			Note:  //  java classes will not support multiple inheritance in case of classes using extends key word. 
+			  //  but java interfaces will support multiple inheritance. 
+			  
+			  
+  
+		    3. multi level inheritance : child class is having parent class and parent class is having grand paretn class is called 
+			   multi level inheritance, in java multi level inheritance is possible. 
+			 
+			    example:
+				
+				  class A{
+				  }
+				   class B extends A{// single level inheritance
+				   }
+				   
+				   class C extends B{// multi level inheritance, i.e class is a children of class B and grand children of class A.
+				   
+				   }
+				   
+				   class D extends C{// class D will have inheritance features from class A,B,C 
+				   
+				   }
+			  4. hybrid inheritance: comibination of any two or more inheritance is called as hybrid inheritance
+			  
+			     
+				   class A{
+				   
+				   }
+				   class B extends A{
+				   }
+				   
+				   class C extends A{
+					
+				   }
+				   
+				    class D extends C{
+					
+					
+	                }
+					
+					
+					5. heirarchy inheritance : one parent can have multiple childrens 
+					  
+					   class A{
+				   
+				   }
+				   class B extends A{
+				   }
+				   
+				   class C extends A{
+					
+				   }
+				   
+				   // here class B and C are childrens of same parent  i.e class  A 
+				   
+				   
+				   Why java classes are not supporting multiple inheritance :
+				   ============================================================
+				   due to constructor chaining java classes are not supporting multiple inheritance. as per java rule for one 
+				   calling statement there should be only on defination , but here as part of the constructor chaining while 
+				   executing super(), it will look for parent class constructor from sub class, but we have more than parents
+				   are available due to multiple inheritance, so here we JRE will get ambiguity error due to 
+				   which parent constructor we should invoke using super().
+				   
+				   
+				   
+				   
+				   
+				   
+				   
+polymorphisum:
+=============
+one form  with multi action is called a polymorphisum. 
+or 
+the process of single form can perform multiple behaviours or actions at different time of execution and different place of 
+execution is called as polymorphism.
+
+Poly-->Many
+Morphism-->Forms...
+
+in jave polymorphism we can achive by using method overriding concepts. method overriding concept can achive by using inherritance.
+so without inherritance there is no polymorphisum . 
+
+method overriding:
+===================
+
+the process of overriding the super class defination inside sub class after inherritance is called as method overriding. 
+
+ class A{
+   void m1(){
+     System.out.println("A-m1");
+   }
+ }
+
+  class B extends A{
+    //
+  }
+   class C extends A{
+     
+	  void m1(){
+	     System.out.println("C-m1");
+	  }
+   }
+   
+    class D{
+	
+	  public static void main(String agrs[]){
+	   
+	     A a1 = new A(); 
+		 a1.m1();// A-m1
+		 B b1 = new B();
+		 b1.m1();// A-m1 
+		 
+		 C c1 = new C();
+		 c1.m1();// C-m1
+	   
+	  }
+	}
+	
+	
+	
+	
+
+co-relationship:- the process of assining sub class object into super class ref variable is called as co relationship.  
+but we can't assign super class object to sub class ref variable.
+
+class A{
+
+}
+class B extends A{
+
+}
+
+A a1 = null// 1
+A a2 = new A();//2
+
+A a3 = new B();// 3 -> co relationship
+
+B b1 = null;
+B b2 = new B();
+//B b3 = new A();//CTE we can't assign super obj to sub class ref var.
+
+Note: in general for any derived variables we can assing only 2 values one null value and second one is corresponding class object.
+but as part of co relationship we can assign sub class objects also for any of the derived class ref variable.
+
+Upcasting and down casting :
+============================
+Upcasting : the process of assining sub class objects or sub ref var to super class ref variable is called as upcasting. 
+it means co relationship process is came as part of upcasting concepts. 
+in java this upcasting process will take care by jre automatically so this process called as Auto Upcasting.  
+ 
+this auto upcasting concept introduced in java at JDK 1.5 version.
+   before jdk  1.5 we can't assing sub class object into super ref var directly. 
+
+
+
+class A{
+}
+class B extends A{
+}
+
+A a1 = null// 1
+A a2 = new A();//2
+
+A a3 = new B();// 3 -> co relationship or auto upcasting
+
+B b1 = new B();
+A a4 = b1;  // the value of A a4 = new B();
+
+b1 = null;
+
+A a5 = b1;// -> A a5 = null;
+
+ a1= null;
+ a1 = new A();  // thesed stmts are called re intialization
+ a1 = new B();
+ 
+ A a1 = null;
+ A a1 = new A(); //CTE  these stmt are called as redeclation with same  i.e duplicate variable
+ A a1 = new B(); //  varname , this is called duplicate declaration
+
+
+examples2: 
+=============
+
+class A{
+}
+class B extends A{
+}
+
+class C extends B{
+}
+
+class D extends A{
+
+}
+
+class P{
+}
+class R extends P{
+}
+
+A a1 = null;// cs
+A a2 = new A();// same class ref and same class obj -> cs
+A a3 = new B();// sup class ref and sub class obj -> cs
+A a4 = new C();// sup class ref and sub class obj -> cs
+A a5 = new D();// sup class ref and sub class obj -> cs
+
+B b1 = null;// CS
+B b2 = new B();// CS
+B b3 = new C();// sup class ref and sub class obj -> cs
+B b4 =  new A();// CTE sub class ref and sup class obj 
+B b5 =  new D();// CTE there is no relationship between B and D.
+
+C c1 = new C();//CS
+C c2 = new B();// CTE sup to sub 
+C c3 = new D();// CTE no relationship b/w C and D 
+C c4 = new A();// CTE sup obj to sub ref var
+
+P p1 = new P(); // cs
+P p2= new R(); // CS sub obj to sup ref 
+P p3 = new A();// CTE no relationship
+P p4 = new B();// CTE no relationship 
+P p5 = new C();// CTE No relationship
+
+R r1 = new R();// CS
+R r2 = new D();// CTE 
+
+Down casting : the process of assining super class objs or super class ref variables into sub class ref variables is called as
+               down casting. 
+in java we dont have auto down casting concept. we should take care explicitly our self. by using explicit down casting process. 
+
+   Syntax:
+   SubClass refVar = (Sub class name)superclass Object;
+   SubClass refVar = (Sub class name)superclass RefVar;
+   
+   Note : by using explicit down casting we can Manipulate the java compiler at compilation time, 
+   so it will make java code compile success. 
+   But at runTime JRE will throw the RunTime Exception if super class ref var doen't have sub class type objects 
+      i.e java.lang.ClassCastException.
+   
+		  class A{
+		  
+		  }
+		  class B extends A{
+		  
+		  }
+
+		  class P{
+		  }
+
+
+		  A a1 = new A();
+		  A a2 = new B();//
+		  B b1 = new A();//CTE 
+		  B b2 = (B)new A();// CS ,but RTE with java.lang.ClassCastException
+		  
+		  B b3 = a1;// CTE assigning sup class ref to sub class ref
+		  B b4 = (B)a1;// CS -> B b4 = new A(); RTE with ClassCastException
+		  B b5 = a2;//CTE 
+		  B b6 = (B)a2;// CS , -> B b6 =(B)new B(); -? RS 
+			
+		  
+		  P p1 = new P();
+		  B b7 = p1;// CTE 
+		  B b8 = (B)p1;// CTE even though we are doing explicit down casting we are getting CTE, 
+			why because there is no relationship between P and B. 
+  

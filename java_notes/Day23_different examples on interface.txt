@@ -1,0 +1,149 @@
+interface X{
+	    void m1(); //  public abstract void m1();
+	 }
+	 interface Y{
+	   int m2();
+	 }
+	 
+	 interface Z  extends X,Y{
+	    // how many members in Z  : 2 1. m1 and m2 
+	 }
+	 
+	 class A{
+	  public void m1(){
+	     System.out.println("A-m1");
+	   }
+	 }
+	 
+	  class B extends A{ // m1(). m2(int i)
+	  
+	  public  void m2(int i){
+	     System.out.println("B-m2");
+	   }
+	 }
+	 
+	 class C extends A{
+	  
+		 public  int m2(){
+			 System.out.println("C-m2");
+			return 10;
+		  }
+	 }
+	 
+	 class  D implements X{ 
+	 
+	 public  void m1(){
+	    System.out.println("D-m1");
+	  }
+	  
+	   public int m2(){
+	    System.out.println("D-m2");
+		return 20;
+	  }
+	 }
+	 
+	 class E extends A implements X{ //  CS  even though we are not implementing m1() inside class E, 
+	 //  why bzc from interface X we are receiving m1() absstract, but class A we are receiving another m1()
+	 // with same signature of abstract method m1(), so this A class inherited method act like a implementation 
+	 // for interface abstract method. 
+	 
+	 }
+	 
+	 class F extends B implements Z{ //  2 abstract 1. voisd m1() 2. int m2()
+	                                 // 2 concret methods 1.void m1() 2. void m2(int i)
+									 
+									 // Ans : CTE why bzc we are not implementing int m2() absstract method 
+									 //or we are not declarating class F as a abstract 
+	 
+	 }
+	 
+	 class G extends D  implements Z{  // CS Z is already implemented by class D
+	 
+	 }
+	 
+	 class H extends A implements X{  // CS
+	 }
+	 
+	 class I extends B implements Y{ // B. void m2(int i) Y. int m2() -> CTE 
+	
+	}
+	 
+	 class J extends A implements Z{
+	    
+		public int m2(){
+		  System.out.println("J-m2");
+		  return 30;
+		}
+	 }
+	 
+	 abstract class K extends B implements Y{// Y . int m2() B. void m2(int i)  // CS
+	 // even though i am not implementing abstract methos m2(), but i am declarating my class as a absstract.
+	 } 
+	 
+	 
+	 in case of corelationships : we need to remember one important point while invoking 
+	                              class members using co relationship ref variable or object . 
+								  
+		1. if the invoking member is non static then we need to look into the class for which class 
+		   we created object. 
+		2.  if the invoking member is  static then we need to look into the class for which class 
+		   we created ref variable. 
+		   
+		   A a1 = new B();
+		   
+		   a1.statticM1(); //we need to look for statticM1() from class A; 
+		   a1.nonStaticM2(); // we need to look for nonStaticM2() from class B(); 
+		   
+		   thse points are valid only for method overriding case or inherited method case, 
+		   but sub class specific methods this point not apply.
+		   
+		   class A{
+		      
+			  public static void m1(){
+			  System.out.println("A-Static m1()");
+			  }
+			  
+			   public  void m2(){
+			  System.out.println("A-non Static m2()");
+			  }
+			  
+		   }
+		    class B extends A{
+			
+			  public static void m1(){
+			  System.out.println("B-Static m1()");
+			  }
+			  
+			   public  void m2(){
+			  System.out.println("B-non Static m2()");
+			  }
+			  public void m3(){
+			   System.out.println("B-non Static m3()");
+			  }
+			
+			}
+			
+	    A a1 = new A();
+		a1.m1();//A-Static m1()
+		a1.m2();// A-non static m2()
+		
+		B b1 = new B();
+		b1.m1();// B-Static m1()
+		b1.m2();//B-NonStatic m2()
+		b1.m3();//B-NonStatic m3()
+		
+		A a2 = new B();
+		
+		a2.m1();//  A-Static m1() -> A.m1();
+		a2.m2();//  B-NonStatic m2()
+		//a2.m3();// using sup ref we can'y sub class specific member
+		((B)a2).m3();// B-NonStatic m3().
+		
+		B b2 = (B)a2;
+		b2.m3();
+		
+		
+		note: in case of static method method override concept not make sence. why bzc based on the ref variable
+		      corresponding class output we will get. 
+			  
+			  

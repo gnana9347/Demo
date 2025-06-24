@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Visitor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff; /* Light Blue */
+            margin: 0;
+            padding: 20px;
+            color: #333; /* Default font color */
+        }
+        .visitor-details {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff; /* White */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .visitor-details h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            color: #4b0082; /* Indigo */
+            background-color: #e6e6fa; /* Lavender */
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .visitor-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .visitor-details p strong {
+            width: 100px;
+            display: inline-block;
+            color: #00008b; /* Dark Blue */
+        }
+        .visitor-details p span, .visitor-details a {
+            background-color: #e6f7ff; /* Light Cyan */
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .navigation button {
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff; /* Blue */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="visitor-details">
+        <h2>Visitor Details</h2>
+        <p><strong>ID:</strong> <span id="visitorId"></span></p>
+        <p><strong>Name:</strong> <span id="visitorName"></span></p>
+        <p><strong>Age:</strong> <span id="visitorAge"></span></p>
+        <p><strong>Email:</strong> <span id="visitorEmail"></span></p>
+        <p><strong>Phone:</strong> <span id="visitorPhone"></span></p>
+        <p><strong>Aadhar:</strong> <a id="visitorAadhar" href="#">Download Aadhar</a></p>
+        <p><strong>Photo:</strong> <br><br>
+            <a id="visitorPhotoDownload" href="#"><img id="visitorPhoto" src="#" alt="Visitor Photo" style="max-width: 200px;"></a>
+        </p>
+        <div class="navigation">
+            <button onclick="location.href='/list-visitors'">Back to List</button>
+            <button onclick="location.href='/'">Home</button>
+        </div>
+    </div>
+
+    <script>
+        // Get visitor ID from query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const visitorId = urlParams.get('id');
+
+        // Fetch visitor details from the backend
+        function fetchVisitorDetails(id) {
+            fetch(`/api/v1/visitor/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visitorId').textContent = data.id;
+                    document.getElementById('visitorName').textContent = data.name;
+                    document.getElementById('visitorAge').textContent = data.age;
+                    document.getElementById('visitorEmail').textContent = data.email;
+                    document.getElementById('visitorPhone').textContent = data.phone;
+                    document.getElementById('visitorAadhar').setAttribute('href', `/api/v1/visitor/aadhar/${data.id}`);
+                    document.getElementById('visitorPhoto').setAttribute('src', 'data:image/jpeg;base64,' + data.photo);
+                    document.getElementById('visitorPhotoDownload').setAttribute('href', `/api/v1/visitor/photo/${data.id}`);
+                })
+                .catch(error => {
+                    console.error('Error fetching visitor details:', error);
+                });
+        }
+
+        // Initial fetch and render
+        fetchVisitorDetails(visitorId);
+    </script>
+</body>
+</html>

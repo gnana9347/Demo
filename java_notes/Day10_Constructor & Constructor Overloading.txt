@@ -1,0 +1,256 @@
+ 				
+				constructor : constructor is one of executable block inside the java class with same name of class name, it is used to creating objects for 
+				that corresponding class and providing initial state for that object. constructor doent have any return type.
+				
+				-> the process of defining a block with the same name of class name wihtout return type is called as a constructor.
+				-> using constructor we can create object and give the initial state for objects.
+				
+				-> 	for every object creation constructor will execute. 			
+				
+				   syntax: class ClassName{
+				         // declare attribtes
+						 
+						 // declare constructor
+						 
+						 ClassName(){
+						 
+						 /// body of the constructor
+						 
+						 }
+						 
+						// () : constructor signature 
+						// ClassName : constructor name 
+						// {} : constructor body
+				   }
+
+				Ex:
+				class Person{
+				 Person(){
+					System.out.println("I am in Person class constructor");
+				  }
+				}
+
+				class PersonManager{
+				  public static void main(String args[]){
+					
+				  Person p1 = new Person();//  here new Person(); is called as calling statement for person class constructor 
+				  Person p2= new Person();//  here new Person(); is called as calling statement for person class constructor 
+				  Person p3 = new Person();//  here new Person(); is called as calling statement for person class constructor 
+				  }
+				}
+				o/p: 
+				D:\lab\202401_JavaBatch\src>javac -d ../classes Person1.java
+
+				D:\lab\202401_JavaBatch\src>cd ../classes
+
+				D:\lab\202401_JavaBatch\classes>java PersonManager
+				I am in Person class constructor
+				I am in Person class constructor
+				I am in Person class constructor
+
+				D:\lab\202401_JavaBatch\classes>
+				
+				
+				
+				Note: for every object creation constructor will execute once, without executing constructor we can't able to create object for any class. 
+				
+				Note: Contructor only we will create the object and it will give the initial state for the object. 
+				contructor will act like a mother for objects .
+				
+				instalation of notepad++:
+				==========================
+				
+				notepad++ is a advance editor for developing java programs, it will
+				give better suggestions and look and feel for developers while writing the java code.
+				
+				1. download notepad++ software from this url :			
+								
+				inside constructor only we will get all default values for instance attributes.
+				
+				1. creating object
+				2. providing initial state for object with default value concept.
+				
+				
+				for every object creation corresponding class contructor will execute once :
+				
+				lets create 4 objects for person class:
+				
+				class Person1{
+						Person1(){
+
+						System.out.println("I am in person class constructor");
+					   }
+
+					 public static void main(String args[]){
+
+						 Person1 p1 = new Person1();
+						 Person1 p2 = new Person1();
+						 Person1 p3 = new Person1();
+						 Person1 p4 = new Person1();   
+					  }
+					}
+				o/p: 
+				I am in person class constructor
+				I am in person class constructor
+				I am in person class constructor
+				I am in person class constructor
+                
+				Note: if we want to create any object we need constructor. without constructor we cant create any object.
+				  Person.java                                                           Person.clss
+				class Person{                                                      class Person extends Object {
+				 int age;																		int age;
+				 
+				 public static void main(String args[]){									Person(){
+																								 // this constructor is default constructor
+																								}
+																								
+				                                             --> javac  -->       public static void main(String args[]){	
+				   Person p1 = new Person(); 											 Person p1 = new Person();
+				   p1.age  =  20;														 p1.age  =  20;
+				   
+				   System.out.println(p1.age);//20										System.out.println(p1.age);//20
+				 }																	}
+				}																}
+				
+				Note: we cant create any class without constructor, even though if we create any class without constructor,
+				at the time of compilation java compiler will keep the one deafult constructor with no arg signature. 
+				Note2:Java comipler will create the default constructor if and only if there is no constructor in side 
+				our class.
+				
+				Q: is it possible to create empty class in java :
+				 ans : no, why beacuse even though if we create class without any members like bellow, at the time of
+				 compilation java compiler will add one default constructor into our .class file like below
+				 
+				 Perosn.java						Person.class
+				 class Person                     class Person extends Object
+				 {									{
+				                                      Person(){
+													          
+								-->javac -->				}
+				           
+				 }		
+
+				 }
+				
+				Constructor overLoading: the process of keeping more than one constructor in the same class with different 
+				signature is called as constructor over loading. 
+				
+				  exm:
+				  
+				    class Person{
+					
+					
+					    Person(){// this is called defination for no arg constructor
+						  System.out.println("No arg constructor");
+						}
+						
+						Person(int cash){// here signature expects what is the inputs we are expecting from caller
+						  System.out.println("int type constructor");						
+						}
+						
+						Person(int cash,String party){ // this constructor expecting 1 int and 1 string
+						  System.out.println("int - String type constructor");				
+						}
+						
+						Person(int cash,String party,String gift){ // this constructor expecting 1 int and 2 string values 
+						  System.out.println("int - String -String type constructor");				
+						}
+						
+						Person(int cash,int i,double d){ // this constructor expecting 2 int and 1 double values 
+						  System.out.println("int - int -double type constructor");				
+						}
+						
+						static public void main(String args[]){
+						  Person p1 = new Person(); // this is called as  calling statement for no arg constructor
+						  
+						 // Person p2 = new Perosn(int cash);
+						 // Person p2 = new Perosn(int cash,String party);
+						 
+						 Person p2 = new Perosn(100);
+						 Person p3 = new Perosn(10,"drink party");
+						 Person p4 =  new Person(10000,"coffee party", "mobile");
+						 Person p5 =  new Person(10,"abc", "xzyz");
+						 Person p5 =  new Person(1,20, 5.7);
+						 
+						 
+						 Person p6 =  new Person(100,2000, "String");//CTE
+						 // this is a calling stament for int,int,String type constructor but there is not defination this
+						 // calling statement so we will get the compile time error.
+						  
+						
+						}
+					}
+					
+					output:
+					
+					No arg constructor
+					int type constructor
+					int - String type constructor
+					int - String -String type constructor
+					int - String -String type constructor
+					int - int -double type constructor
+					
+					
+					
+				 class Person{
+				 
+				 Person(){
+				  System.out.println("No arg constructor");
+				 }
+				 
+				 /* 
+				  Person(){
+				  System.out.println("No arg constructor");
+				 }
+				 */
+				    
+		}	  
+					Perspon p1 = new Perosn();//this is the calling stmt for no arg constructor	, for this one calling 
+					//	 there are multiple defination stmt , in java it is not acceptable it will cause the ambiguiting error
+                Note:  for every calling there should be a only one defination statement. 
+               // if we want to make compilation successfull we need to remove either one of the no arg constructor				
+										  
+			  
+			  
+			  class A{
+			    int i;
+				int i;//CTE // duplicate attairbute
+				String name;
+				int name;//CTE duplicate atribute 
+			  //Note: in java we cant keep same name for more than one attribte in the same scope. 
+			  }
+			  
+			  class A{	  
+			      A(int i){
+				  SOP("int constructor");
+				  }
+				  
+				  A(double i){
+				  SOP("double constructor");
+				  }
+				  A(String i){
+				  SOP("String constructor");
+				  }
+				  /*
+				  A(int i){ name of constructor, list of arguments, type  args , order args matched with 1 constructor
+				  SOP("int constructor");
+				  }
+				  */
+				  A(int i, String s){  //name ,2, int and string, int-string
+				  SOP("int- String constructor");
+				  }
+				  
+				  A(String i, int s){ //name ,2 , int and string, String -int
+				  SOP("String- int constructor");
+				  }
+				  
+				/*  A(String i, int s){//name ,2 , int and string, String -int
+				  SOP("String- int constructor");
+				  }*/
+				  
+				   A(String i, int s, float f){
+				  SOP("String- int -float constructor");
+				  }			  
+			  
+			  }
+			     

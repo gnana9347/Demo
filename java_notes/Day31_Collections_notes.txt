@@ -1,0 +1,2874 @@
+
+Collection is one the frame work in java, it was introduced to overcome the drawbacks in the arrays.
+
+Java Collections Framework Hierarchy
+=====================================
+ Iterable
+  └── Collection
+        ├── List
+        │    ├── ArrayList
+        │    ├── LinkedList
+        │    ├── Vector
+        │    └── Stack
+        ├── Set
+        │    ├── HashSet
+        │    ├── LinkedHashSet
+        │    └── TreeSet
+        ├── Queue
+        │    ├── PriorityQueue
+        │    └── LinkedList
+        └── Deque
+             ├── ArrayDeque
+             └── LinkedList
+
+Map (Not extending Collection)
+  ├── HashMap
+  ├── LinkedHashMap
+  ├── TreeMap
+  └── Hashtable
+
+	  collections framework : 
+	  ====================
+	    collections: start with small 'c': this word is used to represents the
+	                  collection framework concept.
+	    Collection: start with capital 'c' without end with 's' : 
+		                 it is a master super interface in the collection framework. 
+	                
+	    Collections: start with capital 'C': it is a one of Utility class inside
+	                 collection framework like Arrays class in array concept. it will have
+	                 some utility methods to manipulates the collection framework elements.
+	                 
+	    All collection classes and interfaces are available under java.util package,
+		so if we want to use any of the collection classes or interfaces 
+		we should add the import statement. 
+	    
+	    By using collection framework we can able to store and 
+		manipulate multiple values with multiple data types as well
+		by using single variable.
+		
+		Collections will work like similar to Arrays with Object class type. 
+		
+		Object a[] = new Object[3];
+		a[0] =  new Object();
+		a[1] =  new Integer(10);
+		a[2] =  new String("K7iT");
+		
+	    
+	    why bzc ,  collection framework classes or methods are by default Object class type.
+	    like Array with Object class type. 
+	    
+	      ex: 
+	        Object obj1 = new Object();
+		    String s1 = new String("K7it");
+		    Integer i1 =  new Integer(20);
+		    
+		    a[0] = obj1;
+		    a[1] = s1;
+		    a[2] = i1;
+		    a[3] = 1234; //-> auto boxing into Integer class type // new Integer(1234);
+		    
+		    Collection framework hierarchy :
+		    
+		    Collection:                            		   -> Map
+		        ->List                                			  ->HashMap
+		           -> ArrayList  					  ->LinkedHashMap
+		           -> LinkedList 					  ->TreeMap
+		           -> Vector(Legacy class )				  ->HashTable(Legacy class)
+		         
+	            ->Set 
+	                ->HashSet
+	                ->LinkedHashSet
+	                ->TreeSet
+	            ->Queue
+	                ->PriorityQueue
+	          
+	                
+	      Legacy classes: its a old classes from jdk1.0 onwards these class are available,
+		  but its not advisable to use legacy classes.
+	      
+	      in collection framework mainly we have 4 interfaces, in that 3 are sub interface to
+	      to Collection interface i.e List , Set, Queue. But 4th interface Map is not a sub 
+	      interface to collection interface, it is separate interface inside collections
+	      framework. 
+	      
+	      We will start with List interface:
+	      List: list interface is a sub interface of collection interface, its available under 
+	      java.util package. 
+	      List interface will works as same as the Arrays like index based operations.
+		  why because list will use Arrays internally with Object type array. 
+	      
+		 -> List will allow duplicate values. it means we can add same value more than one time. 
+	     -> list will allow null values
+		 -> list will provide order of output, it means which order we inserted same order we will
+	        get the output while printing/reading values .
+	     -> by using List we can able to insert the data randomly by using index. 
+	     -> by using list we can read the data randomly by using index from where we need.
+		 -> by default List size will taken as 10, once we added 10 elements into list then
+	        it will increase the size of list double of present size. 
+	        i.e it will increase 
+	        10 to 20
+	        20 to 40
+	        40 to 80
+		
+		 
+		 
+	     List is having 3 sub classes  like
+	             ArrayList 
+	             LinkedList 
+	             Vector
+	            
+	          ArrayList: it is sub class of List interface , 
+			   it will works same as list interface features 
+			   which we have listed above.
+	          
+			  lets discuss Arraylist class members:
+			  ========================================
+			  
+	          Arraylist is having 3 types of Constructors.
+			  
+	              1. Arraylist() -  no arg  -> default size 10
+	              2. Arraylist(int initialcapaticy); -> we can decide list size our self 100,90,30
+	              3. Arraylist(Collection col) ->  we can convert another collection type
+				  (HashSet, LinkedHashSet,TreeSet,Vector,LinkedList,Arraylist) to new  ArrayList type
+	              
+	              
+	            Note: in side every collections classes toString() method is overridden.
+	            
+	            Note2:  ArrayList its internally using arrays only,
+				without arrays Arraylist will not work.
+				
+	            ArrayList internally it will use the Object type Array.
+	            
+	            Object a[] =  new Object[10];
+	          
+     			When we start adding elements into a array using add() method
+				
+	            before adding element into array it will check 
+	            
+	            if( no of elements in the array > size of the array){
+	             1. then  first we need  created the new array with double size of 
+	              old array capacity.
+				  Object temp[] =  new Object[20];
+	             2. copy old array elements into a new array
+				     
+				     for(int i=0;i<a.length;i++){
+					   temp[i] =  a[i];
+					 }
+	             3. add our new element on top of old elements 
+				    temp[a.length] = newValue;
+	             4. return that new array to user.
+				     a= temp;
+	            }else{
+	               1. add new element old array just increasing index by one.
+				    a[i++] = newvalue;
+	            }
+	            
+				How many ways we can create object for Arraylist:
+				===============================================
+	             1. Arraylist() -  no arg  :
+				 =============================
+				  when we try to create obj for Arralist using no arg constructor,
+				  it will reserve the 10 memory locations to out AL class object 
+				  as initialCapacity.
+				  
+				  ArrayList list = new Arraylist();// capacity: 10 
+				  
+			here when we are adding elements into our AL more than 10 , 
+			then this capacity will increasing by double i.e 10 to 20.
+			after adding more than 20 elements then this capacity will increased 
+			to 20 to 40 ....
+			
+			then while adding 41 element capacity will become 80,
+			here we are using only 41 memory locations to store our values 
+			remaining 39 memory locations are getting  wasted. 
+		 
+             to acheive this process AL will internally perform following operations
+			 
+			  if(size of the array == no of elements in the array){
+	             1. then  first we need  created the new array with double size of 
+	              old array capacity.
+	             2. copy old array elements into a new array
+	             3. add our new element on top of old elements 
+	             4. return that new array to user.
+	            }else{
+	               1. add new element old array just increasing index by one.
+	            }
+	            
+				here due to creating duplicate array will wast memory,
+				and coping old values values into new array will makes time wast,
+				in order to avoid this process we can better to use
+				Arralist(int initialCapacity) constructor for creating object. 
+				
+				 2. Arraylist(int initialcapaticy);
+				 ==================================
+				 Arralist list  = new Arralist(41);
+				 here 1st time it self it will reserve 41 memory location for us to 
+				 store the  values. 
+				 
+				 Note: here initialCapacity is not a fixed capacity 
+				 or final capacity, 
+				 if we need we can store more than 41 elements also ,
+				 but while storing 42 element again it will get double of 
+				 current capacity. i,e 82. 
+				 
+				 next 3rd constructor :
+				 ======================
+				  3. Arraylist(Collection col) :
+				  ===============================
+				  if we want to add one Arralist values into another ArrayList object 
+				  while creating 2nd AL object it self ,
+				  then we can go with  Arraylist(Collection col) type constructor.
+				  
+				  Arralist list1 = new Arralist();
+				  list1.add(10);
+				  list1.add(20);
+				  
+				  Arralist list2 = new Arralist(list1);//heer list2 by deafult he will 
+				                                   //get 2 values from list1 i.e 10,20
+				  
+				  
+				  
+				  How to add the elements into Arralist:
+				  =========================================
+			            
+					1. add(): by using add method we can add the elements into a arraylist.
+					inside every sub class of List interface there are 
+					2 overloaded add methods 
+					
+	              1. add(Object Element): this add method will add new element at 
+				                   end of arraylist any time
+	              2. add(int index, Object element) : 
+				     this method will add the new element at specified 
+	                  index place instead of adding at end of arraylist. 
+	                  
+	                  in arrays it works like this 
+	                  a[1] =  abc;
+	                  a[1] = xyz;
+	                  sop(a[1]);// xyz
+	                  
+	                  But In Arralist it will bit difference:
+					  =======================================
+					  like in Arralist 
+	                  in ArrayList:
+	                  =============
+	                  ArrayList list = new ArrayList();
+	                  list.add("abc");//index 0
+	                  list.add("pqr");// index 1
+	                  list.add("123");// index 2
+	                  list.add("456");// index 3
+	                  
+	                  Syso(list.get(1));//pqr
+	                  Syso(list.get(2));//123
+	                  Syso(list.get(3));//456
+	                  
+	                  
+	                  list.add(1,"xyz");// // this is called as random insert
+	                  
+	                  Syso(list.get(1));//xyz
+	                  Syso(list.get(2));//pqr
+	                  Syso(list.get(3));//123
+	                  Syso(list.get(4));//456
+	                  
+	                  // here when we add new element in the specified index, then arraylist 
+	                   will shift existing data from specified index to still last element
+	                   one step forward i.e 1 index value in to 2 index, 2nd index value into
+	                   3rd index, 3rd index value... 4th index........ nth index value 
+	                   n+1th index .
+	                   
+	                   Note: because of this, arraylist will give the less performance in case of 
+	                   Random insertion. but it will give best performance in case of random 
+	                   access or reading.
+	                  
+	                  
+	                 get(int index): this method will give the element data from specified index.
+	                 ===========
+					 if we want to read the data from arralist we can use get() method.
+					 
+	                  Syso(list.get(1));//xyz
+	                  Syso(list.get(2));//pqr
+	                  Syso(list.get(3));//123
+	                  Syso(list.get(4));//456
+	                  
+	                  Note; here if index is less zero or greater than size of arraylist it will
+	                   give IndexOutOfBoundExcpetion
+	                     
+	                     Syso(list.get(7));
+	                     
+		Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 7 out 
+		of bounds for length 5 	at 
+	                  
+				size(): this method will give the no of elements present in the Arralist.
+                ========= 
+					syso(list.size());// 5		
+					
+					  
+	           3. addAll(collection c): by using addAll method we can add all elements from one
+	                           arraylist elements into a another arraylist. it will add at end of 
+							   Collection.
+				  
+	           4. addAll(int index, collection c):  by using addAll method we can add all elements 
+	                        from one arraylist elements into a another arraylist at specified index.
+	           
+	             addAll() : it will take argument type is collection interface, so this method
+	             will support for all sub class of collection interface classes elements. 
+	             i.e ArrayLit, LinkedList,Vector,HashSet,TreeSet,LinkedHashSet,List,Set etc..
+	             
+	             example: 
+	    
+	    		ArrayList list = new ArrayList();
+				// how to add elements in to AL
+				list.add(100);
+				list.add(10.12);
+				list.add("pranitha");
+				list.add(true);
+				list.add("giri");
+				list.add('a');
+				
+				ArrayList list1 = new ArrayList();
+				list1.addAll(list);	
+	
+				System.out.println("Old arralist:"+list); old list: [100, 10.12, pranitha, true, giri, a]
+				System.out.println("new arralist:"+list1);new list :[100, 10.12, pranitha, true, giri, a]
+	      Note: addAll(Col): will always append the new elements at ending of the new collection
+	                         list.
+	                         
+	                    list1.addAll(3,list);   
+	                    
+	                    
+	          ArrayList(Collection c): this constructor will perform 2 oeprations, 
+	            1.  creating obj for Arralist 
+	            2. inserting all elements from parameter collection to our arraylist obj like 
+	            as same as addAll() method.
+	            
+	            ArrayList list = new ArrayList();
+				// how to add elements in to AL
+				list.add(100);
+				list.add(10.12);
+				list.add("pranitha");
+				list.add(true);
+				list.add("giri");
+				list.add('a');
+				
+				ArrayList list1 = new ArrayList(list);
+				
+				System.out.println("Old arralist:"+list); old list: [100, 10.12, pranitha, true, giri, a]
+				System.out.println("new arralist:"+list1);new list :[100, 10.12, pranitha, true, giri, a]
+	     
+	      ArrayList(int initialcapacity): this constructor will create the obj for ArrayList
+	      with specified capacity instead of default capacity i.e 10;
+	      
+	                    ArrayList list = new ArryList(150);
+	                    
+	                    Object a[] = new Object[150];
+	                    
+	                    Object a[] = new Object[10];//deafult 
+	                    
+	                    
+	             note: if we want to all more elements in arraylist better to go arraylist 
+	              initial capacity instead of default capacity. why bzc by deafult AL will  
+	              takes deafult capacity is 10 , but once u trying to add 11 element 
+	              it will perform 2 operations 
+	                 1. resizing the internal object type array creating  with new array.
+	                 2. copy all elements from old array to new array which we created with 
+	                    new capacity.
+	                   
+	                   suppose we have requirement to add 150 elements.
+	                   in case of deafult process
+	                   10 -- 11th adding 
+	                        Object a[] = new Object[10];
+	                        a[0] =v1;
+	                        a[1] =v2;
+	                        a[2] =v3;
+	                        a[3] =v4;
+	                        a[4] =v5;
+	                        a[5] =v6;
+	                        a[6] =v7;
+	                        a[7] =v8;
+	                        a[8] =v9;
+	                        a[9] =v10;
+	                       1. resize or rescale operation from 10 to 20 array list
+	                       2. cop all 10 elements into a new array
+	                       3. add new values into new array
+	                       4. return new array to user 
+	                        Object temp[] = new Object[10*2];
+	                        int i=0
+	                        for(Object v: a){
+	                         temp[i] =  v;
+	                         i++;
+	                        }
+	                        
+	                         temp[0] =a[0];
+	                         temp[1] =a[1];
+	                         temp[2] =a[2];
+	                         temp[3] =a[3];
+	                         temp[4] =a[4];
+	                         temp[5] =a[5];
+	                         temp[6] =a[6];
+	                         temp[7] =a[7];
+	                         temp[8] =a[8];
+	                         temp[9] =a[9];
+	                         
+	                         a = temp;                        
+	                         
+	                         
+	                        a[10] = v11
+	                        
+	                        above steps will repeat for at 21 elements place, 41 elements place
+	                        81 elements place, 
+	                        
+	                        if we want to avoid all these exercise after reaching the initial
+	                        capacity better to create our collection objects with required 
+	                        capacity i.e 150 
+	                        
+	            How to find out no of elements in my collection object?
+	            =======================================
+	                        size(); by using size() we can get the number of elements in  
+	                        our collection object.  it will return the integer value.
+	                  
+	                    ArrayList list = new ArrayList();
+							// how to add elements in to AL
+							list.add(100);
+							list.add(10.12);
+							list.add("pranitha");
+							list.add(true);
+							list.add("giri");
+							list.add('a');
+							
+							System.out.println("size of my AL:"+list.siz());// 6
+				
+				 isEmpty(): by using isEmpty() we can find out either our collection obj is 
+				 empty or not empty, if it is a empty isEmpty() will return true, else it
+				  will return false;
+				  
+				  Arraylist list2  = new ArrayList();
+				  System.out.println("is list2  empty:"+list2.isEmpty());// true
+				  System.out.println("is list  empty:"+list.isEmpty());// false
+				  
+				  how to update existing value in list:
+				  ====================================
+				  
+				  set(int index, Object newValue) : this method will update the old value
+				  with new value at specified index. 
+				  
+				  
+				  
+				    ArrayList list = new ArrayList();
+							// how to add elements in to AL
+							list.add(100);
+							list.add(10.12);
+							list.add("Babu");
+							list.add(true);
+							list.add("tharun");
+							list.add('Kumar');
+							
+				System.out.println("before update arralist:"+list); [100, 10.12, Bau, true, tharun, kumar]
+				
+				 list.set(4,"Deepak");
+				 list.set(5,"Prasad")
+				System.out.println("new arralist:"+list1);new list :[100, 10.12, pranitha, true, Deepak, Prasad]
+	     			
+				How to search for elements from the collection object:
+				======================================================
+				
+				contains(Object element): this method will return boolean true if specified 
+				element available in our collection obj else it will return boolean false.
+				
+	               ArrayList list = new ArrayList();
+							// how to add elements in to AL
+							list.add(100);
+							list.add(10.12);
+							list.add("Babu");
+							list.add(true);
+							list.add("tharun");
+							list.add('Kumar');
+							
+							sop(list.contains("Babu"));// true
+							sop(list.contains("Java"));// false
+							         
+							      
+	         indexOf(Object element): 
+	         						this method will works same as contains method, but  this method will works like if element present it will return that corresponding element index value else it will return -1;  
+	         
+	         lastIndexOf(Object element): 
+	         					this method also works same as indexOf() but only
+	         difference is index of method scans for element from start to end, but last 
+	         index of method will scan for element from end to start.
+	         if element present it will return that corresponding element index value else 
+	         it will return -1;  
+	         
+	                   
+	        containsAll(collection c): 
+	        					this method will compare one collection to another 
+	        collection obj with all elements, if all elements are available in new collection 
+	        it will return boolean true else it will return boolean false.
+	        
+	        ArrayList list2 = new ArrayList();	 
+			 list2.add("prasad");
+			 
+			ArrayList list1 = new ArrayList();
+			list1.add("prasad");
+			list1.add("deepak");
+			
+			if(list1.indexOf("prasad") != -1){
+				syso("prasad is present in list");
+			}
+			if(list1.indexOf("prasad") == -1){
+				syso("prasad is not present in list");
+			}
+			
+			if(list1.contains("prasad")){
+				syso("prasad is present in list");
+			}
+			if( ! list1.indexOf("java")){
+				syso("prasad is not present in list");
+			}
+			
+ System.out.println("is list1 having all elements of list2:"+list1.containsAll(list2));//true
+ System.out.println("is list2 having all elements of list1:"+list2.containsAll(list1));//false
+
+
+	        ArrayList list2 = new ArrayList();	 
+			 list2.add("babu");
+			 list2.add("tharun");
+			ArrayList list1 = new ArrayList();
+			list1.add("babu");
+			list1.add("kumar");
+			
+	      System.out.println("is list1 having all elements of list2:"+list1.containsAll(list2));//false
+	      
+	  case 1: list1 having all elements of list2 i.e prasad  so out is : true
+	  case2: list1 doest have tharun element from list2, list2 having babu,
+	  tharun, but list1 having babu, kumar. so tharun is missing in list1.  : false
+	  
+	   so we are getting boolean false;
+	   
+	   How to remove or delete elements from list:
+	   =============================================
+	   
+	   remove(element):  remove(element) it will remove the given element from the specified 
+	   list, if and only if that element is present else it will simply ignore.
+	   
+	   		ArrayList list1 = new ArrayList();
+			list1.add("pranitha");
+			list1.add(true);
+			list1.add("Anu");
+			System.out.println("before remove:"+list1);//before remove:[pranitha, true, Anu]
+			list1.remove(true);
+			System.out.println("after remove:"+list1);//after remove:[pranitha, Anu]
+			list1.remove("Giri");//here if element is not available nothing will happen in the list
+			System.out.println("after remove:"+list1);//after remove:[pranitha, Anu]
+			
+	   remove(int index): this method also remove the element from the specified index inside
+	   specified list. but here index should be >= 0 or <=size-1 else we will get the IOOBE
+	   
+	   
+					ArrayList list1 = new ArrayList();
+					list1.add("pranitha");
+					list1.add(true);
+					list1.add("Anu");
+					System.out.println("before remove:"+list1);//before remove:[pranitha, true, Anu]
+					list1.remove(1);
+					System.out.println("after remove:"+list1);//after remove:[pranitha, Anu]
+					list1.remove(5);//here Index 5 out of bounds for length 2
+					System.out.println("after remove:"+list1);//after remove:[pranitha, Anu]
+					
+					out put:
+					before remove:[pranitha, true, Anu]
+					after remove:[pranitha, Anu]
+					Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 5 out of bounds for length 2
+						at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+						at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+						at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:266)
+						at java.base/java.util.Objects.checkIndex(Objects.java:359)
+						at java.base/java.util.ArrayList.remove(ArrayList.java:504)
+						at com.k7it.CollectionApiDemo.main(CollectionApiDemo.java:520)
+
+	
+	    removeAll(Collection c): removeAll() will remove all the elements from list1 which 
+	    are available in list2.
+	    
+			    ArrayList list1 = new ArrayList();
+				list1.add("pranitha");
+				list1.add("Giri");
+				list1.add("Anu");
+			
+			ArrayList list2 = new ArrayList();	 
+			 	list2.add("pranitha");
+			 	list2.add("Giri");
+			 	list2.add("Latha");
+			 
+			 System.out.println("before remove all list1 and list 2");
+			 System.out.println("list1:"+list1);
+			 System.out.println("list2:"+list2);
+			 list1.removeAll(list2);
+			 
+			 System.out.println("after remove all list1 and list 2");
+			 System.out.println("list1:"+list1);
+			 System.out.println("list2:"+list2);
+			 
+			 Output:
+			 
+			 	before remove all list1 and list 2
+				list1:[pranitha, Giri, Anu]
+				list2:[pranitha, Giri, Latha]
+				after remove all list1 and list 2
+				list1:[Anu]
+				list2:[pranitha, Giri, Latha]
+				
+				
+
+	    retainAll(Collection c): this method will remove all unmatched elements from list1
+	    to list2;
+	    
+	     ArrayList list1 = new ArrayList();
+		list1.add("pranitha");
+		list1.add("Giri");
+		list1.add("Anu");
+	
+	ArrayList list2 = new ArrayList();	 
+	 	list2.add("pranitha");
+	 	list2.add("Giri");
+	 	list2.add("Latha");
+	 
+	 System.out.println("before retainAll list1 and list 2");
+	 System.out.println("list1:"+list1);
+	 System.out.println("list2:"+list2);
+	 
+	 list1.retainAll(list2);
+	 
+	 System.out.println("after retainAll  list1 and list 2");
+	 System.out.println("list1:"+list1);
+	 System.out.println("list2:"+list2);
+	 
+	 
+	 Output:
+	    before retainAll list1 and list 2
+		list1:[pranitha, Giri, Anu]
+		list2:[pranitha, Giri, Latha]
+		after retainAll  list1 and list 2
+		list1:[pranitha, Giri]
+		list2:[pranitha, Giri, Latha]
+
+	   clear(): this method will clear / remove all elements from specified list, it will make
+	   list is empty.
+	   
+	   ArrayList list1 = new ArrayList();
+		list1.add("pranitha");
+		list1.add("Giri");
+		list1.add("Anu");
+	 
+	 System.out.println("before clear list1");
+	 System.out.println("list1:"+list1);
+	 
+	 list1.clear();
+	 
+	 System.out.println("after clear  list1");
+	 System.out.println("list1:"+list1);
+	 
+	  OutPut:
+	    before clear list1
+		list1:[pranitha, Giri, Anu]
+		after clear  list1
+		list1:[]
+		
+		=================================================
+		
+		Some more Utilities methods :
+		==============================
+   		
+    subList(startIndex,endIndex): this method will return the sub list or portion of the list
+    from specified list obj between given start and end index.
+    
+    ArrayList list1 = new ArrayList();
+		list1.add("pranitha");
+		list1.add("Giri");
+		list1.add("Anu");
+		list1.add("likith");
+		list1.add("Babu");
+		list1.add("Ravi");
+		list1.add("Uday");
+	 
+	 System.out.println("original:"+list1);
+	 
+	 List subList  = list1.subList(1,4);
+	 
+	 System.out.println("SubList from 1 to 4 index:"+subList);
+	 	
+	 	
+	 	Output:
+	 	     original:[pranitha, Giri, Anu, likith, Babu, Ravi, Uday]
+			 SubList from 1 to 4 index:[Giri, Anu, likith]
+			 
+	 Note1: here start index is a include operation but end index is exclude operation
+	   i.e we will take elements from list objects between 
+	   >= startIndex and < endInde.
+
+    Note1:  here either start index or end index should not be less than
+    0 or greater than size; else we will get IOOBE. 
+     and also start index always less then end index. 
+    
+	 trimToSize(): this method will release the unwanted memory space which 
+	 is allocated to our list object and it will keeps only how many elements are 
+	 there our list.
+	 
+	 replaceAll(Collection c):  this method will replace all element which 
+	 are matching the filter condition with new value from list object.  
+	 this method added as part of JDK 1.8 version.
+	 
+	 
+	   ArrayList list1 = new ArrayList();
+			list1.add("pranitha");
+			list1.add("Giri");
+			list1.add("Anu");
+		 System.out.println("before repalceall list1");
+		 System.out.println("list1:"+list1);
+		 
+		 list1.replaceAll(e -> e.equals("pranitha") ? "Aruna" :"Latha");
+		 
+		 System.out.println("after repalceAll  list1");
+		 System.out.println("list1:"+list1);
+		 
+	 
+	    here: -> this symbol is called as lamda expression 
+	    ? : ; this symbols are called as ternary operator , it will works same as  
+	      if and else blocks.  in case of if and else we need write multiple lines of code
+	      but if we use ternary operator we can achieve same this in single line.
+	      
+	         if(e.equals("pranitha")){
+			 	e = "Aruna";
+			 }else {
+				 e = "Latha";
+			 
+			}
+			
+		Syntax:  filterContion ? sucessCase value  : failure case value;
+		
+		int i  = 10;
+		
+		int j =  i==10? 100: 200;
+		
+		syso(j);//100
+		
+		j = i==20?100:200;		
+		syso(j);// 200
+	     
+	     syso( 100==200 ? "Babu":"Raju"); // Raju
+		 
+	     Note: List interface classes will allows null values and duplicate values.
+	      ArrayList list1 = new ArrayList();
+			list1.add("pranitha");
+			list1.add("Giri");
+			list1.add("Giri");
+			list1.add("Anu");
+			list1.add("Anu");
+			list1.add("Anu");
+			list1.add(null);
+			list1.add(null);
+		 System.out.println("list1:"+list1);
+		 
+		 output: 
+		 
+		 list1:[pranitha, Giri, Giri, Anu, Anu, Anu, null, null]
+         
+		 
+         How many ways we can read the data from arrayList:
+         ==================================================
+         1. by using direct get(int index) :
+         ===================================
+          ArrayList list1 = new ArrayList();
+			list1.add("Prasad");
+			list1.add("Babu");
+			list1.add("Deepak");
+			list1.add("Kumar");
+			list1.add("Sahana");
+			list1.add("tharun");
+			list1.add("Sahana");
+			list1.add(null);
+			list1.add(null);
+			
+			System.out.println(list1.get(4));//Sahana
+			System.out.println(list1.get(1));//Babu
+			
+	   2. using for loop :
+	   
+	      for(int i = 0 ;i<list1.size();i++){
+	      	System.out.println(list1.get(i));
+	      }
+	      
+	   3. while loop 
+	   
+	      int i = 0;
+	      while(i < list1.size()){
+	        System.out.println(list1.get(i));
+	        i++;
+	      }
+	      
+	   4. do - while 
+	    ArrayList list1 = new ArrayList();
+	     int i = 0;
+	   	  do{
+	   	  	System.out.println(list1.get(i));
+	   	  	 i++;
+	   	  }while(i < list1.size());
+	     Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 
+	     out of bounds for length 0
+	     
+	     Note: if List if empty do while will give the IOOBE, while reading zero index value
+	     from empty list.
+	     
+	     if we want avoid this exception we should check the list is not empty before 
+	     reading data from list.
+	     
+	     ArrayList list1 = new ArrayList();
+	     list1.add("pranitha");
+			list1.add("Giri");
+			list1.add("Giri");
+			list1.add("Anu");
+			list1.add("Anu");
+			list1.add("Anu");
+	    if(!list1.isEmpty()) {
+	              int i = 0;
+			   	  do{
+			   	  	System.out.println(list1.get(i));
+			   	  	 i++;
+			   	  }while(i < list1.size());
+			   	  
+	   	 }else{
+	   	 	System.out.println("list is empty");
+	   	 }
+	     
+	     output: 
+	     
+	     	pranitha
+			Giri
+			Giri
+			Anu
+			Anu
+			Anu
+
+     5. by using enhanced for loop :
+     
+         ArrayList list1 = new ArrayList();
+	     list1.add("pranitha");
+			list1.add("Giri");
+			list1.add("Giri");
+			list1.add("Anu");
+			list1.add("Anu");
+			list1.add("Anu");
+			
+			for( Object element : list1){
+				System.out.println(element);
+			}
+			
+			 ArrayList list1 = new ArrayList();
+		     	list1.add("pranitha");
+				list1.add("Giri");
+				list1.add("Giri");
+				list1.add("Anu");
+				list1.add("Anu");
+				list1.add("Anu");
+			
+			for( Object element :list1){
+			    String str  =  (String)element;
+				System.out.println(str);
+			}
+			
+			output:
+			pranitha
+			Giri
+			Giri
+			Anu
+			Anu
+			Anu
+			
+			if List contains multiple data type values :
+			  ArrayList list1 = new ArrayList();
+		     	list1.add("pranitha");
+				list1.add(123);
+				list1.add(40.35);
+				list1.add(true);
+				
+			
+			for( Object element :list1){
+			    String str  =  (String)element;
+				System.out.println(str);
+			}
+			
+			output:
+			pranitha
+			Exception in thread "main" java.lang.ClassCastException: 
+			class java.lang.Integer cannot be cast to class java.lang.String
+      while reading second value we are getting class cast excpetion 
+      
+      how to avoid this issue :
+      =========================
+      if we want to avoid this problem we need to know what is my value data type at runtime
+      dynamically so that i can down cast accordingly 
+       
+        in java there is a one key word to find out value data type at runtime i.e
+         instanceof key word
+
+      syntax : 
+      
+             value instanceof ClassName 
+             
+             here instanceof key word will give the boolean true value if value is belongs to
+             specified class type else it will gives boolean false. 
+            Example: 
+             1234 instanceof Integer // true
+             1234 instanceof String // false
+             
+			    ArrayList list1 = new ArrayList();
+			 	list1.add("pranitha");
+				list1.add(123);
+				list1.add(40.35);
+				list1.add(true);
+				
+			
+				for( Object element :list1){
+					if(element instanceof String ) {
+						String str  =  (String)element;
+						System.out.println(str);
+					}else if(element instanceof Integer) {
+						int i =  (Integer)element;
+						System.out.println(i);
+					}else if(element instanceof Double) {
+						Double i =  (Double)element;
+						System.out.println(i);
+					}else if(element instanceof Boolean) {
+						Boolean i =  (Boolean)element;
+						System.out.println(i);
+					}
+				}
+				
+				output: 
+			 	pranitha
+				123
+				40.35
+				true
+
+	 	6. by using iterator() :  iterator() method will give the return type is Iterator 
+	 	 interface type its available under java.util package only. this interface having 2 
+	 	    important methods 
+	 	      1. hasNext(): it will verify the list object either list having next element 
+	 	       from current position. if there is a next element it will return boolean true
+	 	       else it will return boolean false 
+	 	      
+	 	      2. next() : next() will take the cursor or control into next position like one
+	 	      step forward from current position and he will returns the new position value.
+	 	      
+	 	      if we want to read the values from list by using iterator we should use while 
+	 	      loop .
+	 	      	
+	 	 		ArrayList list1 = new ArrayList();
+			 	list1.add("Prasad");
+				list1.add(123);
+				list1.add(40.35);
+				list1.add(true);
+		       
+				Iterator  it =  list1.iterator();
+				while(it.hasNext()) {
+					System.out.println(it.next());
+				}
+				
+				output:
+				Prasad
+				123
+				40.35
+				true
+				
+				draw backs in Iterator : 
+				1. by uisng Iterator we can't read back word direction ,  only forword direct read allowed.
+				2. once Iterator obj , we can't modify list object. either adding new elements or removing existing elements not possible. 
+				 if we try to modify , we will get the ConcurrentModificationException. : it means more than one resourses are using same list. 
+				  ArrayList list3 = new ArrayList();
+				     	list3.add("Prasad");
+						list3.add(123);
+						list3.add(40.35);
+						list3.add(true);
+				 Iterator  it =  list3.iterator();
+					list3.add("786");// ConcurrentModificationException
+					while(it.hasNext()) {
+						System.out.println(it.next());
+					}
+
+	        7. listIterator : by using listIterator() method also we can read the data from list.
+	        listIterator() method will give return type as ListIterator interface, it is a 
+	        sub interface of Iterator Interface.
+	        
+	        -> here by using Iterator interface we can able to read the data from the list only
+	        in forward direction, but by using ListIterator we can read the data from list
+	        in 2 ways forward direction and backward direction. 
+	        
+	        -> in Iterator interface we have only 2 method 1. hasNext() 2.next()
+	           but in ListIterator interface we have 7 important methods 
+	           1. hasNext()
+	           2. next()
+	           3. hasPrevious()
+	           4. previous()
+	           5. add()
+	           6. remove()
+	           7. set()
+	           
+	           example:
+	           ArrayList list1 = new ArrayList();
+			 	list1.add("pranitha");
+				list1.add(123);
+				list1.add(40.35);
+				list1.add(true);
+		       
+				ListIterator  it =  list1.listIterator();
+				System.out.println("reading forward direction:");
+				while(it.hasNext()) {
+					System.out.println(it.next());
+				}
+				System.out.println("reading backward direction :");
+				while(it.hasPrevious()) {
+					System.out.println(it.previous());
+				}
+	         
+	         output:
+	           reading foward direction:
+	         	pranitha
+				123
+				40.35
+				true
+				
+				reading abckward direction :
+				
+				true
+				40.35
+				123
+				pranitha
+
+	         Note: while iterating the list obj by using iterator interface we can't modify
+	         the list obj either adding element or removing element or modifying elements.
+	         if we try to do any of these operations we will get the 
+	          ConcurrentModificationException like bellow
+	          
+	          ArrayList list1 = new ArrayList();
+		 	list1.add("pranitha");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+	       
+		    Iterator  it =  list1.iterator();
+			while(it.hasNext()) {
+				list1.add("new value");//// here we are trying to add new element into  list obj
+				                         // while iterating list
+				System.out.println(it.next());
+			}
+			
+	       output:
+	           Exception in thread "main" java.util.ConcurrentModificationException
+	Note2: if we want to add or remove the elements from list while iterating we should go for
+	ListIterrator instead of simple iterator.
+	
+	ArrayList list1 = new ArrayList();
+		 	list1.add("pranitha");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+	       System.out.println("forward drection");
+		    ListIterator  lit =  list1.listIterator();
+			while(lit.hasNext()) {
+				Object element = lit.next();
+				if(element instanceof String && ((String)element).equals("pranitha")) {
+					lit.add("Latha");
+				}
+				System.out.println(element);
+			}
+			System.out.println("Back ward direction");
+			
+			while(lit.hasPrevious()) {
+				
+				System.out.println(lit.previous());
+			}
+			
+	System.out.println(list1);
+	output:
+	 	forward drection
+		pranitha
+		123
+		40.35
+		true
+		Back ward direction
+		true
+		40.35
+		123
+		Latha
+		pranitha
+		[pranitha, Latha, 123, 40.35, true]
+		
+		how to remove the element from list while iterator:
+		
+
+			ArrayList list1 = new ArrayList();
+		 	list1.add("pranitha");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+	       System.out.println("forward drection");
+		    ListIterator  lit =  list1.listIterator();
+			while(lit.hasNext()) {
+				Object element = lit.next();
+				if(element instanceof String && ((String)element).equals("pranitha")) {
+					lit.remove();// here we are removing the pranitha element 
+				}
+				System.out.println(element);
+			}
+			System.out.println("Back ward direction");
+			
+			while(lit.hasPrevious()) {
+				
+				System.out.println(lit.previous());
+			}
+			
+			System.out.println(list1);
+	
+	  out put:
+	  
+	  	forward drection
+		pranitha
+		123
+		40.35
+		true
+		Back ward direction
+		true
+		40.35
+		123
+		[123, 40.35, true]
+
+    
+    How to update the list value while iterator :
+    
+    ArrayList list1 = new ArrayList();
+		 	list1.add("pranitha");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+	       System.out.println("forward drection");
+		    ListIterator  lit =  list1.listIterator();
+			while(lit.hasNext()) {
+				Object element = lit.next();
+				if(element instanceof String && ((String)element).equals("pranitha")) {
+					lit.set("Aruna");
+				}
+				System.out.println(element);
+			}
+			System.out.println("Back ward direction");
+			
+			while(lit.hasPrevious()) {
+				
+				System.out.println(lit.previous());
+			}
+			
+	System.out.println(list1);
+	
+	output: 
+	 	forward drection
+		pranitha
+		123
+		40.35
+		true
+		Back ward direction
+		true
+		40.35
+		123
+		Aruna
+		[Aruna, 123, 40.35, true]
+
+
+		instanceof:  by using instanceof key word we can determine data type of the value
+		 			 at Runtime.
+		 			 syntax:
+		 			    dataype instanceof variablename;
+		 			    
+		 			    ex: 
+		 			     int i = 10;
+		 			    sop(  Integer instanceof i );// true 
+		 			    sop(  String instanceof i );// false 
+		 			    
+		8. reading list by using foreach(): foreach is added as part of the jdk 1.8 
+		 
+		      ArrayList list1 = new ArrayList();
+		 	list1.add("K7iT");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+			for(Object element : list1) {
+				System.out.println(element);
+			}
+			list1.forEach( element -> System.out.println(element) );
+			
+			list1.forEach(e -> {
+				System.out.println(e); 
+				System.out.println("Hello every one i am reading throrugh for each forloop");
+				});
+		      
+	      
+		e: represent inner element of the list automatically like enhanced forloop , here
+		    datatype is not required .
+	  	-> : lamda expression 
+	  	
+	  	inside foreach loop if we want to keep only one line of code then {} not required
+	  	and also single line code no need to end with ;(semicolon). if we want to keep more 
+	  	than one line of code in side forEach loop then we should use {} then in side {} 
+	  	every line should end with semicolon ;.  
+	  	
+	  	forEach is one of the stream api as part of the jdk 1.8.
+	  	
+		      
+		      
+		How to sort the elements List:
+		==============================
+		if we want to sort the elements in list we should use the Collections.sort().
+		here Collections is one of Utility class for all collections operations like Arrays class
+		in the array concept. this class will provide all utility operation  methods for collection
+		list.
+		
+		Sort(); it will sort the elements in list be default ascending order.  
+		
+		 syntax: 
+		 
+		         public static List sort(List list);
+		         
+		   Collections.sort(List): will support sort operation only for List interface classes
+		    ArrayList, LinkedList,Vector. it wont support for Set or map interface classes.
+		 
+		 Note: if we want to sort the list element, that list should
+		 contain only one type data. else will get ClassCastException
+		 
+		 example: 
+		    ArrayList list1 = new ArrayList();
+		 	list1.add("K7iT");
+			list1.add(123);
+			list1.add(40.35);
+			list1.add(true);
+		
+		    Collections.sort(list1); //  java.lang.ClassCastException: class why bez out list is 
+		                            // contains different data type elements like string, int,double
+		                              etc.. 
+		      
+		    sorting rules:
+		    ==============
+		    primitive data type elements:
+		      1. we should maintain the single data type value in list.
+		      
+		     example:
+		      ArrayList list1 = new ArrayList();
+		 	list1.add("K7iT");
+			list1.add("Latha");
+			list1.add("Aruna");
+			list1.add("dhanya");
+			list1.add("Dhanya");
+			list1.add("123");
+			list1.add("#123");
+			list1.add("anu");
+			System.out.println("Before sort:"+list1);
+			Collections.sort(list1);
+			System.out.println("after sorting the list :"+list1);
+			
+			output:
+			 Before sort:[K7iT, Latha, Aruna, dhanya, Dhanya, 123, #123, anu]
+			 after sorting the list :[#123, 123, Aruna, Dhanya, K7iT, Latha, anu, dhanya]
+            
+             sorting order or priority :
+               1. special chars 
+               2. numbers
+		       3. upper case
+		       4. lower case
+		      
+		     How to sort the elements in in the list in descending order :  
+		     
+		     in side Collections class there is another overloaded sort() with 2 parameters 
+		     i.e 
+		       Collections.sort(List, Comparator.reverseOrder);
+		   Example:    
+		        ArrayList list1 = new ArrayList();
+		 	list1.add("K7iT");
+			list1.add("Latha");
+			list1.add("Aruna");
+			list1.add("dhanya");
+			list1.add("Dhanya");
+			list1.add("123");
+			list1.add("#123");
+			list1.add("anu");
+			System.out.println("Before sort:"+list1);
+		    Collections.sort(list1,Comparator.reverseOrder());
+			System.out.println("after reverse sorting the list :"+list1);
+			
+			
+			output:
+			    Before sort:[K7iT, Latha, Aruna, dhanya, Dhanya, 123, #123, anu]
+				after reverse sorting the list :[dhanya, anu, Latha, K7iT, Dhanya, Aruna, 123, #123]
+
+             How to add the derived objects into List:
+             =========================================
+             ArrayList list = new ArrayList();
+			Person p1 = new Person(27,"K7iT",5.5,60.25);
+			Person p2 = new Person(25,"dhanya",5.3,50.25);
+			Person p3 = new Person(22,"aruna",5.6,55.0);
+			Person p4 = new Person(25,"giri",5.7,75.0);
+			
+			list.add(p1);
+			list.add(p2);
+			list.add(p3);
+			list.add(p4);
+			list.add(p4);
+			list.add(new Person(21,"babu",5.6,65.50));
+			
+			System.out.println(list);
+			output:
+			[com.k7it.Person@5e91993f, com.k7it.Person@1c4af82c, 
+			com.k7it.Person@379619aa, com.k7it.Person@cac736f, 
+			com.k7it.Person@cac736f, com.k7it.Person@5e265ba4]
+			
+			
+			if we want to get meaning full output we need to override the toString();
+			output after override toString():
+			[{Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			{Name:dhanya,Age:25,Height:5.3,Weight:50.25}, 
+			{Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}]
+			
+			How to to sort the derived  elements in list:
+			============================================
+
+			ArrayList list = new ArrayList();
+			Person p1 = new Person(27,"K7iT",5.5,60.25);
+			Person p2 = new Person(25,"dhanya",5.3,50.25);
+			Person p3 = new Person(22,"aruna",5.6,55.0);
+			Person p4 = new Person(25,"giri",5.7,75.0);
+			
+			list.add(p1);
+			list.add(p2);
+			list.add(p3);
+			list.add(p4);
+			list.add(p4);
+			list.add(new Person(21,"babu",5.6,65.50));			
+			System.out.println("Before sort"+list);
+			System.out.println("sorting list without implements comparable interfcae");
+			Collections.sort(list);
+			System.out.println("After sort:"+list);	
+			
+			output: 
+			[{Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			{Name:dhanya,Age:25,Height:5.3,Weight:50.25}, 
+			{Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}]
+			sorting list without implements comparable interfcae
+			Exception in thread "main" java.lang.ClassCastException: class com.k7it.Person cannot
+			 be cast to class java.lang.Comparable (com.k7it.Person is in unnamed module)
+            
+            if we want avod this class casr exception we should impements Comaprable 
+            interface from our derived class i.e class and we should over ride 
+            one inherited abstract method inside our person class i.e comapreTo(). this
+            method only java jre will use to comapre person class object and sort based 
+            on this method return value. 
+            
+            syntax:
+            
+                  public int comapreTo(Object obj){
+                  // here we can write the our sorting logic based on
+                   // which field you want to sort the person objects 
+                    //1. first down cast the object type arg into person type
+						Person p = (Person)obj;
+						//2.  compare current value with parameter obj values and return int value 
+						// this is asending order conditon
+						// if 1st obj > secon obj = 1
+						// if 1st obj < seocnd obj = -1
+						// if 1st obj == 2nd obj  = 0
+						
+						// desending order condtion
+						// if 1st obj > secon obj = -1
+						// if 1st obj < seocnd obj = 1
+						// if 1st obj == 2nd obj  = 0
+	 
+                    
+                  }
+
+
+			example:
+			 ArrayList list = new ArrayList();
+			Person p1 = new Person(27,"K7iT",5.5,60.25);
+			Person p2 = new Person(30,"dhanya",5.3,50.25);
+			Person p3 = new Person(22,"aruna",5.6,55.0);
+			Person p4 = new Person(25,"giri",5.7,75.0);
+			
+			list.add(p1);
+			list.add(p2);
+			list.add(p3);
+			list.add(p4);
+			list.add(p4);
+			list.add(new Person(21,"babu",5.6,65.50));			
+			System.out.println("Before sort"+list);
+			System.out.println("sorting list with implements comparable interfcae");
+			Collections.sort(list);
+			System.out.println("After sort:"+list);
+			 outout:
+			 
+			 	Before sort[
+			 	 {Name:K7iT,Age:27,Height:5.5,Weight:60.25},
+			 	 {Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+			 	 {Name:aruna,Age:22,Height:5.6,Weight:55.0},
+			 	 {Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			 	 {Name:giri,Age:25,Height:5.7,Weight:75.0},
+			 	 {Name:babu,Age:21,Height:5.6,Weight:65.5}]
+				sorting list with implements comparable interface
+			   After desending order sort:[
+				 {Name:dhanya,Age:30,Height:5.3,Weight:50.25},
+			 	 {Name:K7iT,Age:27,Height:5.5,Weight:60.25},
+			 	 {Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			 	 {Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			 	 {Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			 	 {Name:babu,Age:21,Height:5.6,Weight:65.5}]
+			
+			
+
+		    How to sort the derived objects  in the list: 
+		    ============================================
+		    derived data type elements:
+		      1. here also we should maintain the same class type object elements      
+		          else we will get the ClassCastException
+		      2. that class should implements the Comparable interface and we should override
+		       the compareTo() which is inherited from comparable interfcae. 
+		       
+		       
+		      drawbacks of Comparable interface:  
+		      1.by using comparable interface we can able 
+		      sort based on only one sort condition  at any point of time, for example
+		      if we want to sort based on age one place and sort based on name another place
+		      or sort based height another place or ascending order one place or descending 
+		      order one place etc.   we can't achieve these types requirements. 
+		     
+		      2. any sorting logic will available only in one class or only one place .
+		      
+		      in order to over come this drawbacks java people came up with one new interface
+		      for sorting support with the name of Comparator, it is also available under 
+		      java.util package. 
+		      
+		     comparator interface is having one abstract method i.e
+		     
+		      public abstract int compare(Object obj1, Object Obj2);
+		      
+		      
+		                    Comparable 
+		                         comapreTo(Object obj) ;
+		                    Comparator    
+		                          compare(Object obj1,Object obj2); 
+		                          
+		   steps to implements the sorting technique by using Comparator:
+		   ================================================================
+		   1. create a sorting class with implementing the comparator interface 
+		   
+		      public class SortBasedOnAge implements Comparator{
+		      }
+		      
+		   2. override the compare() with required sorting condition 
+		   
+		   		@Override
+				public int compare(Object o1, Object o2) {
+					Person p1 = (Person)o1;
+					Person p2 = (Person)o2;
+					 if(p1.age > p2.age) {
+							return 1;
+						}else if(p1.age < p2.age) {
+							return -1;
+						}
+						return 0;
+				}
+		   3. pass this class object as second parameter to collections.sort();
+		   
+		   Collections.sort(list,new SortBasedOnAge());
+		   
+		  
+			
+		   
+		   example1: 
+		   
+		   ArrayList list = new ArrayList();
+			Person p1 = new Person(27,"K7iT",5.5,60.25);
+			Person p2 = new Person(30,"dhanya",5.3,50.25);
+			Person p3 = new Person(22,"aruna",5.6,55.0);
+			Person p4 = new Person(25,"giri",5.7,75.0);
+			
+			list.add(p1);
+			list.add(p2);
+			list.add(p3);
+			list.add(p4);
+			list.add(p4);
+			list.add(new Person(21,"babu",5.6,65.50));			
+			System.out.println("Before sort"+list);
+			System.out.println("sorting list with implements comparator interfcae");
+			Collections.sort(list,new SortBasedOnAge());
+			System.out.println("After sort based on age:"+list);
+			Collections.sort(list,new SortBasedOnHeight());
+			System.out.println("After sort based on height:"+list);
+			Collections.sort(list,new SortBasedOnName());
+			System.out.println("After sort based on name:"+list);
+			
+			
+			
+			output:
+			Before sort[
+			{Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			{Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+			{Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}]
+			sorting list with implements comparator interface
+			After sort based on age:[
+			 {Name:babu,Age:21,Height:5.6,Weight:65.5},
+			 {Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			 {Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			 {Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			 {Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			 {Name:dhanya,Age:30,Height:5.3,Weight:50.25}]
+			After sort based on height:[
+			{Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+			{Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}, 
+			{Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}]
+			After sort based on name:[
+			{Name:K7iT,Age:27,Height:5.5,Weight:60.25}, 
+			{Name:aruna,Age:22,Height:5.6,Weight:55.0}, 
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}, 
+			{Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}]
+			
+			
+		   Drawbacks of ArrayList:
+		   ==========================
+		   1. in case of random insertion Arraylist will produce very less performance 
+		     why because for example list is having 100 elements if we insert one element
+		     at 50 index place by using insert(index,value), then new element will insert into
+		     50th index, but old element of 50th index to 100th index will shift one step 
+		     forward so total element in the list will come 101. shifiting of existing elements
+		      are taking more time. 
+		       So in case of random insertion ArrayList is not advisable. 
+		       
+		   Advantage of Arraylist:
+		   ==========================
+		   1. Arraylist will give the better performance in case of random reading why because 
+		   arraylist will works based on index, so it will give the required element from 
+		   specified index directly and faster also. 
+		   
+		   
+		   In order to fix the Arraylist Drawbacks java people came up with one new class in 
+		   collections i.e LinkedList 
+		   
+		   linkedlist:
+		   ===========
+		   LinkedList is one of sub class inside Collection interface, it will works
+		   based on pointers. this class will gives the better performance incase of random 
+		   insertion why because only 2 nodes will disturb while inserting any element at random index place.  
+		   
+		   LinkedList works based on Nodes, each node will contains 2 parts 
+		   1. current node value 
+		   2. next next node address 
+		   
+		   types of linked LinkedList:
+		   1. single linkedList: Single LL can have only next element address.so we can go 
+		                         forward direction, but we cant come back backward direction.
+		                         
+		                         Single LinkedList works based on Nodes, each node will contains 2 parts 
+								   1. value -> current node value 
+								   2. next  -> next node address 
+								   
+				-> in single Linked List last next field will always have null. 
+								   
+								   
+		   2. double linkedList: double LinkedList works based on Nodes, each node will 
+		     		contains 3 parts 
+				   1. value - >current node value 
+				   2. next  -> next node address 
+				   3. previous -> previous node address 
+				   
+				   
+		    
+		   3. circular linkedList : circular LL means last element next will pointing to 
+		       first element instead of null. 
+		       
+		      
+		      important methods in LL:
+		      
+		      1. addFirst(value): it will add new value at first position of the linked always.
+		      2. addLast(value):  it will add new values always at end of the linked list
+		      3. removeFirst(): it will remove the first element for linked list.
+		      4. removeLast(): it will remove element from last index of the LL.
+		      5. getFirst(): it will return first element of the LL
+		      6. getLast(): it will return the last element of the LL
+		      7. offer(value): it will add the new value at tail/end of the LL and it will return
+		                      boolean true if added successfully else it will return boolean false.
+		      8.  offerFirst(value): it will add new element at start of LL
+		      9.  offerLast(value) : it will add new Element at end of the LL
+		      10. peek(): it will return the first element of LL always but it wont remove that element
+		      11. poll(): it will return first element of LL and it will remove that element. 
+		      12. pop() : it will return first element of LL and it will remove that element.
+		      13. push(value): it will add the new element at start of the LL.
+		      
+		      LinkedList list = new LinkedList();
+			
+			list.add(10);
+			list.add(20);
+			list.add(40);
+			list.add(50);
+			list.addFirst(70);
+			list.push(80);
+			list.offer(90);
+			System.out.println("before peek()"+list);	
+			System.out.println("peek first element:"+list.peek());
+			System.out.println("after peek"+list);
+			
+			System.out.println("before poll()"+list);	
+			System.out.println("poll first element:"+list.poll());
+			System.out.println("after poll"+list);
+			
+			System.out.println("before pop()"+list);	
+			System.out.println("pop first element:"+list.pop());
+			System.out.println("after pop"+list);
+			System.out.println("before push()"+list);	
+			list.push(100);
+			System.out.println("after push"+list);
+			
+			output:
+			 
+		    before peek()[80, 70, 10, 20, 40, 50, 90]
+			peek first element:80
+			after peek[80, 70, 10, 20, 40, 50, 90]
+			before poll()[80, 70, 10, 20, 40, 50, 90]
+			poll first element:80
+			after poll[70, 10, 20, 40, 50, 90]
+			before pop()[70, 10, 20, 40, 50, 90]
+			pop first element:70
+			after pop[10, 20, 40, 50, 90]
+			before push()[10, 20, 40, 50, 90]
+			after push[100, 10, 20, 40, 50, 90]
+       
+         how to sort the collection using more than one field like sort by name and age
+		    ArrayList list = new ArrayList();
+			Person p1 = new Person(37,"K7iT",5.5,60.25);
+			Person p2 = new Person(30,"dhanya",5.3,50.25);
+			Person p3 = new Person(25,"aruna",5.6,55.0);
+			Person p4 = new Person(25,"giri",5.7,75.0);
+			Person p5 = new Person(25,"babu",5.7,75.0);
+			Person p6 = new Person(30,"ravi",5.7,75.0);
+			
+			list.add(p1);
+			list.add(p2);
+			list.add(p3);
+			list.add(p4);
+			list.add(p4);
+			list.add(p5);
+			list.add(p6);
+			list.add(new Person(21,"babu",5.6,65.50));			
+			System.out.println("Before sort"+list);
+			Collections.sort(list,new SortPersonBasedOnAgeAndName());
+			System.out.println("After sort based on age and name:"+list);
+		  
+		   output:
+		   Before sort[
+		   	{Name:K7iT,Age:37,Height:5.5,Weight:60.25}, 
+		   	{Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+		   	{Name:aruna,Age:25,Height:5.6,Weight:55.0}, 
+		   	{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+		   	{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+		   	{Name:babu,Age:25,Height:5.7,Weight:75.0}, 
+		   	{Name:ravi,Age:30,Height:5.7,Weight:75.0}, 
+		   	{Name:babu,Age:21,Height:5.6,Weight:65.5}]
+		   	
+			After sort based on age and name:[
+			{Name:babu,Age:21,Height:5.6,Weight:65.5}, 
+			{Name:aruna,Age:25,Height:5.6,Weight:55.0}, 
+			{Name:babu,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:giri,Age:25,Height:5.7,Weight:75.0}, 
+			{Name:dhanya,Age:30,Height:5.3,Weight:50.25}, 
+			{Name:ravi,Age:30,Height:5.7,Weight:75.0}, 
+			{Name:K7iT,Age:37,Height:5.5,Weight:60.25}]
+
+		   
+		   
+		   
+		   Vector: Vector is same as the ArrayList what are methods are avaiable under Arraylist
+		    all methods are there in Vector. but only difference is vector is fully thread safe
+		    class but arrayList not thread safe. why bzc in side Vector every method is synchronized 
+		    type. 
+		    
+		    Arraylist :
+		            public Object get()
+		            public boolean add(value)
+		            
+		     Vector:
+		      public synchronized Object get()
+		      public synchronized boolean add(value)
+		      public synchronized int indexOf(value)
+		      
+		      Arraylist will give best performance but less accuracy but vector will give '
+		      less performance but 100% accuracy. 
+		      Arraylist will allow more then one thread at a time
+		      vector will only one thread at a time
+		      array list will we may get data corruption due to multiple threads 
+		      vector will 100% data safety because we are allowing only one thread at a time
+		      Array list methods are not synchronized methods 
+		      in Vector every method is synchronized methods.
+		      Arraylist not 100% thread safety 
+		      Vector 100% thread safety
+		      
+		      
+		      how to convert list to arrays:
+			=========================================
+			
+			    ArrayList list = new ArrayList();
+			     list.add("Aruna");
+		         list.add("Aruna");
+			  Object persons[] = list.toArray();
+			  
+				
+				how to convert from arrays to list
+				===================================
+				
+				int a[] = {10,20,40,70,50,80};// Anonymous array it is fixed size array 
+				System.out.println(a);
+				List listFromArray = Arrays.asList(a);
+				
+				
+				
+		
+		
+		      
+		      List Highlights:
+		      ==================
+		       1. AL
+		       2. LL
+		       3. V
+		       
+		       -> list works based on index 
+		       -> list will support access / read
+		       -> list will support random insertion 
+		       -> list will support duplicate values 
+		            list.add("Aruna");
+		            list.add("Aruna");
+		       -> list will support null values 
+		             list.add(null);
+		             list.add(null);
+		       -> list will support iterator and listIterator 
+		       -> list will support index based reading and writing 
+		       -> if we want sort list elements we should use Collections.sort()
+		          Collections.sort() : will support only for list classes 
+		       ->  we can convert list to arrays and arrays to list why because 
+		           list will works internally based arrays only.
+		           
+		       -> list will give the order output : it means which order we are inserting the
+		       data same order we will get the output it wont change the insertion order.
+		        
+		       Set:
+		       =====       
+		          Set is one of sub interface under the Collection interface. 
+		        
+		        Set highlights:
+		        =================
+		        
+		        -> Set will not allow duplicates, even though if we add duplicates from 
+		           second elements onwards it will simply ignore it wont add to set. 
+		        -> Set will allows null values but only once 
+		        -> set will not support index based operations insertion or reading 
+		        -> set will not support order output one one time it will give one one order
+		           output. 
+		        -> Set uses HashMap internally 
+		        -> in set there is no getter method to read the data from set
+		        -> set will support only iterator based reading operation 
+		               i.e 
+		                1. iterator
+		                2. Enhanced for loop 
+		                3. forEach
+		        -> Set is having 3 main classes 
+		              1. HashSet
+		              2. LinkedHashSet
+		              3. TreeSet
+		              
+		     HashSet: HashSet is one of the Sub class of Set interface, it will use HashMap
+		     Internally. 
+		     HashSet will not allow duplicate values 
+		     HashSet Will not give order output  
+		     
+		    HashSet set = new HashSet();      
+			
+			set.add("dhanya");	
+			set.add("latha");	
+			set.add("aruna");	
+			set.add("selvi");	
+			set.add("aruna");	
+			set.add("anu");	
+			set.add(null);	
+			set.add(null);	
+			set.add("dhanya");
+			set.add("giri");
+			
+			System.out.println("Number of values in set:"+set.size());//
+			System.out.println(set);                  
+				                
+			output:
+			Number of values in set:7  // actual we added 9 elements but we are getting only 6
+			                           // bzc set will not allow duplicate
+			[null, dhanya, latha, selvi, anu, giri, aruna]	 
+			// set will not give order output 
+			 
+			 // set 
+			 public boolean add(Object value){
+			    if(! this.contains(value))
+			    		this.add(value);		    
+			 }
+		      // list
+		     public boolean add(Object value){
+			    		this.add(value);		    
+			 }
+		      
+		      
+		    How many ways we can add the elements in the hashset:
+		    =====================================================
+		    
+		    add(value):  this will not allow duplicates 
+		    addAll(Collection): this will also not allow duplicates 
+		    HashSet(Collection): 
+		    
+		    Note: where ever we can see the Collection type: there we can pass any all sub class
+		     		of List or Set interfaces but we cant use sub class of Map interface .
+		    
+		    
+		    Example: for remove the duplicates from list by using set 
+		    
+		    ArrayList list = new ArrayList();
+			list.add(10);
+			list.add(10);
+			list.add(20);
+			list.add(30);
+			list.add(30);
+			list.add(30);
+			System.out.println(list);
+			HashSet set1  = new HashSet();
+			set1.addAll(list);
+			System.out.println(set1);
+			
+			How to convert list to set:
+			=============================
+			HashSet set2 =  new HashSet(list);
+			System.out.println(set2);
+			
+			// how to covert set to List
+			 ============================
+			ArrayList list2  = new ArrayList(set1);
+			System.out.println(list2);
+			
+			output:
+			 	[10, 10, 20, 30, 30, 30]
+				[20, 10, 30]
+				[20, 10, 30]
+				[20, 10, 30]
+		    
+		   How to read the elements from HashSet:
+		   =======================================
+		   1. iterator(): 
+		   2. enhanced forloop
+		   3. forEach
+		   
+		   
+		   HashSet set = new HashSet();      
+			
+				set.add("dhanya");	
+				set.add("latha");	
+				set.add("aruna");	
+				set.add("selvi");	
+				set.add("aruna");	
+				set.add("anu");	
+				set.add(null);	
+				set.add(null);	
+				set.add("dhanya");
+				set.add("giri");
+				// reading through iterator
+				Iterator it = set.iterator();
+				System.out.println("reading through iterator");
+				while(it.hasNext()) {
+					
+					System.out.println(it.next());
+				}
+				
+					// reading through enhanced for loop:
+					// for(InnerElementDataType refvar : array/Collection)
+					System.out.println("reading using enhanced forloop");
+					for(Object value: set) {
+						System.out.println(value);
+					}
+				
+				// forEach()
+				    System.out.println("reading using forEach");
+					set.forEach(value ->  System.out.println(value));
+					System.out.println("pring using :: operator ");
+					set.forEach(System.out::println);// printing values by using double colon operator 
+				                                     // it also 1.8 feature
+				    
+				
+	
+	
+				output:
+				
+					readijg thorugh itetator
+					null
+					dhanya
+					latha
+					selvi
+					anu
+					giri
+					aruna
+					reading using enhanced forloop
+					null
+					dhanya
+					latha
+					selvi
+					anu
+					giri
+					aruna
+					reading using forEach
+					null
+					dhanya
+					latha
+					selvi
+					anu
+					giri
+					aruna
+					pring using :: operator 
+					null
+					dhanya
+					latha
+					selvi
+					anu
+					giri
+					aruna
+					
+					
+					How to convert set to Array :
+					// how to convert into specific array type instead of Object type array 
+					  String[]  strs = (String[])set.toArray(new String[10]);
+						
+				      for(String str: strs) {
+				    	  System.out.println(str);
+				      }
+
+                    Note: if we want to convert specific type array from list or set 
+                      then that list or set objects should elements only corresponding array
+                      data type else we will class cast exception. 
+                      
+                      Draw backs in HashSet:
+                      ======================
+                      
+                      1. in hashSet we can't achieve the ordered output 
+                      2. we can't sort the elements 
+                      
+                      inorder to fix these draw backs java people came up with another 
+                      2 classes in Set interface
+                         1. LinkedHashSet : by using this we can achieve the order output
+                         2. TreeSet : by using this we can sort the elements TreeSet will 
+                                      sort the elements by default ascending order. 
+                                      
+                      Example:
+                      LinkedHashSet set = new LinkedHashSet();      
+			
+						set.add("dhanya");	
+						set.add("latha");	
+						set.add("aruna");	
+						set.add("selvi");	
+						set.add("aruna");	
+						set.add("anu");	
+						set.add(null);	
+						set.add(null);	
+						set.add("dhanya");
+						set.add("giri");
+						// reading through iterator
+						Iterator it = set.iterator();
+						System.out.println("readijg thorugh itetator");
+						while(it.hasNext()) {
+							
+							System.out.println(it.next());
+						}
+						 readijg thorugh itetator
+							dhanya
+							latha
+							aruna
+							selvi
+							anu
+							null
+							giri   
+					                                      
+					    Note:  Here: we are geting order output , which order we have inserted same order 
+					       we have receiving the data                                
+					                                      
+					
+					How to sort the elements in the Set Interface:
+					===============================================
+					Collections.sort(List): will not support for Set interface classes to 
+					sort the elements, in Set interface if we want to sort the elements 
+					we should use the TreeSet class, TreeSet class by default it will give 
+					sorted output in ascending order. 
+					
+					-> TreeSet will  not allow null values 
+					   if we try to add null values treeset we will NPE
+					   TreeSet set = new TreeSet(); 
+					   set.add(null);// NullPointerException
+					   
+					   
+		           TreeSet set = new TreeSet();      
+			
+					set.add("dhanya");	
+					set.add("latha");	
+					set.add("aruna");	
+					set.add("selvi");	
+					set.add("aruna");	
+					set.add("anu");	
+					set.add("dhanya");
+					set.add("giri");
+					
+					set.forEach(System.out::println);
+					
+					output:
+					
+					pring using :: operator 
+						anu
+						aruna
+						dhanya
+						giri
+						latha
+						selvi
+						
+			If we want to sort reverse order pass comparator.reverseOrder input paramter 
+			to treeset constructor 
+			
+				TreeSet set = new TreeSet(Comparator.reverseOrder());      
+			
+				set.add("dhanya");	
+				set.add("latha");	
+				set.add("aruna");	
+				set.add("selvi");	
+				set.add("aruna");	
+				set.add("anu");	
+				set.add("dhanya");
+				set.add("giri");
+					System.out.println("pring using :: operator ");
+					set.forEach(System.out::println);// printing values by using double colon operator 
+				                                     // it also 1.8 feature
+				                                      * 
+				   output:
+				   
+	    			pring using :: operator 
+					selvi
+					latha
+					giri
+					dhanya
+					aruna
+					anu
+					
+					
+         Queue :
+		=========
+		 queue works based on FIFO/ LILO algorithm.it also sub interface of Collection
+         inside this we have only one main class PrioriotyQueue.
+         
+         PriorityQueue queue1  = new PriorityQueue(queue);
+	 System.out.println(queue);//[K7iT, Likith, Pranitha]
+	 System.out.println(queue1);//[K7iT, Likith, Pranitha]
+	 
+	 queue.addAll(queue);//RTE IllegalArgumentException
+	 queue.addAll(queue1);// [K7iT, K7iT, Pranitha, Likith, Likith, Pranitha]
+	 
+	 System.out.println(queue);
+	 
+	 Note: we can't add same elements into self queue again using addAll(). 
+	 
+	 
+	 
+         important methods in the queues :
+         =================================
+         
+               1. offer(value): it will add the new value at tail/end of the QUEUE
+                  and it will return boolean true if added successfully else it will 
+                  return boolean false.
+		       2. peek(): it will return the first element of Queue always but i wont remove that element
+		       3. element(): it will return the first element of Queue always but i wont remove that element
+		       4. poll(): it will return first element of Queue and it will remove that element. 
+		     
+          Map: Map is one of important interface in the collections frame work, but it is not
+               sub interface of Collection interface like List,Set,Queue.
+               in Map there is 3 important classes 
+               1. HashMap
+               2. LinkedHashMap
+               3. TreeMap
+               
+               -> all Map classes will works based on Key and Value pair. 
+                  ("name","K7iT")
+                  ("age",37)
+                  
+                  Here : first value will works like variable name and second value works 
+                  like variable value.
+                    name = "K7iT";
+                    age  = 37;
+                    
+                -> Map will not allow duplicate keys. but if we try to use same again 
+                   then it will replace old value with new value, but it wont duplicate key
+                   
+                      name  = "K7iT";                      
+                      name  = "Java";
+                      
+                       ("name","K7iT")
+                       ("age",37);
+                       ("name","Java");
+                       
+                       here only 2 values be after 3rd entry also
+                        name = java 
+                        age = 37
+                -> Map will allow duplicate values 
+                   ("name","K7iT");
+                   ("college","K7iT");
+                   ("height",5.5);
+                   ("weight", 5.5)
+                   
+                -> map will allow null key(only one) and null values (multiple) 
+                   (null, "test");
+                   ("Name",null);
+                   ("food",null)
+                   (null,"xyz");
+                   
+                   here total elements : 3
+                   null: xyz
+                   Name: null
+                   food: null
+                   
+                        
+               HashMap:
+               -> HashMap will not produce ordered output.       
+               -> HashMap is one of the subclass under Map interface. it is available under 
+                  java.util package.
+               -> it will works based on key and value pair 
+               Example: 
+               How to create object hashMap: 
+                 there are 3 constructor in HashMap:
+                   1. HashMap();
+                   2. HashMap(int initialCapacity)
+                   3. HashMap(Map map);
+                   
+               Important methods:
+               =================
+               How to add the elements into Map:
+               =================================
+               put(key,value): 
+               -----------------
+               			put method will add the entries into to map object with given
+               key and value pair, here if same key is repeating then old value is replacing
+               with new value the same key.   
+               
+             	HashMap map = new HashMap();
+				map.put("name", "K7iT");
+				map.put("age", 37);
+				map.put("height", 5.5);
+				map.put("weight", 60.25);
+				
+				System.out.println(map);
+				output:
+				{name=K7iT, weight=60.25, age=37, height=5.5}  
+				
+               
+                putAll(Map map): this method will add all the elements from one map to another
+                 map. 
+                 
+                HashMap(Map map) : this constructor will create new HashMap obj with all the elements 
+                                    of the another map.   
+                                    
+                                        
+                     	HashMap map = new HashMap();
+						map.put("name", "K7iT");
+						map.put("age", 37);
+						map.put("height", 5.5);
+						map.put("weight", 60.25);	
+						System.out.println("map:"+map);
+						HashMap map1 = new HashMap();
+						map1.putAll(map);	
+						System.out.println("map1:"+map1);
+						
+					map:{name=K7iT, weight=60.25, age=37, height=5.5}
+					map1:{name=K7iT, weight=60.25, age=37, height=5.5}
+					
+			How to update the values for existing keys :
+			============================================
+		    if we want to update values in the hashmap we should use only put(oledkey,new value) with 
+		    old key and new value
+		    
+		    
+		    			HashMap map = new HashMap();
+						map.put("name", "K7iT");
+						map.put("age", 37);
+						map.put("height", 5.5);
+						map.put("weight", 60.25);	
+						System.out.println("map:"+map); 
+						
+						map.put("name","Kesav");
+						System.out.println("map:"+map); 
+						output: map:{name=K7iT, weight=60.25, age=37, height=5.5}
+						        map:{name=Kesav, weight=60.25, age=37, height=5.5}
+						
+	       How to update the keys in map: 
+	       ==================================
+	       		we can't update the keys in map , only ways is remove the old key and add the newkey
+	       		with new value.
+	       		
+	       remove(key): it will remove the specified key from the map if it presents and 
+	        it will return value of corresponding key. if key not present in the map
+	        then it will return null value
+	        
+	        
+            
+           remove(key,value): this method will remove the specified key from the map 
+           if that key value is equal to user specified value else it wont remove, he will 
+           return boolean false.    
+          
+             HashMap map = new HashMap();
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);
+			System.out.println("map:"+map);	
+			System.out.println(map.remove("age"));// i am removing the key = age.
+			System.out.println(map.remove("height",5.7));
+			
+			System.out.println("map:"+map);
+			//here i am trying to remove the height key where values = 5.7
+			 
+		output:
+		 	map:{name=K7iT, weight=60.25, age=37, height=5.5}
+			37
+			false
+			{name=K7iT, weight=60.25, height=5.5}
+
+	      Note: here we can see age key remove , but height key not remove because height key 
+	      is present in the map but value of of height key is not matching with 5.7
+	      
+	      How to read the values from map:
+	      ================================
+	      1. get(key): this method will return the value of specified key from the map if it 
+	                   present else it will return null. 
+	                   
+	                    HashMap map = new HashMap();
+						map.put("name", "K7iT");
+						map.put("age", 37);
+						map.put("height", 5.5);
+						map.put("weight", 60.25);
+						System.out.println("value of Age key:"+ map.get("age"));// 37
+						System.out.println("value of Salary key:"+ map.get("salary"));// null
+						
+						output:
+						value of Age key:37
+						value of Salary key:null
+						
+			    2. keySet(): this method will convert all map keys into a set interface type.
+			                
+			       1. enhanced forloop:
+			         ------------------------       
+			       HashMap map = new HashMap();
+					map.put("name", "K7iT");
+					map.put("age", 37);
+					map.put("height", 5.5);
+					map.put("weight", 60.25);		
+					Set keySet =  map.keySet();
+					
+					for(Object key : keySet) {
+						System.out.println(key+":"+map.get(key));
+					}
+		           output:
+		           ==========
+		            name:K7iT
+					weight:60.25
+					age:37
+					height:5.5
+					
+					
+					2. iterator:
+					--------------
+					HashMap map = new HashMap();
+					map.put("name", "K7iT");
+					map.put("age", 37);
+					map.put("height", 5.5);
+					map.put("weight", 60.25);		
+					Set keySet =  map.keySet();
+					
+					Iterator it  = keySet.iterator();
+					while(it.hasNext()) {
+						Object key = it.next();
+						System.out.println(key+":"+ map.get(key));
+					}
+					
+					HashMap map = new HashMap();
+					map.put("name", "K7iT");
+					map.put("age", 37);
+					map.put("height", 5.5);
+					map.put("weight", 60.25);		
+					Set keySet =  map.keySet();
+					
+					Iterator it  = keySet.iterator();
+					while(it.hasNext()) {
+						Object key = it.next();
+						System.out.println(key+":"+ map.get(key));
+					}
+					
+					HashMap map = new HashMap();
+					map.put("name", "K7iT");
+					map.put("age", 37);
+					map.put("height", 5.5);
+					map.put("weight", 60.25);		
+					Set keySet =  map.keySet();
+					
+					 keySet.forEach(key -> System.out.println(key+":"+map.get(key)));
+				
+				    output:
+				    
+				      	name:K7iT
+						weight:60.25
+						age:37
+						height:5.5
+
+					
+				3. 	values() :  this method will return all map values as a Collection interface 
+				    type. 
+				    
+				    
+			    HashMap map = new HashMap();
+				map.put("name", "K7iT");
+				map.put("age", 37);
+				map.put("height", 5.5);
+				map.put("weight", 60.25);	
+				
+				Collection mapValues =  map.values();
+				Iterator it   = mapValues.iterator();
+				while(it.hasNext()) {
+					System.out.println(it.next());
+				}
+				
+				HashMap map = new HashMap();
+				map.put("name", "K7iT");
+				map.put("age", 37);
+				map.put("height", 5.5);
+				map.put("weight", 60.25);	
+				
+				Collection mapValues =  map.values();
+				for(Object value: mapValues) {
+					System.out.println(value);
+				}
+		
+         	output:
+                K7iT
+				60.25
+				37
+				5.5
+				
+				here we will get direct values from map
+				
+		       HashMap map = new HashMap();
+				map.put("name", "K7iT");
+				map.put("age", 37);
+				map.put("height", 5.5);
+				map.put("weight", 60.25);	
+				
+				Collection mapValues =  map.values();
+	           mapValues.forEach(System.out::println);
+
+	        output:
+                K7iT
+				60.25
+				37
+				5.5
+				
+				
+          Note:
+          Collection: collection without s and Capital C means it is Interface
+          Collections: Collections with capital C and end with s is called Utility class
+          collections: collections start lower case 'c' then it is called as collection frame
+                        work name
+			
+		  4. forEach(key,value): this forEach will giev the key and value both for every iterator
+		     example:
+		     
+			HashMap map = new HashMap();
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);		
+			map.forEach((key,value) -> System.out.println(key+":"+value));
+		 
+		     output:
+		     
+				name:K7iT
+				weight:60.25
+				age:37
+				height:5.5
+				
+		5. entrySet():  in map key and value pair is called Entry class Object like Node in the 
+		   LinkedList. here entrySet() will give the all Entries of Map into a Set. 
+		   
+		   Entry is a one of class under java.util package . Map internally it will use the 
+		   Entry class for storing the key and value inside map.
+		   
+		   
+		   HashMap map = new HashMap();
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);	
+			Set entrySet =  map.entrySet();
+			
+			Iterator it  = entrySet.iterator();
+			while(it.hasNext()) {
+				Entry entry  = (Entry)it.next();
+				System.out.println(entry.getKey()+":"+entry.getValue());
+			}
+			name:K7iT
+			weight:60.25
+			age:37
+			height:5.5
+			
+			Drawbacks of HashMap :
+			=========================
+			1. we can't get the ordered output by using HashMap. i.e what order we have inserted 
+			    same order we can't get the output. 
+			    
+			in order fix this drawback java people came up with one class class called
+			LinkedHashMap. it will give the ordered output. except this rest everything same 
+			as the HashMap. 
+			
+			
+			ex:
+			
+			LinkedHashMap map = new LinkedHashMap();
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);	
+			Set entrySet =  map.entrySet();
+			
+			Iterator it  = entrySet.iterator();
+			while(it.hasNext()) {
+				Entry entry  = (Entry)it.next();
+				System.out.println(entry.getKey()+":"+entry.getValue());
+			}
+			
+			Set keySet = map.keySet();
+			for(Object key: keySet) {
+				System.out.println(key+":"+map.get(key));
+			}
+			
+			output:
+			
+			name:K7iT
+			age:37
+			height:5.5
+			weight:60.25
+			
+			name:K7iT
+			age:37
+			height:5.5
+			weight:60.25
+		what order we have inserted same order we are getting the output.
+		
+		how to sort the elements in the map:
+		====================================		
+		1. inside map if we want sort the elements we should use TreeMap. because we don't have
+		  any other methods to support sorting in map interface like Collections.sort() in List
+		   interface classes.  
+	   2. TreeMap will give the by default ascending order output for keys, not values. 
+	   3. if we want sort the elements we should follow below rules
+	     i. all keys should same data type
+	     ii. keys should not contains null 
+	     iii. if we want to sort derived data type keys, then that corresponding class should 
+	          implements the Comparable interface and should override compareTo() with sorting 
+	          technique. 
+	     iv.  in case of sorting by derived object comparing field should not be duplicate, 
+	          else it will replace old value with new value for duplicate key values. 
+		
+		Example:
+		
+		
+		ascending order: 
+		  TreeMap map = new TreeMap();
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);	
+			Set entrySet =  map.entrySet();
+			
+			Set keySet = map.keySet();
+			for(Object key: keySet) {
+				System.out.println(key+":"+map.get(key));
+			}
+		output: 
+		age:37
+		height:5.5
+		name:K7iT
+		weight:60.25
+
+
+		Descending order: 
+		
+		TreeMap map = new TreeMap(Comparator.reverseOrder());
+			map.put("name", "K7iT");
+			map.put("age", 37);
+			map.put("height", 5.5);
+			map.put("weight", 60.25);	
+			Set entrySet =  map.entrySet();
+			
+			Set keySet = map.keySet();
+			for(Object key: keySet) {
+				System.out.println(key+":"+map.get(key));
+			}
+				
+		   output: 			
+		    weight:60.25
+			name:K7iT
+			height:5.5
+			age:37
+
+      sorting derived keys:
+      ====================
+        
+			public class Person implements Comparable {
+			   int age;
+			   String name;
+			   double height;
+			   double weight;
+			   
+			   Person(int age, String name,double height, double weight){
+				   this.age =  age;
+				   this.name = name;
+				   this.height = height;
+				   this.weight = weight;	   
+			   }
+			   @Override
+			   public String toString() {
+				   return "{Name:"+this.name+",Age:"+this.age+
+						   ",Height:"+this.height+",Weight:"+this.weight+"}";
+			   }
+			@Override
+			public int compareTo(Object obj) {
+				//1. first down cast the object type arg into person type
+				Person p = (Person)obj;
+				//2.  compare current value with parameter obj values and return int value 
+				// this is asending order conditon
+				// if 1st obj > secon obj = 1
+				// if 1st obj < seocnd obj = -1
+				// if 1st obj == 2nd obj  = 0
+				
+				// desending order condtion
+				// if 1st obj > secon obj = -1
+					// if 1st obj < seocnd obj = 1
+					// if 1st obj == 2nd obj  = 0
+				
+				
+				return this.name.compareTo(p.name);
+			}
+			}
+			
+			// sort the derived data type keys:
+	Person p1 = new Person(37,"K7iT",5.5,60.25);
+	Person p2 = new Person(30,"dhanya",5.3,50.25);
+	Person p3 = new Person(25,"aruna",5.6,55.0);
+	Person p4 = new Person(25,"giri",5.7,75.0);
+	Person p5 = new Person(25,"babu",5.7,75.0);
+	Person p6 = new Person(30,"ravi",5.7,75.0);
+	
+	TreeMap map1 = new TreeMap(Comparator.reverseOrder());
+	
+	map1.put(p1,10);
+	map1.put(p2,20);
+	map1.put(p3,30);
+	map1.put(p4,15);
+	map1.put(p5,25);
+	map1.put(p6,40);
+	
+	Set keySet = map1.keySet();
+	for(Object key: keySet) {
+		System.out.println(key+":"+map1.get(key));
+	}
+	
+	descending order output:
+	  	{Name:ravi,Age:30,Height:5.7,Weight:75.0}:40
+		{Name:giri,Age:25,Height:5.7,Weight:75.0}:15
+		{Name:dhanya,Age:30,Height:5.3,Weight:50.25}:20
+		{Name:babu,Age:25,Height:5.7,Weight:75.0}:25
+		{Name:aruna,Age:25,Height:5.6,Weight:55.0}:30
+		{Name:K7iT,Age:37,Height:5.5,Weight:60.25}:10
+
+      how HashMap:
+      ===========
+      HashMap will works based on hashCode() and equals() :
+      
+      when we try to add the key and value into hashmap entry - then first hashmap will
+      execute the key.hashCode()  -- it will get the memory location where 
+       I need to insert my key
+        map.put("abc", 10); "abc".hashcode(); -> 1+2+3 =  6 -here 6 will consider as memory 
+                                                location for where i can insert my map entry 
+                                                object 
+                                               
+        here Entry is class, map will use this class internally 
+        
+        class Entry{
+        
+           Object key,
+           Object value,
+           Entry next;
+        }
+        
+        put(Object key,Object value){
+           Entry entry = new Entry();
+           entry.key = key; // "abc"
+           entry.value = value;// 10            
+           key.hashCode() =  6 ->  now he will store entry object at 6th memory location.
+        
+        }
+        
+        
+        map.put("xyz",40); 
+        	1. new Entry("xyz",40); 
+        	2. key.hashCode() -> 24+25+26 = 75
+            3. insert entry obj at 75 memory location
+            
+      map.put("abc",60); 
+      
+        1. new Entry("abc",60);
+        2. key.hashCode() -> 6 
+        3. we need to insert this entry obj at 6th memory location 
+        4. before insert we should verify that specified memory location is empty or not
+           i. if empty then simply insert the entry obj into memory location
+           ii. if not empty then we should compare old entry obj with new entry obj based on
+               keys with help of equals() method 
+               
+                oldEntryObj.key.equals(newEntryObj.key){ 
+                // if true i.e  both the keys are same 
+                 // "abc".equals("abc")
+                  then
+                   replace old value with new value 
+                   oldEntryObj.value  = newEntryObj.value;                  
+                }else{
+                   
+                }              
+            Note: when ever if we receive the same hashCode for more than one Entry object
+                  that is called as hash collision.  
+      
+       map.put("cba",100);
+       1. new Entry("cba",100);
+        2. key.hashCode() -> 6
+        3. we need to insert this entry obj at 6th memory location 
+        4. before insert we should verify that specified memory location is empty or not
+           i. if empty then simply insert the entry obj into memory location
+           ii. if not empty then we should compare old entry obj with new entry obj based on
+               keys with help of equals() method 
+               
+                oldEntryObj.key.equals(newEntryObj.key)
+                if("abc".equals("cba")){ // false
+                              
+                }else{
+                   // in case of key are different then map will maintain the linkedlist 
+                    concept between hashcolision entry objects i.e                    
+                    oldEntryObj.next = newEntryObj;
+                }    
+                
+            Note: in  side our derived classes we should override hashCode() and equals()
+               both.
+               
+                             
+           how we override hashCode() but we dint overRide equals() in side our class?
+           what will happen in case of hash collision  ?
+            ans:  always it will consider as different key so it will create linked even 
+                though keys are equals. 
+           
+             how we override  equals()  but we dint overRide hashCode() in side our class?
+           what will happen in side hashmap  ?
+         ans: in this case we will never get hashCollision 
+         
+         map.put(new Person("abc",20), 70);//
+         map.put(new Person("abc",20), 200);//
+         
+         map.get(new Person("abc",20));// null
+         
+         Person p1 = new Person("abc",20);
+         map.put(p1,70);
+         map.put(p1,200);
+         
+         map.get(p1);// 200
+         
+         
+         // how set will works internally :
+          Ans: HashSet will works internally as same as hashMap, because Hashset will use 
+         HashMap internally.  when ever we try to add entry into a hashSet that value will
+         consider as a key for hashMap and value for that key is consider as one constant
+         value with name of PRESENT.
+         
+          set.add("abc");
+          
+          add(Object value){
+             map.put(value,PRESET);
+          }
+          
+         
+         
+         
+	 */
+	
+public static void main(String[] args) {
+	
+	HashSet set  = null;
+	
+	// sort the derived data type keys:
+	Person p1 = new Person(37,"K7iT",5.5,60.25);
+	Person p2 = new Person(30,"dhanya",5.3,50.25);
+	Person p3 = new Person(25,"aruna",5.6,55.0);
+	Person p4 = new Person(25,"giri",5.7,75.0);
+	Person p5 = new Person(25,"babu",5.7,75.0);
+	Person p6 = new Person(30,"ravi",5.7,75.0);
+	
+	TreeMap map1 = new TreeMap(Comparator.reverseOrder());
+	
+	map1.put(p1,10);
+	map1.put(p2,20);
+	map1.put(p3,30);
+	map1.put(p4,15);
+	map1.put(p5,25);
+	map1.put(p6,40);
+	
+	Set keySet = map1.keySet();
+	for(Object key: keySet) {
+		System.out.println(key+":"+map1.get(key));
+	}
+	
+		
+	/*	
+	  	-> : lamda expression 
+	  	
+	  	inside foreach loop if we want to keep only one line of code then {} not required
+	  	and also single line code no need to end with ;(semicolon). if we want to keep more 
+	  	than one line of code in side forEach loop then we should use {} then in side {} 
+	  	every line should end with semicolon ;.  
+	  	
+	  	forEach is one of the stream api as part of the jdk 1.8.
+	  	
+	  	
+	6
+			*/
+	
+	//System.out.println(list1);
+
+  	  // list1.replaceAll(e -> e.equals("pranitha") ? "Aruna" :"Latha");
+		 
+		/* if(e.equals("pranitha")){
+			 e = "Aruna";
+		 }else {
+			 e = "Latha";
+		 }
+		 */
+		// System.out.println("after repalceAll  list1");
+		 //System.out.println("list1:"+list1);
+		 
+	 	
+	
+	/*
+	Object a[] =  new Object[10];
+    
+    Object obj1 = new Object();
+    String s1 = new String("K7it");
+    Integer i1 =  new Integer(5);
+    
+    a[0] = obj1;
+    a[1] = s1;
+    a[2] = i1;
+    a[3] = 1234; //-> auto boxing into Integer class type
+    
+    Object temp[] =  a;
+    a = new Object[20];
+    int i=0;
+    for(Object obj : a){
+       a[i++] = obj;
+    }
+    
+    return a;
+    
+    
+    */
+	
+	/*ArrayList list = new ArrayList();
+	// how to add elements in to AL
+	list.add(100);
+	list.add(10.12);
+	list.add("pranitha");
+	list.add(true);
+	list.add("giri");
+	list.add('a');
+	//list.add
+	
+	System.out.println(list);
+	
+	// read values 
+	System.out.println(list.get(3));
+	System.out.println(list.get(5));
+	System.out.println(list.get(2));
+	//System.out.println(list.get(7));  java.lang.IndexOutOfBoundsException: Index 7 out 
+	
+	ArrayList list1 = new ArrayList();
+	list1.addAll(list);
+	System.out.println("new arralist:"+list1);
+	System.out.println("size:"+list1.size());
+	list1.addAll(3,list);  
+	
+	
+	System.out.println("new arralist after insert into specified index:"+list1);
+	System.out.println("size:"+list1.size());
+	list1.addAll(3,list1);  
+	System.out.println("new arralist after insert into specified index:"+list1);
+	System.out.println("size:"+list1.size());
+	
+	
+	 ArrayList list4 = new ArrayList();
+		// how to add elements in to AL
+	 list4.add(100);
+		list4.add(10.12);
+		list4.add("pranitha");
+		list4.add(true);
+		list4.add("giri");
+		list4.add('a');
+		
+System.out.println("before update arralist:"+list4);// [100, 10.12, pranitha, true, giri, a]
+
+list4.set(4,"Gowtham");
+list4.set(5,"Aruna");
+System.out.println("new arralist:"+list4);//new list :[100, 10.12, pranitha, true, Gowtham, Aruna]
+*/
+	
+	
+	
+//	 ArrayList list2 = new ArrayList();	 
+//	 list2.add("pranitha");
+//	 list2.add(true);
+//	ArrayList list1 = new ArrayList();
+//	list1.add("pranitha");
+//	list1.add(true);
+//	list1.add("Anu");
+//System.out.println("is list1 having all elements of list2:"+list1.containsAll(list2));//true
+
+
+  
+
+  
+}
+
+}

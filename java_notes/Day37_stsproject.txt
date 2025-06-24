@@ -1,0 +1,556 @@
+
+(One-to-One) -> one student can have one address
+
+Student -> Address address
+address -> no need to mention anything related to student 
+
+
+(One-to-Many)   -> one student can have multiple projects 
+ Student -> List<Project> projects
+ Project -> no need to mention anything
+
+
+Student -> School (Many-to-One) --> multiple students into one school
+ Student -> School school
+ School  -> List<Student> students
+
+(Many to Many )
+Student -> List<Course> 
+Course  -> List<Student> 
+
+
+Student relationship detials:
+==============================
+address: One-to-One relationship reference to an Address entity.
+projects: One-to-Many relationship reference to a list of Project entities.
+school: Many-to-One relationship reference to a School entity.
+courses: Many-to-Many relationship reference to a list of Course entities.
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import java.util.List;
+
+@Document(collection = "students")
+public class Student {
+    @Id
+    private String id;
+    private String name;
+    private int age;
+
+    @DBRef
+    private Address address;
+
+    @DBRef
+    private List<Project> projects;
+
+    @DBRef
+    private School school;
+
+    @DBRef
+    private List<Course> courses;
+
+    // Getters and Setters
+}
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "addresses")
+public class Address {
+    @Id
+    private String id;
+    private String street;
+    private String city;
+    private String state;
+    private String postalCode;
+
+    // Getters and Setters
+}
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "projects")
+public class Project {
+    @Id
+    private String id;
+    private String title;
+    private String description;
+
+    // Getters and Setters
+}
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import java.util.List;
+
+@Document(collection = "courses")
+public class Course {
+    @Id
+    private String id;
+    private String title;
+    private String description;
+
+    @DBRef
+    private List<Student> students;
+
+    // Getters and Setters
+}
+
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import java.util.List;
+
+@Document(collection = "schools")
+public class School {
+    @Id
+    private String id;
+    private String name;
+    private String address;
+
+    @DBRef
+    private List<Student> students;
+
+    // Getters and Setters
+}
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/v1/students")
+public class StudentController {
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @PostMapping
+    public Student createStudent(@RequestBody Student student) {
+        if (student.getCourses() != null) {
+            courseRepository.saveAll(student.getCourses());
+        }
+        return studentRepository.save(student);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable String id) {
+        Optional<Student> student = studentRepository.findById(id);
+        return student.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable String id, @RequestBody Student studentDetails) {
+        return studentRepository.findById(id).map(student -> {
+            student.setName(studentDetails.getName());
+            if (studentDetails.getCourses() != null) {
+                courseRepository.saveAll(studentDetails.getCourses());
+                student.setCourses(studentDetails.getCourses());
+            }
+            return ResponseEntity.ok(studentRepository.save(student));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable String id) {
+        return studentRepository.findById(id).map(student -> {
+            studentRepository.delete(student);
+            return ResponseEntity.ok().build();
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/courses")
+    public ResponseEntity<List<Course>> getCoursesByStudent(@PathVariable String id) {
+        return studentRepository.findById(id).map(student -> ResponseEntity.ok(student.getCourses()))
+            .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+}
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/students")
+public class StudentController {
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private SchoolRepository schoolRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @PostMapping
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        if (student.getAddress() != null) {
+            addressRepository.save(student.getAddress());
+        }
+        if (student.getProjects() != null) {
+            projectRepository.saveAll(student.getProjects());
+        }
+        if (student.getSchool() != null) {
+            schoolRepository.save(student.getSchool());
+        }
+        if (student.getCourses() != null) {
+            courseRepository.saveAll(student.getCourses());
+        }
+        studentRepository.save(student);
+        return new ResponseEntity<Student>(student, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudentById(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> updateStudent(@PathVariable String id,
+	@RequestBody Student studentDetails) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+        }
+
+        student.setName(studentDetails.getName());
+        student.setAge(studentDetails.getAge());
+        if (studentDetails.getAddress() != null) {
+            addressRepository.save(studentDetails.getAddress());
+            student.setAddress(studentDetails.getAddress());
+        }
+        if (studentDetails.getProjects() != null) {
+            projectRepository.saveAll(studentDetails.getProjects());
+            student.setProjects(studentDetails.getProjects());
+        }
+        if (studentDetails.getSchool() != null) {
+            schoolRepository.save(studentDetails.getSchool());
+            student.setSchool(studentDetails.getSchool());
+        }
+        if (studentDetails.getCourses() != null) {
+            courseRepository.saveAll(studentDetails.getCourses());
+            student.setCourses(studentDetails.getCourses());
+        }
+        studentRepository.save(student);
+        return new ResponseEntity<Student>(student, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        studentRepository.delete(student);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}/projects")
+    public ResponseEntity<List<Project>> getProjectsByStudent(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<List<Project>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Project>>(student.getProjects(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/courses")
+    public ResponseEntity<List<Course>> getCoursesByStudent(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<List<Course>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Course>>(student.getCourses(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/school")
+    public ResponseEntity<School> getSchoolByStudent(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<School>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<School>(student.getSchool(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/address")
+    public ResponseEntity<Address> getAddressByStudent(@PathVariable String id) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) {
+            return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Address>(student.getAddress(), HttpStatus.OK);
+    }
+}
+
+
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/courses")
+public class CourseController {
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @PostMapping
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
+        courseRepository.save(course);
+        return new ResponseEntity<Course>(course, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Course> getCourseById(@PathVariable String id) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course == null) {
+            return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Course>(course, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> updateCourse(@PathVariable String id, @RequestBody Course courseDetails) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course == null) {
+            return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+        }
+        
+        course.setTitle(courseDetails.getTitle());
+        course.setDescription(courseDetails.getDescription());
+        courseRepository.save(course);
+        return new ResponseEntity<Course>(course, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable String id) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        courseRepository.delete(course);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<Student>> getStudentsByCourse(@PathVariable String id) {
+        Course course = courseRepository.findById(id).orElse(null);
+        if (course == null) {
+            return new ResponseEntity<List<Student>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Student>>(course.getStudents(), HttpStatus.OK);
+    }
+}
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/projects")
+public class ProjectController {
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @PostMapping
+    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+        projectRepository.save(project);
+        return new ResponseEntity<Project>(project, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable String id) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project == null) {
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody Project projectDetails) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project == null) {
+            return new ResponseEntity<Project>(HttpStatus.NOT_FOUND);
+        }
+        
+        project.setTitle(projectDetails.getTitle());
+        project.setDescription(projectDetails.getDescription());
+        projectRepository.save(project);
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable String id) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        projectRepository.delete(project);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+}
+
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/schools")
+public class SchoolController {
+
+    @Autowired
+    private SchoolRepository schoolRepository;
+
+    @PostMapping
+    public ResponseEntity<School> createSchool(@RequestBody School school) {
+        schoolRepository.save(school);
+        return new ResponseEntity<School>(school, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<School> getSchoolById(@PathVariable String id) {
+        School school = schoolRepository.findById(id).orElse(null);
+        if (school == null) {
+            return new ResponseEntity<School>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<School>(school, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<School> updateSchool(@PathVariable String id, @RequestBody School schoolDetails) {
+        School school = schoolRepository.findById(id).orElse(null);
+        if (school == null) {
+            return new ResponseEntity<School>(HttpStatus.NOT_FOUND);
+        }
+
+        school.setName(schoolDetails.getName());
+        school.setAddress(schoolDetails.getAddress());
+        schoolRepository.save(school);
+        return new ResponseEntity<School>(school, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchool(@PathVariable String id) {
+        School school = schoolRepository.findById(id).orElse(null);
+        if (school == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        schoolRepository.delete(school);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<Student>> getStudentsBySchool(@PathVariable String id) {
+        School school = schoolRepository.findById(id).orElse(null);
+        if (school == null) {
+            return new ResponseEntity<List<Student>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Student>>(school.getStudents(), HttpStatus.OK);
+    }
+}
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/addresses")
+public class AddressController {
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @PostMapping
+    public ResponseEntity<Address> createAddress(@RequestBody Address address) {
+        addressRepository.save(address);
+        return new ResponseEntity<Address>(address, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Address> getAddressById(@PathVariable String id) {
+        Address address = addressRepository.findById(id).orElse(null);
+        if (address == null) {
+            return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Address>(address, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Address> updateAddress(@PathVariable String id, @RequestBody Address addressDetails) {
+        Address address = addressRepository.findById(id).orElse(null);
+        if (address == null) {
+            return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+        }
+
+        address.setStreet(addressDetails.getStreet());
+        address.setCity(addressDetails.getCity());
+        address.setState(addressDetails.getState());
+        address.setPostalCode(addressDetails.getPostalCode());
+        addressRepository.save(address);
+        return new ResponseEntity<Address>(address, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAddress(@PathVariable String id) {
+        Address address = addressRepository.findById(id).orElse(null);
+        if (address == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        addressRepository.delete(address);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+}
+
+
+

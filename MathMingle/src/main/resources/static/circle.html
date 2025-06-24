@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbc2eb, #a18cd1);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: calc(100% - 24px);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .content {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .content img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #FF5733;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #C70039;
+            transform: scale(1.05);
+        }
+        .back-button::before {
+            content: "← ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">Back</a>
+        <h1>Circle Calculator</h1>
+        <label for="radius">Radius:</label>
+        <input type="number" id="radius" required>
+        <button onclick="validateAndCalculate()">Calculate</button>
+        <div id="error" class="error"></div>
+        <div id="result" class="result"></div>
+        <canvas id="circleCanvas"></canvas>
+        
+        <div class="content">
+            <h2>Understanding Geometry Calculations for a Circle</h2>
+            <p>Geometry is the branch of mathematics that deals with the properties and relations of points, lines, surfaces, and solids. One of the most important shapes studied in geometry is the circle. Here are some key properties and formulas related to a circle:</p>
+            <ul>
+                <li><strong>Area (A):</strong> The area of a circle is given by the formula <em>A = πr²</em>, where <em>r</em> is the radius of the circle.</li>
+                <li><strong>Circumference (C):</strong> The circumference, or the perimeter, of a circle is given by the formula <em>C = 2πr</em>.</li>
+                <li><strong>Diameter (D):</strong> The diameter of a circle is twice the radius, i.e., <em>D = 2r</em>.</li>
+            </ul>
+            <img src="https://www.thoughtco.com/thmb/x7bVq_gqlVyL2U6nEot-2qgNYkE=/1500x1000/filters:fill(auto,1)/Geometry-of-a-Circle-589cbe2c5f9b58819c160fc7.jpg" alt="Circle Illustration">
+        </div>
+    </div>
+    <script>
+        function validateAndCalculate() {
+            const radiusInput = document.getElementById("radius");
+            const errorDiv = document.getElementById("error");
+            const radius = radiusInput.value;
+
+            if (radius === "") {
+                errorDiv.innerText = "Please enter the value.";
+            } else {
+                errorDiv.innerText = "";
+                calculate();
+            }
+        }
+
+        async function calculate() {
+            const radius = parseFloat(document.getElementById("radius").value);
+            const response = await fetch("http://localhost:8080/api/circle/calculate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ radius }),
+            });
+
+            const result = await response.json();
+
+            const resultDiv = document.getElementById("result");
+            if (result.error) {
+                resultDiv.innerText = `Error: ${result.error}`;
+            } else {
+                resultDiv.innerHTML = `
+                    <p>Area: ${result.area}</p>
+                    <p>Circumference: ${result.perimeter}</p>
+                    <p>Diameter: ${result.diagonal}</p>
+                `;
+                drawCircle(radius);
+            }
+        }
+
+        function drawCircle(radius) {
+            const canvas = document.getElementById("circleCanvas");
+            const context = canvas.getContext("2d");
+
+            // Adjust canvas size based on radius
+            canvas.width = radius * 2 + 40; // Adding some margin
+            canvas.height = radius * 2 + 40; // Adding some margin
+
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+            // Draw the circle
+            context.beginPath();
+            context.arc(canvas.width / 2, canvas.height / 2, radius, 0, 2 * Math.PI);
+            context.fillStyle = "#007BFF"; // Change color as needed
+            context.fill();
+            context.strokeStyle = "#0056b3"; // Circle border color
+            context.stroke();
+
+            // Draw the radius value at the center
+            context.fillStyle = "#000";
+            context.font = "16px Arial";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(`${radius}`, canvas.width / 2, canvas.height / 2);
+        }
+    </script>
+</body>
+</html>
